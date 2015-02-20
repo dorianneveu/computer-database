@@ -1,8 +1,5 @@
 package com.excilys.computerdatabase.model;
 
-import java.security.Timestamp;
-import java.sql.Date;
-
 public class Computer {
 
 	private int id;
@@ -58,6 +55,10 @@ public class Computer {
 	public String toString(){
 		return "id : "+ this.id +" name : " +this.name+" introduced : "+this.introduced+" discontinued : "+ this.discontinued+
 				" company : "+this.company.getName();
+	}
+	
+	public String toStringLittle(){
+		return "id : "+ this.id +" name : " +this.name;
 	}
 	
 }

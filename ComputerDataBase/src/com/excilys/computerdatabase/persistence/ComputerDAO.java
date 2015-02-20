@@ -54,8 +54,11 @@ public class ComputerDAO {
 					.prepareStatement("INSERT INTO computer(name, introduced, discontinued, company_id) values (?,?,?,?)");
 			pt.setString(1, computer.getName());
 			pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
-			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
-			pt.setInt(4, computer.getCompany().getId());
+			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
+			if(computer.getCompany() != null && computer.getCompany().getId() != 0)
+				pt.setInt(4, computer.getCompany().getId());
+			else
+				pt.setNull(4, java.sql.Types.BIGINT);
 			pt.executeUpdate();
 			ResultSet rs = pt.getGeneratedKeys();
 			if (rs.next()) {
@@ -73,7 +76,7 @@ public class ComputerDAO {
 					.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
 			pt.setString(1, computer.getName());
 			pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
-			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
+			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
 			pt.setInt(4, computer.getCompany().getId());
 			pt.setInt(5, computer.getId());
 			pt.executeUpdate();
@@ -86,14 +89,16 @@ public class ComputerDAO {
 		}
 	}
 
-	public void delete(Computer computer) {
+	public int delete(Computer computer) {
+		int value = 0;
 		try {
 			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
 					.prepareStatement("DELETE FROM computer WHERE id = ?");
 			pt.setInt(1, computer.getId());
-			pt.executeUpdate();
+			value = pt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return value;
 	}
 }
