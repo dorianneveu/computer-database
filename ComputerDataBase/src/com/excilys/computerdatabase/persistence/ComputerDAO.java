@@ -70,7 +70,8 @@ public class ComputerDAO {
 		return computer;
 	}
 
-	public void update(Computer computer) {
+	public int update(Computer computer) {
+		int i = 0;
 		try {
 			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
 					.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
@@ -79,7 +80,7 @@ public class ComputerDAO {
 			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
 			pt.setInt(4, computer.getCompany().getId());
 			pt.setInt(5, computer.getId());
-			pt.executeUpdate();
+			i = pt.executeUpdate();
 			ResultSet rs = pt.getGeneratedKeys();
 			if (rs.next()) {
 				computer.setId(rs.getInt(1));
@@ -87,6 +88,7 @@ public class ComputerDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return i;
 	}
 
 	public int delete(Computer computer) {

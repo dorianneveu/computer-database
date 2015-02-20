@@ -53,8 +53,20 @@ public class Computer {
 	}
 	
 	public String toString(){
-		return "id : "+ this.id +" name : " +this.name+" introduced : "+this.introduced+" discontinued : "+ this.discontinued+
-				" company : "+this.company.getName();
+		StringBuilder sb = new StringBuilder();
+		sb.append("id : ");
+		sb.append(this.id);
+		sb.append(" name : ");
+		sb.append(this.name);
+		sb.append(" introduced : ");
+		sb.append(this.introduced);
+		sb.append(" discontinued : ");
+		sb.append(this.discontinued);
+		sb.append(" company : ");
+		sb.append(this.company.getName());
+		return sb.toString();
+//		return "id : "+ this.id +" name : " +this.name+" introduced : "+this.introduced+" discontinued : "+ this.discontinued+
+//				" company : "+this.company.getName();
 	}
 	
 	public String toStringLittle(){
