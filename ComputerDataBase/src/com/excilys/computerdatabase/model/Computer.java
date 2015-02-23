@@ -10,11 +10,11 @@ public class Computer {
 	public Computer(){
 		this.id = 0;
 	}
-	public Computer(String name){
+	public Computer(String name) {
 		this.id = 0;
 		this.name = name;
 	}
-	public Computer(int id, String name, String introduced, String discontinued, Company company){
+	public Computer(int id, String name, String introduced, String discontinued, Company company) {
 		this.id = id;
 		this.name = name;
 		this.introduced = introduced;
@@ -52,7 +52,7 @@ public class Computer {
 		this.company = company;
 	}
 	
-	public String toString(){
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("id : ");
 		sb.append(this.id);

@@ -6,20 +6,20 @@ public class Company {
 	private int id;
 	private String name;
 	
-	public Company(){
+	public Company() {
 		this.id = 0;
 	}
-	public Company(int id){
+	public Company(int id) {
 		CompanyDAO dao = new CompanyDAO();
 		Company company = dao.get(id);
 		this.id = company.id;
 		this.name = company.name;
 	}
-	public Company(String name){
+	public Company(String name) {
 		this.id = 0;
 		this.name = name;
 	}
-	public Company(int id, String name){
+	public Company(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -36,7 +36,7 @@ public class Company {
 		this.name = name;
 	}
 	
-	public String toString(){
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("id : ");
 		sb.append(this.id);

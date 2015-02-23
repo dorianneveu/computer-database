@@ -5,8 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DateConverter {
-	/*
-	 * permet de convertir une chaine de caractère au format "yyyy-MM-dd" en date
+	/**
+	 * Convert a String with the format : "yyyy-MM-dd" to date
+	 * @param sDate
+	 * @return
 	 */
 	public static Date stringToDate(String sDate) {
 		Date convertedCurrentDate = null;
@@ -21,7 +23,6 @@ public class DateConverter {
 		try {
 			convertedCurrentDate = sdf.parse(sDate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return convertedCurrentDate;

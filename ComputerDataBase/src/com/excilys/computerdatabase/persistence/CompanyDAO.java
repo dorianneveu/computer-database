@@ -16,8 +16,7 @@ public class CompanyDAO {
 		try {
 			Statement st = ConnectionDAO.INSTANCE.conn.createStatement();
 			ResultSet rs = st
-					.executeQuery("SELECT id, name FROM company WHERE id = "
-							+ id);
+					.executeQuery("SELECT id, name FROM company WHERE id = " + id);
 			if (rs.first()) {
 				company.setId(rs.getInt(1));
 				company.setName(rs.getString(2));
@@ -60,8 +59,7 @@ public class CompanyDAO {
 
 	public void update(Company company) {
 		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
-					.prepareStatement("UPDATE company SET name = ? WHERE id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("UPDATE company SET name = ? WHERE id = ?");
 			pt.setString(1, company.getName());
 			pt.setInt(2, company.getId());
 			pt.executeUpdate();
@@ -72,8 +70,7 @@ public class CompanyDAO {
 
 	public void delete(Company company) {
 		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
-					.prepareStatement("DELETE FROM company WHERE id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("DELETE FROM company WHERE id = ?");
 			pt.setInt(1, company.getId());
 			pt.executeUpdate();
 		} catch (SQLException e) {
