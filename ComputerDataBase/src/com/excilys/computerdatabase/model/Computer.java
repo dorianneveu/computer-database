@@ -67,7 +67,7 @@ public class Computer {
 		return sb.toString();
 	}
 	
-	public String toStringLittle(){
+	public String toStringLittle() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("id : ");
 		sb.append(this.id);

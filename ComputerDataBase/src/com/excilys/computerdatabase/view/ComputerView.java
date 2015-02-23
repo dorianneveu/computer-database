@@ -17,7 +17,7 @@ public class ComputerView {
 		ctrl = new CtrlComputerView();
 	}
 
-	public void showView(Scanner sc){
+	public void showView(Scanner sc) {
 		life = true;
 		while (life) {
 			System.out.println("Please type the number which correspond to your choice:\n1.List of all computer\n2.New computer "

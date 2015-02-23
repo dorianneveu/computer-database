@@ -18,9 +18,7 @@ public class ComputerDAO {
 		Computer computer = new Computer();
 		try {
 			Statement st = ConnectionDAO.INSTANCE.conn.createStatement();
-			ResultSet rs = st
-					.executeQuery("SELECT * FROM computer WHERE id = "
-							+ id);
+			ResultSet rs = st.executeQuery("SELECT * FROM computer WHERE id = " + id);
 			if (rs.first()) {
 				computer.setId(rs.getInt(1));
 				computer.setName(rs.getString(2));

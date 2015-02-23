@@ -13,8 +13,7 @@ public class DateConverter {
 	public static Date stringToDate(String sDate) {
 		Date convertedCurrentDate = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		if(sDate == null)
-		{
+		if(sDate == null) {
 			sDate = "0000-00-00";
 		}
 		if (!sDate.matches("\\d{4}-\\d{2}-\\d{2}")) {

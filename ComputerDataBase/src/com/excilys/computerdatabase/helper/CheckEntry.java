@@ -14,7 +14,6 @@ public class CheckEntry {
 			return false;
 		}
 	}
-
 	/**
 	 * Check if the param is a good date
 	 * @param str

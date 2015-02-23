@@ -15,8 +15,7 @@ public class CompanyDAO {
 		Company company = new Company();
 		try {
 			Statement st = ConnectionDAO.INSTANCE.conn.createStatement();
-			ResultSet rs = st
-					.executeQuery("SELECT id, name FROM company WHERE id = " + id);
+			ResultSet rs = st.executeQuery("SELECT id, name FROM company WHERE id = " + id);
 			if (rs.first()) {
 				company.setId(rs.getInt(1));
 				company.setName(rs.getString(2));
@@ -43,8 +42,7 @@ public class CompanyDAO {
 
 	public Company create(Company company) {
 		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
-					.prepareStatement("INSERT INTO company(name) values (?)");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("INSERT INTO company(name) values (?)");
 			pt.setString(1, company.getName());
 			pt.executeUpdate();
 			ResultSet rs = pt.getGeneratedKeys();

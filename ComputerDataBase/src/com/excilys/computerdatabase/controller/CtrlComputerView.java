@@ -100,7 +100,6 @@ public class CtrlComputerView {
 	public int deleteComputer(String str) {
 		return computerDAO.delete(computerDAO.get(Integer.parseInt(str)));
 	}
-	
 	/**
 	 * Check if the the computer exist.
 	 * @param str

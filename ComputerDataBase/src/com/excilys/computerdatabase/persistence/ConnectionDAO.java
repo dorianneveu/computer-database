@@ -16,7 +16,6 @@ public enum ConnectionDAO {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				conn = DriverManager.getConnection(url, user, passwd);
- 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
