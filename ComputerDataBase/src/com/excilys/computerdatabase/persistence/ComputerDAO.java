@@ -53,10 +53,12 @@ public class ComputerDAO {
 			pt.setString(1, computer.getName());
 			pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
 			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
-			if(computer.getCompany() != null && computer.getCompany().getId() != 0)
+			if(computer.getCompany() != null && computer.getCompany().getId() != 0) {
 				pt.setInt(4, computer.getCompany().getId());
-			else
+			}
+			else {
 				pt.setNull(4, java.sql.Types.BIGINT);
+			}
 			pt.executeUpdate();
 			ResultSet rs = pt.getGeneratedKeys();
 			if (rs.next()) {
