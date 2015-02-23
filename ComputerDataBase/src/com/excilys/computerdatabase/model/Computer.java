@@ -65,12 +65,15 @@ public class Computer {
 		sb.append(" company : ");
 		sb.append(this.company.getName());
 		return sb.toString();
-//		return "id : "+ this.id +" name : " +this.name+" introduced : "+this.introduced+" discontinued : "+ this.discontinued+
-//				" company : "+this.company.getName();
 	}
 	
 	public String toStringLittle(){
-		return "id : "+ this.id +" name : " +this.name;
+		StringBuilder sb = new StringBuilder();
+		sb.append("id : ");
+		sb.append(this.id);
+		sb.append(" name : ");
+		sb.append(this.name);
+		return sb.toString();
 	}
 	
 }

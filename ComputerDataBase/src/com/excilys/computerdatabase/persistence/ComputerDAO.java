@@ -73,8 +73,7 @@ public class ComputerDAO {
 	public int update(Computer computer) {
 		int i = 0;
 		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
-					.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
 			pt.setString(1, computer.getName());
 			pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
 			pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
@@ -94,8 +93,7 @@ public class ComputerDAO {
 	public int delete(Computer computer) {
 		int value = 0;
 		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.conn
-					.prepareStatement("DELETE FROM computer WHERE id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("DELETE FROM computer WHERE id = ?");
 			pt.setInt(1, computer.getId());
 			value = pt.executeUpdate();
 		} catch (SQLException e) {

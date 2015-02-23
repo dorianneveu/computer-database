@@ -6,37 +6,33 @@ import java.util.Scanner;
 import com.excilys.computerdatabase.controller.CtrlMainView;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
-import com.excilys.computerdatabase.persistence.*;
 
 public class MainView {
 
 	public static void main(String[] args) {
 		boolean life = true;
 		CtrlMainView ctrl = new CtrlMainView();
-		ComputerDAO computerDAO = new ComputerDAO();
-		CompanyDAO companyDAO = new CompanyDAO();
 		Computer computer;
 		String name, introduced, discontinued, company;
 		while (life) {
 			Scanner sc = new Scanner(System.in);
-			System.out
-					.println("Bonjour, veuillez choisir l'un de ces choix en indiquant le bon numéro:\n1.Computer\n2.Liste des "
-							+ "entreprises\n3.Quitter");
+			System.out.println("Hi, please type the number which correspond to your choice:\n1.Computer\n2.List of all "
+							+ "companies\n3.Exit");
 			String str = sc.nextLine();
-			System.out.println("Vous avez saisi : " + str);
-			switch(str.trim()){
+			System.out.println("You type : " + str);
+			switch(str.trim()) {
 				case "1" :
 					boolean lifeComputer = true;
 					while (lifeComputer) {
 						System.out
-								.println("Veuillez choisir l'un de ces choix en indiquant le bon numéro:\n1.Liste des ordinateurs\n2.New computer "
-										+ "\n3.Modifier\n4.Supprimer\n5.Afficher détails\n6.Quitter");
+								.println("Please type the number which correspond to your choice:\n1.List of all computer\n2.New computer "
+										+ "\n3.Modify\n4.Delete\n5.Show detail\n6.Exit");
 						str = sc.nextLine();
-						System.out.println("Vous avez saisi : " + str);
-						switch(str.trim()){
+						System.out.println("You type : " + str);
+						switch(str.trim()) {
 							case "1" :
 								// codes controller
-								List<Computer> cs = ctrl.getAllCompany();
+								List<Computer> cs = ctrl.getAllComputer();
 								for (Computer comp : cs) {
 									System.out.println(comp.toStringLittle());
 								}
@@ -54,18 +50,17 @@ public class MainView {
 								System.out.println("Company's key (yyyy-MM-dd): ");
 								str = sc.nextLine();
 								company = str;
-								if(ctrl.insertComputer(name, introduced, discontinued, company).getId()>0){
+								if (ctrl.insertComputer(name, introduced, discontinued, company).getId()>0) {
 									System.out.println("Sucess!");
-								}else{
+								} else {
 									System.out.println("Nothing insert...");
 								}
 								break;
 							case "3" :
 								System.out.println("Id of the computer to modify (0 to cancel) : ");
 								str = sc.nextLine();
-								if(ctrl.checkIsId(str)){
-									if(ctrl.computerExist(str))
-									{
+								if (ctrl.checkIsId(str)) {
+									if (ctrl.computerExist(str)) {
 										computer = ctrl.getComputerById(str);
 										System.out.println("Type just on \"Enter\" if you don't want to change");
 										System.out.println("Name of the computer (mandatory) : " + computer.getName());
@@ -80,48 +75,42 @@ public class MainView {
 										System.out.println("Company's key (yyyy-MM-dd): " + computer.getCompany().getName());
 										str = sc.nextLine();
 										company = str;
-										
-										if(ctrl.updateComputer(name, introduced, discontinued, company, computer) > 0){
+										if (ctrl.updateComputer(name, introduced, discontinued, company, computer) > 0) {
 											System.out.println("Sucess!");
-										}else{
-											System.out.println("Nothing insert...");
+										} else {
+											System.out.println("Nothing updated...");
 										}
-									}
-									else{
+									} else {
 										System.out.println("Wrong entry");
 									}
-								}else{
+								} else {
 									System.out.println("Wrong entry");
 								}
-								
 								break;
 							case "4" :
 								System.out.println("Id of the computer to delete (0 to cancel) : ");
 								str = sc.nextLine();
-								if(!str.equals("0") && str.matches("[0-9]+")){
-									int i = computerDAO.delete(computerDAO.get(Integer.parseInt(str)));
-									if(i == 1){
+								if (ctrl.checkIsId(str)) {
+									if (ctrl.deleteComputer(str) > 0) {
 										System.out.println("Success");
-									}else{
+									} else {
 										System.out.println("No computer deleted, please check the id");
 									}
-									
-								}else{
+								} else {
 									System.out.println("Wrong entry");
 								}
 								break;
 							case "5" :
 								System.out.println("Id of the computer to show (0 to cancel) : ");
 								str = sc.nextLine();
-								if(!str.equals("0") && str.matches("[0-9]+")){
-									computer = computerDAO.get(Integer.parseInt(str));
-									if(computer.getId() != 0 ){
-										System.out.println(computerDAO.get(Integer.parseInt(str)).toString());
-									}
-									else{
+								if (ctrl.checkIsId(str)) {
+									computer = ctrl.getComputerById(str);
+									if (computer.getId() != 0 ) {
+										System.out.println(computer.toString());
+									} else {
 										System.out.println("Wrong entry");
 									}
-								}else{
+								} else {
 									System.out.println("Wrong entry");
 								}
 								break;
@@ -132,15 +121,13 @@ public class MainView {
 					}
 					break;
 				case "2" :
-					// codes controller
-					List<Company> cs = companyDAO.getAll();
+					List<Company> cs = ctrl.getAllCompany();
 					for (Company company1 : cs) {
-						System.out.println(company1.getId() + " : "
-								+ company1.getName());
+						System.out.println(company1.toString());
 					}
 					break;
 				case "3" :
-					System.out.println("Au revoir");
+					System.out.println("Good bye");
 					life = false;
 					sc.close();
 					break;
@@ -148,7 +135,5 @@ public class MainView {
 					break;
 			}
 		}
-
 	}
-
 }
