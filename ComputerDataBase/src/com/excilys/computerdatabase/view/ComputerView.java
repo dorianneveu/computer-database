@@ -20,8 +20,7 @@ public class ComputerView {
 	public void showView(Scanner sc){
 		life = true;
 		while (life) {
-			System.out
-					.println("Please type the number which correspond to your choice:\n1.List of all computer\n2.New computer "
+			System.out.println("Please type the number which correspond to your choice:\n1.List of all computer\n2.New computer "
 							+ "\n3.Modify\n4.Delete\n5.Show detail\n6.Exit");
 			String str = sc.nextLine();
 			System.out.println("You type : " + str);
