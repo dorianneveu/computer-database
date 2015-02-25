@@ -130,4 +130,41 @@ public class ComputerDAO {
 		}
 		return value;
 	}
+	
+
+	public long getCount(){
+		long value = 0;
+		try {
+			ConnectionDAO.INSTANCE.init();
+			Statement st = ConnectionDAO.INSTANCE.conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT count(name) FROM computer");
+			if(rs.first()){
+				value = rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionDAO.INSTANCE.close();
+		}
+		return value;
+	}
+	
+	public List<Computer> getAllLimit(int limit, int offset) {
+		List<Computer> computers = new ArrayList<Computer>();
+		try {
+			ConnectionDAO.INSTANCE.init();
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("SELECT * FROM computer LIMIT ? OFFSET ?");
+			pt.setInt(1, limit);
+			pt.setInt(2, offset);
+			ResultSet rs = pt.executeQuery();
+			while (rs.next()) {
+				computers.add(ComputerMapper.mapperComputer(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionDAO.INSTANCE.close();
+		}
+		return computers;
+	}
 }

@@ -20,10 +20,11 @@ public class CheckEntry {
 	 * @return boolean
 	 */
 	public static boolean checkIsDate(String str) {
-		if (str.matches("\\d{4}-\\d{2}-\\d{2}")) {
-			return true;
-		} else {
-			return false;
+		if (str != null) {
+			if (str.matches("\\d{4}-\\d{2}-\\d{2}")) {
+				return true;
+			} 
 		}
+		return false;
 	}
 }

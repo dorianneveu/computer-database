@@ -13,21 +13,17 @@ public enum ConnectionDAO {
 	public Connection conn;
  
 	private ConnectionDAO() {
-//		if (conn == null) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
-//				conn = DriverManager.getConnection(url, user, passwd);
 			} catch (Exception e) {
 				throw new IllegalStateException(e.getMessage());
 			}
-//		}
 	}
 	
 	public void init(){
 		try {
 			if (conn == null || conn.isClosed()) {
 				try {
-//				Class.forName("com.mysql.jdbc.Driver");
 					conn = DriverManager.getConnection(url, user, passwd);
 				} catch (Exception e) {
 					e.printStackTrace();

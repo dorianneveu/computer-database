@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.4">
+  <display-name>ComputerDataBase</display-name>
+  <servlet>
+    <description></description>
+    <display-name>AddComputer</display-name>
+    <servlet-name>AddComputer</servlet-name>
+    <servlet-class>com.excilys.computerdatabase.servlet.AddComputer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddComputer</servlet-name>
+    <url-pattern>/AddComputer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Dashboard</display-name>
+    <servlet-name>Dashboard</servlet-name>
+    <servlet-class>com.excilys.computerdatabase.servlet.Dashboard</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Dashboard</servlet-name>
+    <url-pattern>/Dashboard</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GoToAddComputer</display-name>
+    <servlet-name>GoToAddComputer</servlet-name>
+    <servlet-class>com.excilys.computerdatabase.servlet.GoToAddComputer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoToAddComputer</servlet-name>
+    <url-pattern>/GoToAddComputer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GoToEditComputer</display-name>
+    <servlet-name>GoToEditComputer</servlet-name>
+    <servlet-class>com.excilys.computerdatabase.servlet.GoToEditComputer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoToEditComputer</servlet-name>
+    <url-pattern>/GoToEditComputer</url-pattern>
+  </servlet-mapping>
+</web-app>

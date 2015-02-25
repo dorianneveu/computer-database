@@ -6,6 +6,7 @@ import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
+import com.excilys.computerdatabase.service.ComputerBL;
 
 public class CtrlComputerView {
 	private ComputerDAO computerDAO;
@@ -21,6 +22,16 @@ public class CtrlComputerView {
 
 	public List<Computer> getAllComputer() {
 		return computerDAO.getAll();
+	}
+	
+	public List<Computer> getAllLimitComputer(int limit, int offset) {
+		return computerDAO.getAllLimit(limit, offset);
+	}
+	
+	
+	public int getPage(long maxPage){
+		ComputerBL bl = new ComputerBL();
+		return (int)(bl.getNumberPage(maxPage));
 	}
 	/**
 	 * Verify all the param before the update of the computer. If a param is not good, set his old value
