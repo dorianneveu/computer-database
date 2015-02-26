@@ -167,4 +167,22 @@ public class ComputerDAO {
 		}
 		return computers;
 	}
+	
+	public List<Computer> findByName(String name) {
+		List<Computer> computers = new ArrayList<Computer>();
+		try {
+			ConnectionDAO.INSTANCE.init();
+			PreparedStatement pt = ConnectionDAO.INSTANCE.conn.prepareStatement("SELECT * FROM computer WHERE name LIKE ?");
+			pt.setString(1, name+"%");
+			ResultSet rs = pt.executeQuery();
+			while (rs.next()) {
+				computers.add(ComputerMapper.mapperComputer(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionDAO.INSTANCE.close();
+		}
+		return computers;
+	}
 }

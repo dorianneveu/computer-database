@@ -11,9 +11,11 @@ import com.excilys.computerdatabase.service.ComputerBL;
 public class CtrlComputerView {
 	private ComputerDAO computerDAO;
 	private Computer computer;
+	private ComputerBL bl;
 
 	public CtrlComputerView() {
 		this.computerDAO = new ComputerDAO();
+		this.bl = new ComputerBL();
 	}
 
 	public Computer getComputerById(String str) {
@@ -30,7 +32,6 @@ public class CtrlComputerView {
 	
 	
 	public int getPage(long maxPage){
-		ComputerBL bl = new ComputerBL();
 		return (int)(bl.getNumberPage(maxPage));
 	}
 	/**
@@ -123,5 +124,12 @@ public class CtrlComputerView {
 		} else {
 			return false;
 		}
+	}
+	
+	public List<Computer> findByName(String name) {
+		if (name.length() > 0) {
+			return bl.findById(name);
+		} 
+		return bl.getAll();
 	}
 }

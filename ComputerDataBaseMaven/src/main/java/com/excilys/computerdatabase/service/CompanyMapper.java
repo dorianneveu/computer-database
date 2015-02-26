@@ -21,7 +21,7 @@ public class CompanyMapper {
 				company = new Company(rs.getInt(1), rs.getString(2));
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("bug mapping computer");
+			throw new RuntimeException("bug mapping company");
 		}
 		return company;
 	}

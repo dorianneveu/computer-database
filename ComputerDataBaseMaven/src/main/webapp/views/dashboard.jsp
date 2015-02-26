@@ -3,6 +3,7 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%--     <jsp:include page="/Dashboard" /> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -11,28 +12,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
 <!-- Bootstrap -->
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <link href="${request.getContextPath()}css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="${request.getContextPath()}css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="${request.getContextPath()}css/main.css" rel="stylesheet" media="screen">
 </head>
-<%List<Computer> computers = (List<Computer>) request.getAttribute("computers"); %>
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="dashboard.html"> Application - Computer Database </a>
+            <a class="navbar-brand" href="Dashboard"> Application - Computer Database </a>
         </div>
     </header>
 
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">
-                <% out.println(computers.size() +" Computers found"); %>
+                 ${ fn:length(computers) } computers found
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="#" method="GET" class="form-inline">
+                    <form id="searchForm" action="Dashboard" method="POST" class="form-inline">
 
-                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
+                        <input type="search" id="search" name="search" class="form-control" placeholder="Search name" />
                         <input type="submit" id="searchsubmit" value="Filter by name"
                         class="btn btn-primary" />
                     </form>
@@ -82,20 +86,19 @@
                 </thead>
                 <!-- Browse attribute computers -->
                 <tbody id="results">
-                <% 
-                for(Computer computer : computers) { 
-                	out.println("<tr>");
-                	out.println("<td class=\"editMode\">" + computer.getId());
-                	out.println("<input type=\"checkbox\" name=\"cb\" class=\"cb\" value=\""+computer.getId()+"\">");
-                	out.println("</td>");
-                	out.println("<td>");
-                	out.println("<a href=\"GoToEditComputer?id="+computer.getId()+"\" onclick=\"\">"+computer.getName()+"</a>");
-                	out.println("</td>");
-                	out.println("<td>" + computer.getIntroduced() + "</td>");
-                	out.println("<td>" + computer.getDiscontinued()+ "</td>");
-                	out.println("<td>" + computer.getCompany().getName()+ "</td>");
-                }
-                %>
+                <c:forEach var="computer" items="${computers}">
+                <tr>
+                	<td class="editMode"> 
+                	<input type="checkbox" name="cb" class="cb" value="${computer.id}">
+                	</td>
+                	<td>
+                	<a href="GoToEditComputer?id=${computer.id}" onclick=""><c:out value="${computer.name}"/></a>
+                	</td>
+                	<td><c:out value="${computer.introduced}"/></td>
+                	<td><c:out value="${computer.discontinued}"/></td>
+                	<td><c:out value="${computer.company.name}"/></td>
+                </tr>
+				</c:forEach>
 
                 </tbody>
             </table>
@@ -104,52 +107,49 @@
 
     <footer class="navbar-fixed-bottom">
         <div class="container text-center">
-        <% if ((int)request.getAttribute("page") != 0) {
-                %>
+         <c:if test="${page != 0}">
             <ul class="pagination">
                 <li>
-                    <a href="#" aria-label="Previous">
+                    <a href="Dashboard?page=${nbeachpage}&offset=${ offset-1 }" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                   </a>
               </li>
-              <% 
-              if ((int)request.getAttribute("page") > 15) {
-            	  for (int i=0;i<(int)request.getAttribute("page");i+=5) {
-                	  out.println("<li><a href=\"Dashboard?page="+request.getAttribute("nbeachpage")+"&offset="+i+"\">" + (i+1) + "</a></li>");
-                  }
-              } else {
-            	  for (int i=0;i<(int)request.getAttribute("page");i++) {
-                	  out.println("<li><a href=\"Dashboard?page="+request.getAttribute("nbeachpage")+"&offset="+i+"\">" + (i+1) + "</a></li>");
-            	  }
-              }
-          %> 
-<!--               <li><a href="#">1</a></li> -->
-<!--               <li><a href="#">2</a></li> -->
-<!--               <li><a href="#">3</a></li> -->
-<!--               <li><a href="#">4</a></li> -->
-<!--               <li><a href="#">5</a></li> -->
+              <c:choose>
+			      <c:when test="${page > 15}">
+			    	  <c:forEach var="i" begin="0" step="5" end="${page}">
+              			<li><a href="Dashboard?page=${nbeachpage}&offset=${i}">${i+1}</a></li>
+              		  </c:forEach>
+			      </c:when>
+			
+			      <c:otherwise>
+					 <c:forEach var="i" begin="0" step="1" end="${page}">
+					 	<c:choose>
+	              			<c:when test="${i == offset}">
+	              				<li><a href="Dashboard?page=${nbeachpage}&offset=${i}"><b>${i+1}</b></a></li>
+		              		</c:when>
+		              		<c:otherwise>
+								<li><a href="Dashboard?page=${nbeachpage}&offset=${i}">${i+1}</a></li>
+					       </c:otherwise>
+				       </c:choose>
+              		 </c:forEach>
+			      </c:otherwise>
+			  </c:choose>
+
               <li>
-                <a href="#" aria-label="Next">
+                <a href="Dashboard?page=${nbeachpage}&offset=${ offset+1 }" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
-        </ul><%} %>
-
+        </ul>
+	</c:if>
         <div class="btn-group btn-group-sm pull-right" role="group" >
-        <form action="Dashboard" Method="GET">
-	    	<input type="submit" name="page" value="10" />
-	    	<input type="submit" name="page" value="50" />
-	    	<input type="submit" name="page" value="100" />
-	    	<input type="submit" name="page" value="ALL" />
-		</form>
-		
-<!--                  <a class="btn btn-success" id="addComputer" href="Dashboard?page=10">10</a>  -->
-<!--                  <a class="btn btn-success" id="addComputer" href="Dashboard?page=50">50</a>  -->
-<!--                  <a class="btn btn-success" id="addComputer" href="Dashboard?page=100">100</a>  -->
-<!--             <button type="button" class="btn btn-default" value="10" onclick="Dashboard">10</button> -->
-<!--             <button type="button" class="btn btn-default">50</button> -->
-<!--             <button type="button" class="btn btn-default">100</button> -->
-        </div>
+	        <form action="Dashboard" Method="GET">
+		    	<input type="submit" name="page" value="10" />
+		    	<input type="submit" name="page" value="50" />
+		    	<input type="submit" name="page" value="100" />
+		    	<input type="submit" name="page" value="ALL" />
+			</form>
+		</div>
 
     </footer>
 <script src="${request.getContextPath()}js/jquery.min.js"></script>

@@ -20,16 +20,14 @@ public class GoToAddComputer extends HttpServlet {
      */
     public GoToAddComputer() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		CtrlMainView ctrl = new CtrlMainView();
-		request.setAttribute("Companies",ctrl.getAllCompany());
+		request.setAttribute("companies",ctrl.getAllCompany());
 		getServletContext().getRequestDispatcher("/views/addComputer.jsp").forward(request,response);
 	}
 
@@ -37,7 +35,6 @@ public class GoToAddComputer extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }
