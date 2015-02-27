@@ -21,6 +21,17 @@ public class ComputerBL {
 		return numberPage;
 	}
 	
+	public int update(ComputerDTO computerDTO) {
+		Computer computer = MapperDTO.dTOToComputer(computerDTO);
+		return this.dao.update(computer);
+	}
+	
+	public ComputerDTO get(int id) {
+		Computer computer = dao.get(id);
+		ComputerDTO computerDTO = MapperDTO.computerToDTO(computer);	
+		return computerDTO;
+	}
+	
 	public List<ComputerDTO> findById(String name) {
 		List<Computer> computers = dao.findByName(name);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();

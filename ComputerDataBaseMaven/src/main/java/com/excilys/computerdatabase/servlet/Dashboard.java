@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.computerdatabase.controller.CtrlComputerView;
-import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 /**

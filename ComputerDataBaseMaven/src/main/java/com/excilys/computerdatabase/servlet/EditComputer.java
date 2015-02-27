@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.excilys.computerdatabase.controller.CtrlComputerView;
-import com.excilys.computerdatabase.model.Computer;
+import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 /**
  * Servlet implementation class EditComputer
@@ -39,7 +39,7 @@ public class EditComputer extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CtrlComputerView ctrl = new CtrlComputerView();
-		Computer computer = ctrl.getComputerById(request.getParameter("id"));
+		ComputerDTO computer = ctrl.getComputerById(request.getParameter("id"));
 		ctrl.updateComputer(request.getParameter("name"), request.getParameter("introduced"), 
 				request.getParameter("discontinued"), request.getParameter("company"), computer);
 		getServletContext().getRequestDispatcher("/Dashboard").forward(request,response);

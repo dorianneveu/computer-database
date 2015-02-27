@@ -34,7 +34,7 @@ public class MapperDTO {
 	static public Computer dTOToComputer(ComputerDTO computerDTO) {
 		Computer computer = new Computer();
 		if (computerDTO.getId() > 0) {
-			computer.setId(computer.getId());
+			computer.setId(computerDTO.getId());
 		}
 		computer.setName(computerDTO.getName());
 		if (computerDTO.getIntroduced() != null) {

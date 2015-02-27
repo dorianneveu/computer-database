@@ -12,6 +12,7 @@ public class ComputerView {
 	boolean life;
 	CtrlComputerView ctrl;
 	Computer computer;
+	ComputerDTO computerDTO;
 	String name, introduced, discontinued, company;
 	
 	public ComputerView() {
@@ -56,21 +57,21 @@ public class ComputerView {
 					str = sc.nextLine();
 					if (CheckEntry.checkIsId(str)) {
 						if (ctrl.computerExist(str)) {
-							computer = ctrl.getComputerById(str);
+							computerDTO = ctrl.getComputerById(str);
 							System.out.println("Type just on \"Enter\" if you don't want to change");
-							System.out.println("Name of the computer (mandatory) : " + computer.getName());
+							System.out.println("Name of the computer (mandatory) : " + computerDTO.getName());
 							str = sc.nextLine();
 							name = str;
-							System.out.println("Introduced (yyyy-MM-dd): " + computer.getIntroduced());
+							System.out.println("Introduced (yyyy-MM-dd): " + computerDTO.getIntroduced());
 							str = sc.nextLine();
 							introduced = str;
-							System.out.println("Discontinued (yyyy-MM-dd): " + computer.getDiscontinued());
+							System.out.println("Discontinued (yyyy-MM-dd): " + computerDTO.getDiscontinued());
 							str = sc.nextLine();
 							discontinued = str;
-							System.out.println("Company's key (yyyy-MM-dd): " + computer.getCompany().getName());
+							System.out.println("Company's key (yyyy-MM-dd): " + computerDTO.getCompanyName());
 							str = sc.nextLine();
 							company = str;
-							if (ctrl.updateComputer(name, introduced, discontinued, company, computer) > 0) {
+							if (ctrl.updateComputer(name, introduced, discontinued, company, computerDTO) > 0) {
 								System.out.println("Sucess!");
 							} else {
 								System.out.println("Nothing updated...");
@@ -99,7 +100,7 @@ public class ComputerView {
 					System.out.println("Id of the computer to show (0 to cancel) : ");
 					str = sc.nextLine();
 					if (CheckEntry.checkIsId(str)) {
-						computer = ctrl.getComputerById(str);
+						computerDTO = ctrl.getComputerById(str);
 						if (computer.getId() != 0 ) {
 							System.out.println(computer.toString());
 						} else {

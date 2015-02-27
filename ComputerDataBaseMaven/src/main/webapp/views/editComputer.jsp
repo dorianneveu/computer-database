@@ -50,7 +50,7 @@
                                 <select class="form-control" id="company" name="company">
                                 	<c:forEach var="company" items="${companies}">
                                 		<c:choose>
-                                			<c:when test="${company.id == computer.company.id }">
+                                			<c:when test="${company.id == computer.companyId }">
                                 				<option value="${company.id}" selected="true"><c:out value="${company.name}"/></option>
                                 			</c:when>
                                 			<c:otherwise>

@@ -62,20 +62,22 @@ public class ComputerDTO {
 		this.companyName = companyName;
 	}
 	
-//	public String toString() {
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("id : ");
-//		sb.append(this.id);
-//		sb.append(" name : ");
-//		sb.append(this.name);
-//		sb.append(" introduced : ");
-//		sb.append(this.introduced);
-//		sb.append(" discontinued : ");
-//		sb.append(this.discontinued);
-//		sb.append(" company : ");
-//		sb.append(this.company.getName());
-//		return sb.toString();
-//	}
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("id : ");
+		sb.append(this.id);
+		sb.append(" name : ");
+		sb.append(this.name);
+		sb.append(" introduced : ");
+		sb.append(this.introduced);
+		sb.append(" discontinued : ");
+		sb.append(this.discontinued);
+		sb.append(" companyId : ");
+		sb.append(this.companyId);
+		sb.append(" company : ");
+		sb.append(this.companyName);
+		return sb.toString();
+	}
 	
 	public String toStringLittle() {
 		StringBuilder sb = new StringBuilder();

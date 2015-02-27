@@ -11,7 +11,6 @@ import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class CtrlComputerView {
 	private ComputerDAO computerDAO;
-	private Computer computer;
 	private ComputerBL bl;
 
 	public CtrlComputerView() {
@@ -19,8 +18,8 @@ public class CtrlComputerView {
 		this.bl = new ComputerBL();
 	}
 
-	public Computer getComputerById(String str) {
-		return computerDAO.get(Integer.parseInt(str));
+	public ComputerDTO getComputerById(String str) {
+		return bl.get(Integer.parseInt(str));
 	}
 
 	public List<ComputerDTO> getAllComputer() {
@@ -44,42 +43,50 @@ public class CtrlComputerView {
 	 * @param computer
 	 * @return int > 0 if the computer is updated
 	 */
-	public int updateComputer(String name, String introduced, String discontinued, String company, Computer computer) {
-		this.computer = new Computer();
+	public int updateComputer(String name, String introduced, String discontinued, String company, ComputerDTO computer) {
+		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
-			if (new Company(Integer.parseInt(company)).getId() != 0) {
-				this.computer.setCompany(new Company(Integer.parseInt(company)));
+			if (Integer.parseInt(company) != 0) {
+				computerDTO.setCompanyId(Integer.parseInt(company));
 			} else {
-				this.computer.setCompany(computer.getCompany());
+				computerDTO.setCompanyId(computer.getCompanyId());
 			}
 		} else {
-			this.computer.setCompany(computer.getCompany());
+			computerDTO.setCompanyId(computer.getCompanyId());
 		}
 		if (CheckEntry.checkIsDate(introduced)) {
-			this.computer.setIntroduced(introduced);
+			computerDTO.setIntroduced(introduced);
 		} else {
 			if (computer.getIntroduced() != null) {
-				this.computer.setIntroduced(computer.getIntroduced().substring(0,10));
+				if (!computer.getIntroduced().equals("")) {
+					computerDTO.setIntroduced(computer.getIntroduced().substring(0,10));
+				} else {
+					computerDTO.setIntroduced(null);
+				}
 			} else {
-				this.computer.setIntroduced(null);
+				computerDTO.setIntroduced(null);
 			}
 		}
 		if (CheckEntry.checkIsDate(discontinued)) {
-			this.computer.setDiscontinued(discontinued);
+			computerDTO.setDiscontinued(discontinued);
 		} else {
 			if (computer.getDiscontinued() != null) {
-				this.computer.setDiscontinued(computer.getDiscontinued().substring(0, 10));
+				if (!computer.getDiscontinued().equals("")) {
+					computerDTO.setDiscontinued(computer.getDiscontinued().substring(0, 10));
+				} else {
+					computerDTO.setIntroduced(null);
+				}
 			} else {
-				this.computer.setDiscontinued(null);
+				computerDTO.setDiscontinued(null);
 			}
 		}
 		if (!name.trim().equals("")) {
-			this.computer.setName(name.trim());
+			computerDTO.setName(name.trim());
 		} else {
-			this.computer.setName(computer.getName());
+			computerDTO.setName(computer.getName());
 		}
-		this.computer.setId(computer.getId());
-		return this.computerDAO.update(this.computer);
+		computerDTO.setId(computer.getId());
+		return bl.update(computerDTO);
 	}
 	/**
 	 * Verify all the param before the insert of the computer. If a param is not good, set his value to null

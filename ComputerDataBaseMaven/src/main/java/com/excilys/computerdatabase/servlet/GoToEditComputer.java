@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.computerdatabase.model.Computer;
+import com.excilys.computerdatabase.service.dto.ComputerDTO;
 import com.excilys.computerdatabase.controller.CtrlComputerView;
 import com.excilys.computerdatabase.controller.CtrlMainView;
 
@@ -30,7 +30,7 @@ public class GoToEditComputer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CtrlComputerView ctrl = new CtrlComputerView();
-		Computer computer = ctrl.getComputerById(request.getParameter("id"));
+		ComputerDTO computer = ctrl.getComputerById(request.getParameter("id"));
 		request.setAttribute("computer",computer);
 		CtrlMainView ctrlCompany = new CtrlMainView();
 		request.setAttribute("companies",ctrlCompany.getAllCompany());

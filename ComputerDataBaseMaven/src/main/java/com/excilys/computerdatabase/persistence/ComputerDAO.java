@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.excilys.computerdatabase.helper.DateConverter;
-import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.ComputerMapper;
 
