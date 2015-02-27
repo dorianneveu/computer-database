@@ -7,6 +7,7 @@ import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
 import com.excilys.computerdatabase.service.ComputerBL;
+import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class CtrlComputerView {
 	private ComputerDAO computerDAO;
@@ -22,12 +23,12 @@ public class CtrlComputerView {
 		return computerDAO.get(Integer.parseInt(str));
 	}
 
-	public List<Computer> getAllComputer() {
-		return computerDAO.getAll();
+	public List<ComputerDTO> getAllComputer() {
+		return bl.getAll();
 	}
 	
-	public List<Computer> getAllLimitComputer(int limit, int offset) {
-		return computerDAO.getAllLimit(limit, offset);
+	public List<ComputerDTO> getAllLimitComputer(int limit, int offset) {
+		return bl.getAllLimit(limit, offset);
 	}
 	
 	
@@ -89,24 +90,24 @@ public class CtrlComputerView {
 	 * @return Computer created
 	 */
 	public Computer insertComputer(String name, String introduced, String discontinued, String company) {
-		Computer computer = new Computer();
+		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
-			computer.setCompany(new Company(Integer.parseInt(company)));
+			computerDTO.setCompanyId(Integer.parseInt(company));
 		} else {
-			computer.setCompany(null);
+			computerDTO.setCompanyId(0);
 		}
 		if (CheckEntry.checkIsDate(introduced)) {
-			computer.setIntroduced(introduced);
+			computerDTO.setIntroduced(introduced);
 		} else {
-			computer.setIntroduced(null);
+			computerDTO.setIntroduced(null);
 		}
 		if (CheckEntry.checkIsDate(discontinued)) {
-			computer.setDiscontinued(discontinued);
+			computerDTO.setDiscontinued(discontinued);
 		} else {
-			computer.setDiscontinued(null);
+			computerDTO.setDiscontinued(null);
 		}
-		computer.setName(name.trim());
-		return this.computerDAO.create(computer);
+		computerDTO.setName(name.trim());
+		return this.bl.insertComputer(computerDTO);
 	}
 
 	public int deleteComputer(String str) {
@@ -126,7 +127,7 @@ public class CtrlComputerView {
 		}
 	}
 	
-	public List<Computer> findByName(String name) {
+	public List<ComputerDTO> findByName(String name) {
 		if (name.length() > 0) {
 			return bl.findById(name);
 		} 

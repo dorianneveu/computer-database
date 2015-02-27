@@ -15,6 +15,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="pg" uri="../WEB-INF/pagetag.tld"%>
 
 <link href="${request.getContextPath()}css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="${request.getContextPath()}css/font-awesome.css" rel="stylesheet" media="screen">
@@ -87,17 +88,17 @@
                 <!-- Browse attribute computers -->
                 <tbody id="results">
                 <c:forEach var="computer" items="${computers}">
-                <tr>
-                	<td class="editMode"> 
-                	<input type="checkbox" name="cb" class="cb" value="${computer.id}">
-                	</td>
-                	<td>
-                	<a href="GoToEditComputer?id=${computer.id}" onclick=""><c:out value="${computer.name}"/></a>
-                	</td>
-                	<td><c:out value="${computer.introduced}"/></td>
-                	<td><c:out value="${computer.discontinued}"/></td>
-                	<td><c:out value="${computer.company.name}"/></td>
-                </tr>
+	                <tr>
+	                	<td class="editMode"> 
+	                	<input type="checkbox" name="cb" class="cb" value="${computer.id}">
+	                	</td>
+	                	<td>
+	                	<a href="GoToEditComputer?id=${computer.id}" onclick=""><c:out value="${computer.name}"/></a>
+	                	</td>
+	                	<td><c:out value="${computer.introduced}"/></td>
+	                	<td><c:out value="${computer.discontinued}"/></td>
+	                	<td><c:out value="${computer.companyName}"/></td>
+	                </tr>
 				</c:forEach>
 
                 </tbody>
@@ -108,40 +109,8 @@
     <footer class="navbar-fixed-bottom">
         <div class="container text-center">
          <c:if test="${page != 0}">
-            <ul class="pagination">
-                <li>
-                    <a href="Dashboard?page=${nbeachpage}&offset=${ offset-1 }" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                  </a>
-              </li>
-              <c:choose>
-			      <c:when test="${page > 15}">
-			    	  <c:forEach var="i" begin="0" step="5" end="${page}">
-              			<li><a href="Dashboard?page=${nbeachpage}&offset=${i}">${i+1}</a></li>
-              		  </c:forEach>
-			      </c:when>
-			
-			      <c:otherwise>
-					 <c:forEach var="i" begin="0" step="1" end="${page}">
-					 	<c:choose>
-	              			<c:when test="${i == offset}">
-	              				<li><a href="Dashboard?page=${nbeachpage}&offset=${i}"><b>${i+1}</b></a></li>
-		              		</c:when>
-		              		<c:otherwise>
-								<li><a href="Dashboard?page=${nbeachpage}&offset=${i}">${i+1}</a></li>
-					       </c:otherwise>
-				       </c:choose>
-              		 </c:forEach>
-			      </c:otherwise>
-			  </c:choose>
-
-              <li>
-                <a href="Dashboard?page=${nbeachpage}&offset=${ offset+1 }" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-	</c:if>
+              <pg:pagetag page="${page}" nbEachPage="${nbeachpage}" offset="${offset}"/>
+		</c:if>
         <div class="btn-group btn-group-sm pull-right" role="group" >
 	        <form action="Dashboard" Method="GET">
 		    	<input type="submit" name="page" value="10" />

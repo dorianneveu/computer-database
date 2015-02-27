@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.excilys.computerdatabase.controller.CtrlComputerView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Computer;
+import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class ComputerView {
 	boolean life;
@@ -26,8 +27,8 @@ public class ComputerView {
 			System.out.println("You type : " + str);
 			switch(str.trim()) {
 				case "1" :
-					List<Computer> cs = ctrl.getAllComputer();
-					for (Computer comp : cs) {
+					List<ComputerDTO> cs = ctrl.getAllComputer();
+					for (ComputerDTO comp : cs) {
 						System.out.println(comp.toStringLittle());
 					}
 					break;

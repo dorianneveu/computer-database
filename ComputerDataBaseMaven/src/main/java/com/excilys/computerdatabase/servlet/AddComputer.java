@@ -35,11 +35,13 @@ public class AddComputer extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Computer computer = new Computer();
+//		Computer computer = new Computer();
 		CtrlComputerView ctrl = new CtrlComputerView();
-		computer = ctrl.insertComputer(request.getParameter("name"), request.getParameter("introduced"), 
+//		computer = ctrl.insertComputer(request.getParameter("name"), request.getParameter("introduced"), 
+//				request.getParameter("discontinued"), request.getParameter("company"));
+		ctrl.insertComputer(request.getParameter("name"), request.getParameter("introduced"), 
 				request.getParameter("discontinued"), request.getParameter("company"));
-		request.setAttribute("resultat",computer);
+//		request.setAttribute("resultat",computer);
 		getServletContext().getRequestDispatcher("/Dashboard").forward(request,response);
 	}
 
