@@ -1,18 +1,29 @@
 package com.excilys.computerdatabase.persistence;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import junit.framework.TestCase;
 
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
+import com.excilys.computerdatabase.service.CompanyMapper;
+import com.excilys.computerdatabase.service.ComputerMapper;
+import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class TestComputerDAO  extends TestCase {
 	
 	ComputerDAO dao = new ComputerDAO();
-	
 
 //	public void testGetAll() {
 //		List<Computer> computers = dao.getAll();
@@ -46,6 +57,26 @@ public class TestComputerDAO  extends TestCase {
 			fail("Delete Fail");
 		}
 		
+	}
+	
+	public void testInsertMock(){ 
+		ComputerDAO computerDao = Mockito.mock(ComputerDAO.class);
+		Computer computer = new Computer();
+		computer.setName("deere");
+
+		Mockito.when(computerDao.create(Mockito.any(Computer.class))).thenAnswer(new Answer<Computer>() {
+			@Override
+			public Computer answer(InvocationOnMock invocation) throws Throwable {
+				Computer user = (Computer) invocation.getArguments()[0];
+				user.setId(1000);
+				return user;
+			}
+		});
+		assertEquals(0, computer.getId());
+		computer = computerDao.create(computer);
+		assertNotNull(computer.getId());
+		assertTrue(computer.getId() > 0);
+		assertTrue(computer.getId() == 1000);
 	}
 
 }

@@ -19,7 +19,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="Dashboard"> Application -
+		<a class="navbar-brand" href="Dashboard?page=ALL"> Application -
 			Computer Database </a>
 	</div>
 	</header>
@@ -49,6 +49,7 @@
 						<div class="form-group">
 							<label for="companyId">Company</label> <select
 								class="form-control" id="company" name="company">
+								<option value="0"><c:out value="--" /></option>
 								<c:forEach var="company" items="${companies}">
 									<option value="${company.id}"><c:out value="${company.name}" /></option>
 								</c:forEach>

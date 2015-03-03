@@ -16,6 +16,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="pg" uri="../WEB-INF/pagetag.tld"%>
+<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <link href="${request.getContextPath()}css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="${request.getContextPath()}css/font-awesome.css" rel="stylesheet" media="screen">
@@ -24,10 +25,9 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="Dashboard"> Application - Computer Database </a>
+            <a class="navbar-brand" href="Dashboard?page=ALL"> Application - Computer Database </a>
         </div>
     </header>
-
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">
@@ -43,11 +43,20 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="GoToAddComputer">Add Computer</a> 
+                    <a class="btn btn-success" id="addComputer" href="AddComputer">Add Computer</a> 
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
+
+
+<%--                 <display:table name="${computers}" defaultsort="1" defaultorder="descending" pagesize="5" > --%>
+<%-- 				    <display:column property="id" title="N°" /> --%>
+<%-- 				    <display:column property="name" title="Nom" sortable="true" /> --%>
+<%-- 				    <display:column property="introduced" title="Prénom" /> --%>
+<%-- 				    <display:column property="discontinued" title="Email" sortable="true" /> --%>
+<%-- 				</display:table> --%>
+
 
         <form id="deleteForm" action="Dashboard" method="POST">
             <input type="hidden" name="selection" value="">
@@ -93,7 +102,7 @@
 	                		<input type="checkbox" name="cb" class="cb" value="${computer.id}">
 	                	</td>
 	                	<td>
-	                		<a href="GoToEditComputer?id=${computer.id}" onclick=""><c:out value="${computer.name}"/></a>
+	                		<a href="EditComputer?id=${computer.id}" onclick=""><c:out value="${computer.name}"/></a>
 	                	</td>
 	                	<td><c:out value="${computer.introduced}"/></td>
 	                	<td><c:out value="${computer.discontinued}"/></td>
@@ -108,7 +117,10 @@
 
     <footer class="navbar-fixed-bottom">
         <div class="container text-center">
-         <c:if test="${page != 0}">
+        
+		
+        
+         <c:if test="${!paginated}"><td>
               <pg:pagetag page="${page}" nbEachPage="${nbeachpage}" offset="${offset}"/>
 		</c:if>
         <div class="btn-group btn-group-sm pull-right" role="group" >

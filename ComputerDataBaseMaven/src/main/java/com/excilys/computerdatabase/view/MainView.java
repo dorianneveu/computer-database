@@ -1,12 +1,10 @@
 package com.excilys.computerdatabase.view;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 import com.excilys.computerdatabase.controller.CtrlMainView;
 import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.persistence.ConnectionDAO;
 
 public class MainView {
 
@@ -38,11 +36,6 @@ public class MainView {
 				default :
 					break;
 			}
-		}
-		try {
-			ConnectionDAO.INSTANCE.conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 }

@@ -26,9 +26,9 @@ public class CtrlComputerView {
 		return bl.getAll();
 	}
 	
-	public List<ComputerDTO> getAllLimitComputer(int limit, int offset) {
-		return bl.getAllLimit(limit, offset);
-	}
+//	public List<ComputerDTO> getAllLimitComputer(int limit, int offset) {
+//		return bl.getAllLimit(limit, offset);
+//	}
 	
 	
 	public int getPage(long maxPage){
@@ -134,10 +134,10 @@ public class CtrlComputerView {
 		}
 	}
 	
-	public List<ComputerDTO> findByName(String name) {
-		if (name.length() > 0) {
-			return bl.findById(name);
-		} 
-		return bl.getAll();
-	}
+//	public List<ComputerDTO> findByName(String name) {
+//		if (name.length() > 0) {
+//			return bl.findByName(name);
+//		} 
+//		return bl.getAll();
+//	}
 }
