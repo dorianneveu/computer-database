@@ -11,11 +11,22 @@ import java.util.List;
 
 import com.excilys.computerdatabase.helper.DateConverter;
 import com.excilys.computerdatabase.helper.Page;
+import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.ComputerMapper;
 
 public class ComputerDAO {
+	
+	private Connection cnx;
+	
+	public ComputerDAO() {
+		
+	}
 
+	public ComputerDAO(Connection cnx) {
+		this.cnx = cnx;
+	}
+	
 	public Computer get(int id) {
 		Computer computer = new Computer();
 		Connection conn = null;
@@ -161,7 +172,26 @@ public class ComputerDAO {
 			}
 		}
 		return value;
-	}	
+	}
+	
+	public void deleteByCompany(Company company) {
+		try {
+			PreparedStatement pt = cnx.prepareStatement("DELETE FROM computer WHERE company_id = ?");
+			pt.setInt(1, company.getId());
+			pt.executeUpdate();
+			
+		} catch (SQLException e) {
+			try {
+				cnx.rollback();
+				cnx.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			throw new IllegalStateException("bug delete computer");
+		} 
+	}
+	
+	
 
 	public long getCount() {
 		long value = 0;

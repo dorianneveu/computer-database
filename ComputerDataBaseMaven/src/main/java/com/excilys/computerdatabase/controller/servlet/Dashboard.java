@@ -34,25 +34,20 @@ public class Dashboard extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int nbPage = 0;
-		int page = 0;
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		
 		if (request.getParameter("page") != null && !request.getParameter("page").equals("ALL") && !Page.isSearch()) {
-			nbPage = (int) blComputer.getNumberPage(Long.parseLong(request.getParameter("page")));
 			Page.INSTANCE.nbPage = (int) blComputer.getNumberPage(Long.parseLong(request.getParameter("page")));
 			if (request.getParameter("page").contains("-")) {
-				nbPage = 10; Page.INSTANCE.nbPage = 10;
-				page = 10; Page.INSTANCE.limit = 10;
+				Page.INSTANCE.nbPage = 10;
+				Page.INSTANCE.limit = 10;
 			} else {
-				page = Integer.parseInt(request.getParameter("page"));
 				Page.INSTANCE.limit = Integer.parseInt(request.getParameter("page"));
 			}
 			if(request.getParameter("offset") != null) {
-				int offset = Integer.parseInt(request.getParameter("offset"));
 				Page.INSTANCE.offset = Integer.parseInt(request.getParameter("offset"));
-				if(offset > 0 && offset <= nbPage) {
-					request.setAttribute("offset",offset);
+				if(Page.INSTANCE.offset > 0 && Page.INSTANCE.offset <= Page.INSTANCE.nbPage) {
+					request.setAttribute("offset",Page.INSTANCE.offset);
 				} else {
 					Page.INSTANCE.offset = 0;
 					request.setAttribute("offset",0);
@@ -67,21 +62,18 @@ public class Dashboard extends HttpServlet {
 		
 		if (!Page.isEmpty() && !request.getParameter("page").equals("ALL")) {
 			if(request.getParameter("offset") != null) {
-				int offset = Integer.parseInt(request.getParameter("offset"));
 				Page.INSTANCE.offset = Integer.parseInt(request.getParameter("offset"));
 			}
 			if (request.getParameter("page") != null) {
 				if(Integer.parseInt(request.getParameter("page")) != Page.INSTANCE.limit) {
 					Page.INSTANCE.offset = 0;
 					Page.INSTANCE.limit = Integer.parseInt(request.getParameter("page"));
-					nbPage =  blComputer.findByNameCount(request.getParameter("search"))/Page.INSTANCE.limit;
 				}
 				Page.INSTANCE.nbPage =  blComputer.findByNameCount(Page.INSTANCE.search)/Page.INSTANCE.limit;
 				if (request.getParameter("page").contains("-")) {
-					nbPage = 10; Page.INSTANCE.nbPage = 10;
-					page = 10; Page.INSTANCE.limit = 10;
+					Page.INSTANCE.nbPage = 10;
+					Page.INSTANCE.limit = 10;
 				} else {
-					page = Integer.parseInt(request.getParameter("page"));
 					Page.INSTANCE.limit = Integer.parseInt(request.getParameter("page"));
 				}
 			}
@@ -96,7 +88,7 @@ public class Dashboard extends HttpServlet {
 		}
 		request.setAttribute("isPaginated", Page.isEmpty());
 		request.setAttribute("cPage", Page.INSTANCE);
-		request.setAttribute("page",nbPage);
+		request.setAttribute("page",Page.INSTANCE.nbPage);
 		request.setAttribute("computers",computersDTO);
 		getServletContext().getRequestDispatcher("/views/dashboard.jsp").forward(request,response);
 	}

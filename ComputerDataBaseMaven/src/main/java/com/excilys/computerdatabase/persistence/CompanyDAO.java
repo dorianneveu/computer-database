@@ -1,5 +1,6 @@
 package com.excilys.computerdatabase.persistence;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,16 @@ import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.service.CompanyMapper;
 
 public class CompanyDAO {
+	
+private Connection cnx;
+	
+	public CompanyDAO() {
+		
+	}
+	
+	public CompanyDAO(Connection cnx) {
+		this.cnx = cnx;
+	}
 
 	public Company get(int id) {
 		Company company = new Company();
@@ -93,18 +104,27 @@ public class CompanyDAO {
 
 	public void delete(Company company) {
 		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.connectionPool.getConnection().prepareStatement("DELETE FROM company WHERE id = ?");
+//			PreparedStatement pt = ConnectionDAO.INSTANCE.connectionPool.getConnection().prepareStatement("DELETE FROM company WHERE id = ?");
+			PreparedStatement pt = cnx.prepareStatement("DELETE FROM company WHERE id = ?");
 			pt.setInt(1, company.getId());
 			pt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
 			try {
-				ConnectionDAO.INSTANCE.connectionPool.getConnection().close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+				cnx.rollback();
+				cnx.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		}
+			e.printStackTrace();
+		} 
+//		finally {
+//			try {
+//				ConnectionDAO.INSTANCE.connectionPool.getConnection().close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 }
