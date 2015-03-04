@@ -41,8 +41,8 @@ public class ComputerBL {
 		return computerDTO;
 	}
 	
-	public List<ComputerDTO> findByName(String name, int limit, int offset) {
-		List<Computer> computers = dao.findByName(name, limit, offset);
+	public List<ComputerDTO> findByName(String name, int limit, int offset, String sort, String type) {
+		List<Computer> computers = dao.findByName(name, limit, offset, sort, type);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));

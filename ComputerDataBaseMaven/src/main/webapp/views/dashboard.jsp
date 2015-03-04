@@ -17,6 +17,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="pg" uri="../WEB-INF/pagetag.tld"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags/" %>
 
 <link href="${request.getContextPath()}css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="${request.getContextPath()}css/font-awesome.css" rel="stylesheet" media="screen">
@@ -25,18 +26,20 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="Dashboard?page=ALL"> Application - Computer Database </a>
+            <a class="navbar-brand" href="Dashboard?page=50&offset=0&order=${page.order }&search=&sort=${page.sort}"> Application - Computer Database </a>
         </div>
     </header>
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">
-                 ${ fn:length(computers) } computers found
+                 <c:out value="${nbFound}"/></td> computers found
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="Dashboard" method="POST" class="form-inline">
-
+                    <form id="searchForm" action="Dashboard?page=${page.limit }&offset=0&order=${page.order }&search=&sort=${page.sort}" method="GET" class="form-inline">
+						<input type="hidden" id="page" name="page" value="${page.limit }"/>
+						<input type="hidden" id="offset" name="offset" value="0"/>
+						<input type="hidden" id="sort" name="sort" value="${page.sort}" />
                         <input type="search" id="search" name="search" class="form-control" placeholder="Search name" />
                         <input type="submit" id="searchsubmit" value="Filter by name"
                         class="btn btn-primary" />
@@ -78,7 +81,7 @@
                             </span>
                         </th>
                         <th>
-                            Computer name
+                        	<a href="Dashboard?page=${page.limit}&offset=0&order=computer.name&search=${page.search}&sort=${page.sort}" >Computer name</a>
                         </th>
                         <th>
                             Introduced date
@@ -120,8 +123,9 @@
         
 		
         
-         <c:if test="${!paginated}"><td>
-              <pg:pagetag page="${page}" nbEachPage="${nbeachpage}" offset="${offset}"/>
+         <c:if test="${page.limit > 0}"><td>
+         	<my:pagination page="${page}" />
+<%--               <pg:pagetag page="${page}" nbEachPage="${page.nbPage}" offset="${page.offset}"/> --%>
 		</c:if>
         <div class="btn-group btn-group-sm pull-right" role="group" >
 	        <form action="Dashboard" Method="GET">

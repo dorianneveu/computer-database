@@ -265,13 +265,13 @@ public class ComputerDAO {
 		return computers;
 	}
 	
-	public List<Computer> findByName(String name, int limit, int offset) {
+	public List<Computer> findByName(String name, int limit, int offset, String sort, String type) {
 		List<Computer> computers = new ArrayList<Computer>();
 		Connection conn = null;
 		try {
 //			ConnectionDAO.INSTANCE.init();
 			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt =conn.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? LIMIT ? OFFSET ?");
+			PreparedStatement pt =conn.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
 			pt.setString(1, name+"%");
 			pt.setInt(2, limit);
 			pt.setInt(3, offset);
