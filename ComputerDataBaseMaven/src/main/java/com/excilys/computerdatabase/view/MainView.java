@@ -1,5 +1,6 @@
 package com.excilys.computerdatabase.view;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +11,7 @@ import com.excilys.computerdatabase.service.CompanyBL;
 
 public class MainView {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		boolean life = true;
 		CtrlMainView ctrl = new CtrlMainView();
 		ComputerView computerView = new ComputerView();

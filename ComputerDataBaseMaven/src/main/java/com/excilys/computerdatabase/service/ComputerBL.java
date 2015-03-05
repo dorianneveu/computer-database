@@ -1,5 +1,7 @@
 package com.excilys.computerdatabase.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +10,10 @@ import com.excilys.computerdatabase.persistence.ComputerDAO;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 import com.excilys.computerdatabase.service.dto.MapperDTO;
 
-public class ComputerBL {
-	ComputerDAO dao;
+public class ComputerBL extends AbstractBL<ComputerDTO> {
+	private Connection cnx;
 	
 	public ComputerBL() {
-		dao = new ComputerDAO();
 	}
 
 	/**
@@ -22,40 +23,27 @@ public class ComputerBL {
 	 */
 	public long getNumberPage(long maxPage) {
 		long numberPage = 0;
-		numberPage = dao.getCount() / maxPage;
+		cnx = getConnection();
+		numberPage = ComputerDAO.INSTANCE.getCount(cnx) / maxPage;
+		closeConnection(cnx);
 		return numberPage;
 	}
 	
 	public int findByNameCount(String name) {
-		return (int)dao.getCountByName(name);
-	}
-	
-	public int update(ComputerDTO computerDTO) {
-		Computer computer = MapperDTO.dTOToComputer(computerDTO);
-		return this.dao.update(computer);
-	}
-	
-	public ComputerDTO get(int id) {
-		Computer computer = dao.get(id);
-		ComputerDTO computerDTO = MapperDTO.computerToDTO(computer);	
-		return computerDTO;
+		cnx = getConnection();
+		int counter = (int)ComputerDAO.INSTANCE.getCountByName(name, cnx);
+		closeConnection(cnx);
+		return counter;
 	}
 	
 	public List<ComputerDTO> findByName(String name, int limit, int offset, String sort, String type) {
-		List<Computer> computers = dao.findByName(name, limit, offset, sort, type);
+		cnx = getConnection();
+		List<Computer> computers = ComputerDAO.INSTANCE.findByName(name, limit, offset, sort, type, cnx);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
 		}
-		return computersDTO;
-	}
-	
-	public List<ComputerDTO> getAll() {
-		List<Computer> computers = dao.getAll();
-		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
-		for (Computer computer : computers) {
-			computersDTO.add(MapperDTO.computerToDTO(computer));
-		}
+		closeConnection(cnx);
 		return computersDTO;
 	}
 	
@@ -66,20 +54,61 @@ public class ComputerBL {
 	 * @return
 	 */
 	public List<ComputerDTO> getAllLimit(int limit, int offset, String sort, String type) {
-		List<Computer> computers = dao.getAllLimit(limit, offset, sort, type);
+		cnx = getConnection();
+		List<Computer> computers = ComputerDAO.INSTANCE.getAllLimit(limit, offset, sort, type, cnx);
+		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
+		for (Computer computer : computers) {
+			computersDTO.add(MapperDTO.computerToDTO(computer));
+		}
+		closeConnection(cnx);
+		return computersDTO;
+	}
+	
+	private final void closeConnection(Connection cnx) {
+		try {
+			cnx.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateAbstract(ComputerDTO object, Connection cnx) throws SQLException {
+		Computer computer = MapperDTO.dTOToComputer(object);
+		ComputerDAO.INSTANCE.update(computer, cnx);
+		
+	}
+
+	@Override
+	public void deleteAbstract(ComputerDTO object, Connection cnx) throws SQLException {
+		cnx = getConnection();
+		ComputerDAO.INSTANCE.delete(ComputerDAO.INSTANCE.get(object.getId(), cnx), cnx);
+	}
+
+	@Override
+	public void insertAbstract(ComputerDTO object, Connection cnx) throws SQLException {
+		Computer computer = MapperDTO.dTOToComputer(object);
+		ComputerDAO.INSTANCE.create(computer, cnx);
+		
+	}
+
+	@Override
+	public ComputerDTO getAbstract(int id, Connection cnx) throws SQLException {
+		Computer computer = ComputerDAO.INSTANCE.get(id, cnx);
+		ComputerDTO computerDTO = MapperDTO.computerToDTO(computer);	
+		return computerDTO;
+	}
+
+	@Override
+	public List<ComputerDTO> getAllAbstract(Connection cnx) throws SQLException {
+		List<Computer> computers = ComputerDAO.INSTANCE.getAll(cnx);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
 		}
 		return computersDTO;
 	}
-	
-	public Computer insertComputer(ComputerDTO computerDTO) {
-		Computer computer = MapperDTO.dTOToComputer(computerDTO);
-		return this.dao.create(computer);
-	}
-	
-	public int deleteComputer(String str) {
-		return dao.delete(dao.get(Integer.parseInt(str)));
-	}
+
+
+
 }

@@ -1,5 +1,7 @@
 package com.excilys.computerdatabase.service.dto;
 
+import java.sql.SQLException;
+
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 
@@ -31,7 +33,7 @@ public class MapperDTO {
 		return cDTO;
 	}
 	
-	static public Computer dTOToComputer(ComputerDTO computerDTO) {
+	static public Computer dTOToComputer(ComputerDTO computerDTO)  {
 		Computer computer = new Computer();
 		if (computerDTO.getId() > 0) {
 			computer.setId(computerDTO.getId());

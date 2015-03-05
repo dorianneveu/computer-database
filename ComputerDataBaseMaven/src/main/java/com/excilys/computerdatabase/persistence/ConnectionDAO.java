@@ -1,5 +1,6 @@
 package com.excilys.computerdatabase.persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.jolbox.bonecp.BoneCP;
@@ -68,11 +69,11 @@ public enum ConnectionDAO {
 //		
 //	}
 //	
-//	public void close(){
-//		try {
-//			conn.close();
-//		} catch (SQLException e) {
-//			throw new IllegalStateException(e.getMessage());
-//		}
-//	}
+	public void close(Connection cnx){
+		try {
+			cnx.close();
+		} catch (SQLException e) {
+			throw new IllegalStateException(e.getMessage());
+		}
+	}
 }

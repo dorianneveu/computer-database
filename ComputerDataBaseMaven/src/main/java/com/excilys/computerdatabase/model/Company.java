@@ -1,6 +1,10 @@
 package com.excilys.computerdatabase.model;
 
+import java.sql.SQLException;
+
 import com.excilys.computerdatabase.persistence.CompanyDAO;
+import com.excilys.computerdatabase.persistence.ConnectionDAO;
+import com.excilys.computerdatabase.persistence.ICompanyDAO;
 
 public class Company {
 	private int id;
@@ -10,8 +14,14 @@ public class Company {
 		this.id = 0;
 	}
 	public Company(int id) {
-		CompanyDAO dao = new CompanyDAO();
-		Company company = dao.get(id);
+//		ICompanyDAO dao = new CompanyDAO();
+//		Company company = dao.get(id);
+		Company company = null;
+		try {
+			company = CompanyDAO.INSTANCE.get(id, ConnectionDAO.INSTANCE.connectionPool.getConnection());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		this.id = company.id;
 		this.name = company.name;
 	}

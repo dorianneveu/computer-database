@@ -46,11 +46,12 @@ public class ComputerView {
 					System.out.println("Company's key (yyyy-MM-dd): ");
 					str = sc.nextLine();
 					company = str;
-					if (ctrl.insertComputer(name, introduced, discontinued, company).getId()>0) {
-						System.out.println("Sucess!");
-					} else {
-						System.out.println("Nothing insert...");
-					}
+//					if (ctrl.insertComputer(name, introduced, discontinued, company).getId()>0) {
+//						System.out.println("Sucess!");
+//					} else {
+//						System.out.println("Nothing insert...");
+//					}
+					ctrl.insertComputer(name, introduced, discontinued, company);
 					break;
 				case "3" :
 					System.out.println("Id of the computer to modify (0 to cancel) : ");
@@ -71,11 +72,12 @@ public class ComputerView {
 							System.out.println("Company's key (yyyy-MM-dd): " + computerDTO.getCompanyName());
 							str = sc.nextLine();
 							company = str;
-							if (ctrl.updateComputer(name, introduced, discontinued, company, computerDTO) > 0) {
-								System.out.println("Sucess!");
-							} else {
-								System.out.println("Nothing updated...");
-							}
+//							if (ctrl.updateComputer(name, introduced, discontinued, company, computerDTO) > 0) {
+//								System.out.println("Sucess!");
+//							} else {
+//								System.out.println("Nothing updated...");
+//							}
+							ctrl.updateComputer(name, introduced, discontinued, company, computerDTO);
 						} else {
 							System.out.println("Wrong entry");
 						}
@@ -87,11 +89,12 @@ public class ComputerView {
 					System.out.println("Id of the computer to delete (0 to cancel) : ");
 					str = sc.nextLine();
 					if (CheckEntry.checkIsId(str)) {
-						if (ctrl.deleteComputer(str) > 0) {
-							System.out.println("Success");
-						} else {
-							System.out.println("No computer deleted, please check the id");
-						}
+//						if (ctrl.deleteComputer(str) > 0) {
+//							System.out.println("Success");
+//						} else {
+//							System.out.println("No computer deleted, please check the id");
+//						}
+						ctrl.deleteComputer(str);
 					} else {
 						System.out.println("Wrong entry");
 					}

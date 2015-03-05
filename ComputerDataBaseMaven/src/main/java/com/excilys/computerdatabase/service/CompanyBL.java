@@ -9,43 +9,42 @@ import com.excilys.computerdatabase.persistence.CompanyDAO;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
 import com.excilys.computerdatabase.persistence.ConnectionDAO;
 
-public class CompanyBL {
-	CompanyDAO dao;
+public class CompanyBL extends AbstractBL<Company> {
+	Connection cnx = null;
 	
 	public CompanyBL() {
-		dao = new CompanyDAO();
-	}
-
-	public List<Company> getAllCompany() {
-		return dao.getAll();
 	}
 	
-	public void delete(Company company) {
-		Connection cnx = null;
-		try {
-			cnx = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			cnx.setAutoCommit(false);
-			CompanyDAO companyDAO = new CompanyDAO(cnx);
-			ComputerDAO computerDAO = new ComputerDAO(cnx);
-			computerDAO.deleteByCompany(company);
-			companyDAO.delete(company);	
-			cnx.commit();
-		} catch (SQLException e) {
-			try {
-				cnx.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
+	
+	@Override
+	public void deleteAbstract(Company company, Connection cnx) {
+		ComputerDAO.INSTANCE.deleteByCompany(company, cnx);
+		CompanyDAO.INSTANCE.delete(company, cnx);
+	}
 
-			try {
-				cnx.setAutoCommit(true);
-				cnx.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	@Override
+	public Company getAbstract(int id, Connection cnx) throws SQLException {
+		Company company = CompanyDAO.INSTANCE.get(id, cnx);
+		return company;
+	}
+
+	@Override
+	public List<Company> getAllAbstract(Connection cnx) throws SQLException {
+		cnx = getConnection();
+		List<Company> companies = CompanyDAO.INSTANCE.getAll(cnx);
+		ConnectionDAO.INSTANCE.close(cnx);
+		return companies;
+	}
+
+	@Override
+	public void updateAbstract(Company object, Connection cnx) throws SQLException {
+		throw new UnsupportedOperationException("this method should not be used");
+		
+	}
+
+	@Override
+	public void insertAbstract(Company object, Connection cnx) throws SQLException {
+		throw new UnsupportedOperationException("this method should not be used");
 		
 	}
 

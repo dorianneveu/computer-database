@@ -44,7 +44,7 @@ public class EditComputer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ComputerDTO computer = blComputer.get(Integer.parseInt(request.getParameter(PARAM_ID)));
 		request.setAttribute("computer",computer);
-		request.setAttribute("companies",blCompany.getAllCompany());
+		request.setAttribute("companies",blCompany.getAll());
 		getServletContext().getRequestDispatcher("/views/editComputer.jsp").forward(request,response);
 	}
 

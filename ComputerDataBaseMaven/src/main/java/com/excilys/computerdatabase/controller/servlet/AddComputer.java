@@ -41,7 +41,7 @@ public class AddComputer extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("companies",blCompany.getAllCompany());
+		request.setAttribute("companies",blCompany.getAll());
 		getServletContext().getRequestDispatcher("/views/addComputer.jsp").forward(request,response);
 	}
 
@@ -49,7 +49,7 @@ public class AddComputer extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		blComputer.insertComputer(ValidatorComputerDTO.insertComputer(request.getParameter(PARAM_NAME), request.getParameter(PARAM_INTRODUCED), 
+		blComputer.insert(ValidatorComputerDTO.insertComputer(request.getParameter(PARAM_NAME), request.getParameter(PARAM_INTRODUCED), 
 				request.getParameter(PARAM_DISCONTINUED), request.getParameter(PARAM_COMPANY)));
 		getServletContext().getRequestDispatcher("/Dashboard").forward(request,response);
 	}

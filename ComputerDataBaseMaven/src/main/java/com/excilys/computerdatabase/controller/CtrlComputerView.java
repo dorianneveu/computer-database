@@ -14,7 +14,6 @@ public class CtrlComputerView {
 	private ComputerBL bl;
 
 	public CtrlComputerView() {
-		this.computerDAO = new ComputerDAO();
 		this.bl = new ComputerBL();
 	}
 
@@ -25,10 +24,6 @@ public class CtrlComputerView {
 	public List<ComputerDTO> getAllComputer() {
 		return bl.getAll();
 	}
-	
-//	public List<ComputerDTO> getAllLimitComputer(int limit, int offset) {
-//		return bl.getAllLimit(limit, offset);
-//	}
 	
 	
 	public int getPage(long maxPage){
@@ -43,7 +38,7 @@ public class CtrlComputerView {
 	 * @param computer
 	 * @return int > 0 if the computer is updated
 	 */
-	public int updateComputer(String name, String introduced, String discontinued, String company, ComputerDTO computer) {
+	public void updateComputer(String name, String introduced, String discontinued, String company, ComputerDTO computer) {
 		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
 			if (Integer.parseInt(company) != 0) {
@@ -86,7 +81,7 @@ public class CtrlComputerView {
 			computerDTO.setName(computer.getName());
 		}
 		computerDTO.setId(computer.getId());
-		return bl.update(computerDTO);
+		bl.update(computerDTO);
 	}
 	/**
 	 * Verify all the param before the insert of the computer. If a param is not good, set his value to null
@@ -96,7 +91,7 @@ public class CtrlComputerView {
 	 * @param company
 	 * @return Computer created
 	 */
-	public Computer insertComputer(String name, String introduced, String discontinued, String company) {
+	public void insertComputer(String name, String introduced, String discontinued, String company) {
 		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
 			computerDTO.setCompanyId(Integer.parseInt(company));
@@ -114,11 +109,11 @@ public class CtrlComputerView {
 			computerDTO.setDiscontinued(null);
 		}
 		computerDTO.setName(name.trim());
-		return this.bl.insertComputer(computerDTO);
+		bl.insert(computerDTO);
 	}
 
-	public int deleteComputer(String str) {
-		return computerDAO.delete(computerDAO.get(Integer.parseInt(str)));
+	public void deleteComputer(String str) {
+		bl.delete(bl.get(Integer.parseInt(str)));
 	}
 	/**
 	 * Check if the the computer exist.
@@ -126,18 +121,11 @@ public class CtrlComputerView {
 	 * @return boolean
 	 */
 	public boolean computerExist(String str) {
-		Computer computer = computerDAO.get(Integer.parseInt(str));
+		ComputerDTO computer = bl.get(Integer.parseInt(str));
 		if (computer.getId() > 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
-//	public List<ComputerDTO> findByName(String name) {
-//		if (name.length() > 0) {
-//			return bl.findByName(name);
-//		} 
-//		return bl.getAll();
-//	}
 }

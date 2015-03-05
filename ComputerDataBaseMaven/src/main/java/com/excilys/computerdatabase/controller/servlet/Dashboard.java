@@ -51,7 +51,7 @@ public class Dashboard extends HttpServlet {
 			if (request.getParameter(PARAM_SELECTION).length() > 0) {
 				String[] selected = request.getParameter(PARAM_SELECTION).split(",");
 				for (String str : selected) {
-					blComputer.deleteComputer(str);
+					blComputer.delete(blComputer.get(Integer.parseInt(str)));
 				}
 			}
 		}

@@ -15,25 +15,16 @@ import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.ComputerMapper;
 
-public class ComputerDAO {
+public enum ComputerDAO {
+	INSTANCE;
 	
-	private Connection cnx;
-	
-	public ComputerDAO() {
+	private ComputerDAO() {
 		
 	}
-
-	public ComputerDAO(Connection cnx) {
-		this.cnx = cnx;
-	}
-	
-	public Computer get(int id) {
+	public Computer get(int id, Connection cnx) {
 		Computer computer = new Computer();
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt = conn.prepareStatement("SELECT computer.*, company.name FROM computer  LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.id = ?");
+			PreparedStatement pt = cnx.prepareStatement("SELECT computer.*, company.name FROM computer  LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.id = ?");
 			pt.setInt(1, id);
 			ResultSet rs = pt.executeQuery();
 			if (rs.first()) {
@@ -41,46 +32,27 @@ public class ComputerDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug get computer");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return computer;
 	}
 
-	public List<Computer> getAll() {
+	public List<Computer> getAll(Connection cnx) {
 		List<Computer> computers = new ArrayList<Computer>();
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			Statement st = conn.createStatement();
+			Statement st = cnx.createStatement();
 			ResultSet rs = st.executeQuery("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id");
 			while (rs.next()) {
 				computers.add(ComputerMapper.mapperComputer(rs));
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug get all computer");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-//			ConnectionDAO.INSTANCE.close();
 		}
 		return computers;
 	}
 
-	public Computer create(Computer computer) {
-		Connection conn = null;
+	public Computer create(Computer computer, Connection cnx) {
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt = conn
+			PreparedStatement pt = cnx
 					.prepareStatement("INSERT INTO computer(name, introduced, discontinued, company_id) values (?,?,?,?)");
 			pt.setString(1, computer.getName());
 			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
@@ -106,23 +78,14 @@ public class ComputerDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug insert computer");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return computer;
 	}
 
-	public int update(Computer computer) {
+	public int update(Computer computer, Connection cnx) {
 		int i = 0;
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt = conn.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
+			PreparedStatement pt = cnx.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
 			pt.setString(1, computer.getName());
 			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
 				pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
@@ -143,38 +106,23 @@ public class ComputerDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug update computer");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return i;
 	}
 
-	public int delete(Computer computer) {
+	public int delete(Computer computer, Connection cnx) {
 		int value = 0;
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt = conn.prepareStatement("DELETE FROM computer WHERE id = ?");
+			PreparedStatement pt = cnx.prepareStatement("DELETE FROM computer WHERE id = ?");
 			pt.setInt(1, computer.getId());
 			value = pt.executeUpdate();
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug delete computer");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return value;
 	}
 	
-	public void deleteByCompany(Company company) {
+	public void deleteByCompany(Company company, Connection cnx) {
 		try {
 			PreparedStatement pt = cnx.prepareStatement("DELETE FROM computer WHERE company_id = ?");
 			pt.setInt(1, company.getId());
@@ -193,36 +141,24 @@ public class ComputerDAO {
 	
 	
 
-	public long getCount() {
+	public long getCount(Connection cnx) {
 		long value = 0;
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			Statement st = conn.createStatement();
+			Statement st = cnx.createStatement();
 			ResultSet rs = st.executeQuery("SELECT count(name) FROM computer");
 			if(rs.first()){
 				value = rs.getLong(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return value;
 	}
 	
-	public long getCountByName(String name) {
+	public long getCountByName(String name, Connection cnx) {
 		long value = 0;
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt = conn.prepareStatement("SELECT count(name) FROM computer WHERE name like ? ");
+			PreparedStatement pt = cnx.prepareStatement("SELECT count(name) FROM computer WHERE name like ? ");
 			pt.setString(1, name+"%");
 			ResultSet rs = pt.executeQuery();
 			if(rs.first()){
@@ -230,23 +166,14 @@ public class ComputerDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return value;
 	}
 	
-	public List<Computer> getAllLimit(int limit, int offset, String sort, String type) {
+	public List<Computer> getAllLimit(int limit, int offset, String sort, String type, Connection cnx) {
 		List<Computer> computers = new ArrayList<Computer>();
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt = conn.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
+			PreparedStatement pt = cnx.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
 			pt.setInt(1, limit);
 			pt.setInt(2, offset);
 			ResultSet rs = pt.executeQuery();
@@ -255,23 +182,14 @@ public class ComputerDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug get computer with limit");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return computers;
 	}
 	
-	public List<Computer> findByName(String name, int limit, int offset, String sort, String type) {
+	public List<Computer> findByName(String name, int limit, int offset, String sort, String type, Connection cnx) {
 		List<Computer> computers = new ArrayList<Computer>();
-		Connection conn = null;
 		try {
-//			ConnectionDAO.INSTANCE.init();
-			conn = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-			PreparedStatement pt =conn.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
+			PreparedStatement pt = cnx.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
 			pt.setString(1, name+"%");
 			pt.setInt(2, limit);
 			pt.setInt(3, offset);
@@ -281,12 +199,6 @@ public class ComputerDAO {
 			}
 		} catch (SQLException e) {
 			throw new IllegalStateException("bug find by name");
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return computers;
 	}
