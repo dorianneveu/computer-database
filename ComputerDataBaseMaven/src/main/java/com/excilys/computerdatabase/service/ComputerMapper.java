@@ -24,6 +24,7 @@ public class ComputerMapper {
 				computer = new Computer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), company);
 			}
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new RuntimeException("bug mapping computer");
 		}
 		return computer;

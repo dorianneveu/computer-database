@@ -1,23 +1,45 @@
 package com.excilys.computerdatabase.persistence;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
 public enum ConnectionDAO {
 	INSTANCE;
- 
-	private String url = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
-	private String user = "admincdb";
-	private String passwd = "qwerty1234";
-//	public Connection conn;
+	private final static String PROPERTY_CONFIG = "config.properties";
+	private final static String PROPERTY_CHAINE_DB = "chaineConnect";
+	private final static String PROPERTY_USER_NAME = "adminDB";
+	private final static String PROPERTY_USER_PASSW = "passwDB";
+	private final static String PROPERTY_DRIVER_DB = "driver";
+	
+	private final String url;
+	private final String user;
+	private final String passwd;
+	private final String driver;
 	public BoneCP connectionPool = null;
  
 	private ConnectionDAO() {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		Properties properties = new Properties();
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
+					classLoader.getResourceAsStream(PROPERTY_CONFIG);
+					properties.load(classLoader.getResourceAsStream(PROPERTY_CONFIG));
+				} catch (IOException e) {
+				System.out.println("Unable to load config file.");
+				throw new Error("pas de fichier de config ?");
+			}
+			
+			url = properties.getProperty(PROPERTY_CHAINE_DB);
+			user = properties.getProperty(PROPERTY_USER_NAME);
+			passwd = properties.getProperty(PROPERTY_USER_PASSW);
+			driver = properties.getProperty(PROPERTY_DRIVER_DB);
+			
+			try {
+				Class.forName(driver);
 			} catch (Exception e) {
 				throw new IllegalStateException(e.getMessage());
 			}			
@@ -52,23 +74,6 @@ public enum ConnectionDAO {
 			}
 	}
 	
-//	public void init(){
-//		try {
-//			if (conn == null || conn.isClosed()) {
-//				try {
-//					conn = DriverManager.getConnection(url, user, passwd);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		} catch (SQLException e) {
-//			throw new IllegalStateException(e.getMessage());
-//		}
-//		
-//		
-//		
-//	}
-//	
 	public void close(Connection cnx){
 		try {
 			cnx.close();

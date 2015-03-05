@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
@@ -36,9 +37,9 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 		return counter;
 	}
 	
-	public List<ComputerDTO> findByName(String name, int limit, int offset, String sort, String type) {
+	public List<ComputerDTO> findByName(Page page) {
 		cnx = getConnection();
-		List<Computer> computers = ComputerDAO.INSTANCE.findByName(name, limit, offset, sort, type, cnx);
+		List<Computer> computers = ComputerDAO.INSTANCE.findByName(page.search, page.limit, page.offset*page.limit, page.order, page.sort, cnx);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));

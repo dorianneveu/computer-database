@@ -83,7 +83,7 @@ public class Dashboard extends HttpServlet {
 			page.nbPage = (int) blComputer.findByNameCount(page.search)/page.limit;
 		}
 		
-		computersDTO = blComputer.findByName(page.search, page.limit, page.offset * page.limit, page.order, page.sort);
+		computersDTO = blComputer.findByName(page);
 
 		request.setAttribute("nbFound", (int) blComputer.findByNameCount(page.search));
 		request.setAttribute(PARAM_PAGE, page);
