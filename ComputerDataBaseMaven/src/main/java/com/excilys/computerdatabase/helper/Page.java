@@ -12,28 +12,13 @@ public class Page {
 	public String search = "";
 	
 	public boolean isEmpty() {
-//		if (INSTANCE.limit == 0 && INSTANCE.offset == 0 && INSTANCE.actualPage == 0) {
 		if (this.limit == 0 && this.offset == 0 && this.actualPage == 0) {
 			return true;
 		}
 		return false;
 	}
 	
-//	public boolean isSearch() {
-//		if (this.search.equals("")) {
-//			return false;
-//		}
-//		return true;
-//	}
-	
 	public void reset() {
-//		Page.INSTANCE.limit = 0;
-//		Page.INSTANCE.offset = 0;
-//		Page.INSTANCE.actualPage = 0;
-//		Page.INSTANCE.nbPage = 0;
-//		Page.INSTANCE.order = "id";
-//		Page.INSTANCE.sort = "Asc";
-//		Page.INSTANCE.search = "";
 		this.limit = 0;
 		this.offset = 0;
 		this.actualPage = 0;

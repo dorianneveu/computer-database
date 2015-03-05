@@ -20,6 +20,10 @@ import com.excilys.computerdatabase.service.ComputerBL;
  */
 @WebServlet("/AddComputer")
 public class AddComputer extends HttpServlet {
+	private static final String PARAM_COMPANY = "company";
+	private static final String PARAM_DISCONTINUED = "discontinued";
+	private static final String PARAM_INTRODUCED = "introduced";
+	private static final String PARAM_NAME = "name";
 	private static final long serialVersionUID = 1L;
 	ComputerBL blComputer;
 	CompanyBL blCompany;
@@ -45,8 +49,8 @@ public class AddComputer extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		blComputer.insertComputer(ValidatorComputerDTO.insertComputer(request.getParameter("name"), request.getParameter("introduced"), 
-				request.getParameter("discontinued"), request.getParameter("company")));
+		blComputer.insertComputer(ValidatorComputerDTO.insertComputer(request.getParameter(PARAM_NAME), request.getParameter(PARAM_INTRODUCED), 
+				request.getParameter(PARAM_DISCONTINUED), request.getParameter(PARAM_COMPANY)));
 		getServletContext().getRequestDispatcher("/Dashboard").forward(request,response);
 	}
 

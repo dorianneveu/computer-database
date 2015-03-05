@@ -16,7 +16,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="pg" uri="../WEB-INF/pagetag.tld"%>
-<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags/" %>
 
 <link href="${request.getContextPath()}css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -26,7 +25,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="Dashboard?page=50&offset=0&order=${page.order }&search=&sort=${page.sort}"> Application - Computer Database </a>
+            <a class="navbar-brand" href="Dashboard?page=50&offset=0&order=id&search=&sort=ASC"> Application - Computer Database </a>
         </div>
     </header>
     <section id="main">
@@ -52,15 +51,6 @@
             </div>
         </div>
 
-
-<%--                 <display:table name="${computers}" defaultsort="1" defaultorder="descending" pagesize="5" > --%>
-<%-- 				    <display:column property="id" title="N°" /> --%>
-<%-- 				    <display:column property="name" title="Nom" sortable="true" /> --%>
-<%-- 				    <display:column property="introduced" title="Prénom" /> --%>
-<%-- 				    <display:column property="discontinued" title="Email" sortable="true" /> --%>
-<%-- 				</display:table> --%>
-
-
         <form id="deleteForm" action="Dashboard" method="POST">
             <input type="hidden" name="selection" value="">
         </form>
@@ -81,18 +71,26 @@
                             </span>
                         </th>
                         <th>
-                        	<a href="Dashboard?page=${page.limit}&offset=0&order=computer.name&search=${page.search}&sort=${page.sort}" >Computer name</a>
+                        	Computer name
+                        	<a href="Dashboard?page=${page.limit}&offset=0&order=computer.name&search=${page.search}&sort=ASC" >^</a>
+                        	<a href="Dashboard?page=${page.limit}&offset=0&order=computer.name&search=${page.search}&sort=DESC" >v</a>
                         </th>
                         <th>
                             Introduced date
+                            <a href="Dashboard?page=${page.limit}&offset=0&order=computer.introduced&search=${page.search}&sort=ASC" >^</a>
+                            <a href="Dashboard?page=${page.limit}&offset=0&order=computer.introduced&search=${page.search}&sort=DESC" >v</a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
                             Discontinued date
+                            <a href="Dashboard?page=${page.limit}&offset=0&order=computer.discontinued&search=${page.search}&sort=ASC" >^</a>
+                            <a href="Dashboard?page=${page.limit}&offset=0&order=computer.discontinued&search=${page.search}&sort=DESC" >v</a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
                             Company
+                            <a href="Dashboard?page=${page.limit}&offset=0&order=computer.company_id&search=${page.search}&sort=ASC" >^</a>
+                            <a href="Dashboard?page=${page.limit}&offset=0&order=computer.company_id&search=${page.search}&sort=DESC" >v</a>
                         </th>
 
                     </tr>

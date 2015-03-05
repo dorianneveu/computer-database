@@ -104,7 +104,6 @@ private Connection cnx;
 
 	public void delete(Company company) {
 		try {
-//			PreparedStatement pt = ConnectionDAO.INSTANCE.connectionPool.getConnection().prepareStatement("DELETE FROM company WHERE id = ?");
 			PreparedStatement pt = cnx.prepareStatement("DELETE FROM company WHERE id = ?");
 			pt.setInt(1, company.getId());
 			pt.executeUpdate();
@@ -113,18 +112,10 @@ private Connection cnx;
 				cnx.rollback();
 				cnx.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
 		} 
-//		finally {
-//			try {
-//				ConnectionDAO.INSTANCE.connectionPool.getConnection().close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
 	}
 
 }

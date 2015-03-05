@@ -1,4 +1,3 @@
-
 <%@ tag body-content="empty" %>
 <%@ attribute name="page" required="true" type="com.excilys.computerdatabase.helper.Page" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
