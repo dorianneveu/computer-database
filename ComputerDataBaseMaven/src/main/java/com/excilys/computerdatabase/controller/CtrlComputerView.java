@@ -3,14 +3,10 @@ package com.excilys.computerdatabase.controller;
 import java.util.List;
 
 import com.excilys.computerdatabase.helper.CheckEntry;
-import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.model.Computer;
-import com.excilys.computerdatabase.persistence.IComputerDAO;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class CtrlComputerView {
-	private IComputerDAO computerDAO;
 	private ComputerBL bl;
 
 	public CtrlComputerView() {

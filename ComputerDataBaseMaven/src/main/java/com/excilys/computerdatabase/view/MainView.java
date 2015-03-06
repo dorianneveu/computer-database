@@ -7,7 +7,6 @@ import java.util.Scanner;
 import com.excilys.computerdatabase.controller.CtrlMainView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.service.CompanyBL;
 
 public class MainView {
 

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.excilys.computerdatabase.controller.CtrlComputerView;
-import com.excilys.computerdatabase.controller.CtrlMainView;
 import com.excilys.computerdatabase.controller.validator.ValidatorComputerDTO;
 import com.excilys.computerdatabase.service.CompanyBL;
 import com.excilys.computerdatabase.service.ComputerBL;

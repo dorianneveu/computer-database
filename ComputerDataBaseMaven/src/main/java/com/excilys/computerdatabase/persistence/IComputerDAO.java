@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.persistence;
 
-import java.sql.Connection;
 import java.util.List;
 
 import com.excilys.computerdatabase.model.Company;

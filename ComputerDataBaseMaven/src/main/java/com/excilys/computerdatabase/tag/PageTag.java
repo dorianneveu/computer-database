@@ -10,19 +10,9 @@ import com.excilys.computerdatabase.helper.Page;
 public class PageTag extends SimpleTagSupport {
 	
 	private Page page;
-	private int nbEachPage;
-	private int offset;
 
 	public void setPage(Page page) {
 		this.page = page;
-	}
-
-	public void setNbEachPage(int nbEachPage) {
-		this.nbEachPage = nbEachPage;
-	}
-
-	public void setOffset(int offset) {
-		this.offset = offset;
 	}
 
 	public void doTag() throws IOException {

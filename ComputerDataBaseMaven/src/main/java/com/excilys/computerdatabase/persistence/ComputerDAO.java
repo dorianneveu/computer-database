@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.persistence;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.excilys.computerdatabase.helper.DateConverter;
-import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.ComputerMapper;

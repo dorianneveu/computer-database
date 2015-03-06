@@ -1,7 +1,6 @@
 package com.excilys.computerdatabase.controller.validator;
 
 import com.excilys.computerdatabase.helper.CheckEntry;
-import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class ValidatorComputerDTO {

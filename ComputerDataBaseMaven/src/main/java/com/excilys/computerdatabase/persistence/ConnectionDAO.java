@@ -95,8 +95,6 @@ public enum ConnectionDAO {
 		return connection;
 	}
 	
-	
-	
 	public void initTransaction() {
 		Connection connection = null;
 		try {

@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -72,15 +71,5 @@ public abstract class AbstractBL<T> implements Service<T> {
 	public abstract T getAbstract(int id) throws SQLException;
 
 	public abstract List<T> getAllAbstract() throws SQLException;
-	
-	public final Connection getConnection() {
-		Connection cnx = null;
-		try {
-			cnx = ConnectionDAO.INSTANCE.connectionPool.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cnx;
-	}
 	
 }
