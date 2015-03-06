@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +7,11 @@ import java.util.List;
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
+import com.excilys.computerdatabase.persistence.ConnectionDAO;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 import com.excilys.computerdatabase.service.dto.MapperDTO;
 
 public class ComputerBL extends AbstractBL<ComputerDTO> {
-	private Connection cnx;
 	
 	public ComputerBL() {
 	}
@@ -24,27 +23,27 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	 */
 	public long getNumberPage(long maxPage) {
 		long numberPage = 0;
-		cnx = getConnection();
-		numberPage = ComputerDAO.INSTANCE.getCount(cnx) / maxPage;
-		closeConnection(cnx);
+		ConnectionDAO.INSTANCE.getConnection();
+		numberPage = ComputerDAO.INSTANCE.getCount() / maxPage;
+		ConnectionDAO.INSTANCE.closeConnection();
 		return numberPage;
 	}
 	
 	public int findByNameCount(String name) {
-		cnx = getConnection();
-		int counter = (int)ComputerDAO.INSTANCE.getCountByName(name, cnx);
-		closeConnection(cnx);
+		ConnectionDAO.INSTANCE.getConnection();
+		int counter = (int)ComputerDAO.INSTANCE.getCountByName(name);
+		ConnectionDAO.INSTANCE.closeConnection();
 		return counter;
 	}
 	
 	public List<ComputerDTO> findByName(Page page) {
-		cnx = getConnection();
-		List<Computer> computers = ComputerDAO.INSTANCE.findByName(page.search, page.limit, page.offset*page.limit, page.order, page.sort, cnx);
+		ConnectionDAO.INSTANCE.getConnection();
+		List<Computer> computers = ComputerDAO.INSTANCE.findByName(page.search, page.limit, page.offset*page.limit, page.order, page.sort);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
 		}
-		closeConnection(cnx);
+		ConnectionDAO.INSTANCE.closeConnection();
 		return computersDTO;
 	}
 	
@@ -55,54 +54,45 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	 * @return
 	 */
 	public List<ComputerDTO> getAllLimit(int limit, int offset, String sort, String type) {
-		cnx = getConnection();
-		List<Computer> computers = ComputerDAO.INSTANCE.getAllLimit(limit, offset, sort, type, cnx);
+		ConnectionDAO.INSTANCE.getConnection();
+		List<Computer> computers = ComputerDAO.INSTANCE.getAllLimit(limit, offset, sort, type);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
 		}
-		closeConnection(cnx);
+		ConnectionDAO.INSTANCE.closeConnection();
 		return computersDTO;
 	}
-	
-	private final void closeConnection(Connection cnx) {
-		try {
-			cnx.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	@Override
-	public void updateAbstract(ComputerDTO object, Connection cnx) throws SQLException {
+	public void updateAbstract(ComputerDTO object) throws SQLException {
 		Computer computer = MapperDTO.dTOToComputer(object);
-		ComputerDAO.INSTANCE.update(computer, cnx);
+		ComputerDAO.INSTANCE.update(computer);
 		
 	}
 
 	@Override
-	public void deleteAbstract(ComputerDTO object, Connection cnx) throws SQLException {
-		cnx = getConnection();
-		ComputerDAO.INSTANCE.delete(ComputerDAO.INSTANCE.get(object.getId(), cnx), cnx);
+	public void deleteAbstract(ComputerDTO object) throws SQLException {
+		ComputerDAO.INSTANCE.delete(ComputerDAO.INSTANCE.get(object.getId()));
 	}
 
 	@Override
-	public void insertAbstract(ComputerDTO object, Connection cnx) throws SQLException {
+	public void insertAbstract(ComputerDTO object) throws SQLException {
 		Computer computer = MapperDTO.dTOToComputer(object);
-		ComputerDAO.INSTANCE.create(computer, cnx);
+		ComputerDAO.INSTANCE.create(computer);
 		
 	}
 
 	@Override
-	public ComputerDTO getAbstract(int id, Connection cnx) throws SQLException {
-		Computer computer = ComputerDAO.INSTANCE.get(id, cnx);
+	public ComputerDTO getAbstract(int id) throws SQLException {
+		Computer computer = ComputerDAO.INSTANCE.get(id);
 		ComputerDTO computerDTO = MapperDTO.computerToDTO(computer);	
 		return computerDTO;
 	}
 
 	@Override
-	public List<ComputerDTO> getAllAbstract(Connection cnx) throws SQLException {
-		List<Computer> computers = ComputerDAO.INSTANCE.getAll(cnx);
+	public List<ComputerDTO> getAllAbstract() throws SQLException {
+		List<Computer> computers = ComputerDAO.INSTANCE.getAll();
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));

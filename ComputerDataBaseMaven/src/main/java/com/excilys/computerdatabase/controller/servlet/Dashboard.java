@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.excilys.computerdatabase.helper.Page;
+import com.excilys.computerdatabase.persistence.ConnectionDAO;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
@@ -82,7 +86,6 @@ public class Dashboard extends HttpServlet {
 			page.search = request.getParameter(PARAM_SEARCH);
 			page.nbPage = (int) blComputer.findByNameCount(page.search)/page.limit;
 		}
-		
 		computersDTO = blComputer.findByName(page);
 
 		request.setAttribute("nbFound", (int) blComputer.findByNameCount(page.search));

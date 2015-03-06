@@ -17,11 +17,7 @@ public class Company {
 //		ICompanyDAO dao = new CompanyDAO();
 //		Company company = dao.get(id);
 		Company company = null;
-		try {
-			company = CompanyDAO.INSTANCE.get(id, ConnectionDAO.INSTANCE.connectionPool.getConnection());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		company = CompanyDAO.INSTANCE.get(id);
 		this.id = company.id;
 		this.name = company.name;
 	}

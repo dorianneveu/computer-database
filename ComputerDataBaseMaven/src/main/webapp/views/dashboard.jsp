@@ -3,31 +3,11 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%--     <jsp:include page="/Dashboard" /> --%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Computer Database</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="utf-8">
-<!-- Bootstrap -->
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="pg" uri="../WEB-INF/pagetag.tld"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags/" %>
-
-<link href="${request.getContextPath()}css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="${request.getContextPath()}css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="${request.getContextPath()}css/main.css" rel="stylesheet" media="screen">
-</head>
-<body>
-    <header class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="Dashboard?page=50&offset=0&order=id&search=&sort=ASC"> Application - Computer Database </a>
-        </div>
-    </header>
+    <%@include file="header.jsp" %>
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">

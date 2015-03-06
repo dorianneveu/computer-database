@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
@@ -21,6 +24,9 @@ public enum ConnectionDAO {
 	private final String passwd;
 	private final String driver;
 	public BoneCP connectionPool = null;
+	private static ThreadLocal<Connection> connectionThreadLocal = new ThreadLocal<Connection>();
+	private static Logger log = LoggerFactory.getLogger(ConnectionDAO.class);
+
  
 	private ConnectionDAO() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -44,27 +50,16 @@ public enum ConnectionDAO {
 				throw new IllegalStateException(e.getMessage());
 			}			
 			try {
-				/*
-				 * 
-				 * Création d'une configuration de pool de connexions via l'objet
-				 * 
-				 * BoneCPConfig et les différents setters associés.
-				 */
 				BoneCPConfig config = new BoneCPConfig();
-
-				/* Mise en place de l'URL, du nom et du mot de passe */
 
 				config.setJdbcUrl(url);
 				config.setUsername(user);
 				config.setPassword(passwd);
 
-				/* Paramétrage de la taille du pool */
-
 				config.setMinConnectionsPerPartition(5);
 				config.setMaxConnectionsPerPartition(10);
 				config.setPartitionCount(2);
 
-				/* Création du pool à partir de la configuration, via l'objet BoneCP */
 				connectionPool = new BoneCP(config);
 
 			} catch (SQLException e) {
@@ -81,4 +76,80 @@ public enum ConnectionDAO {
 			throw new IllegalStateException(e.getMessage());
 		}
 	}
+	
+	public Connection getConnection() {
+		Connection connection = null;
+		if (connectionThreadLocal.get() != null) {
+			log.debug("get a connection from the threadlocal " + connectionThreadLocal.get().hashCode());
+			return connectionThreadLocal.get();
+		}
+		try {
+			connection = ConnectionDAO.INSTANCE.connectionPool.getConnection();
+			connectionThreadLocal.set(connection);
+			connection.setAutoCommit(true);
+			log.debug("put a connection to the threadlocal "
+					+ connectionThreadLocal.get().hashCode());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return connection;
+	}
+	
+	
+	
+	public void initTransaction() {
+		Connection connection = null;
+		try {
+			connection = ConnectionDAO.INSTANCE.connectionPool.getConnection();
+			connection.setAutoCommit(false);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		connectionThreadLocal.set(connection);
+		log.debug("put a connection for transaction to the threadlocal "
+				+ connectionThreadLocal.get().hashCode());
+	}
+
+	public void closeTransaction() {
+		Connection connection = connectionThreadLocal.get();
+		try {
+			connection.commit();
+			connection.close();
+		} catch (SQLException e) {
+			log.error(e.getMessage());
+		}
+		connectionThreadLocal.remove();
+	}
+
+	public void closeConnection() {
+		Connection connection = connectionThreadLocal.get();
+		boolean isAutocomit = false;
+		try {
+			isAutocomit = connection.getAutoCommit();
+			log.debug(isAutocomit + "");
+		} catch (SQLException e) {
+			log.error(e.getMessage());
+		}
+		if (isAutocomit) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				log.error(e.getMessage());
+			}
+			connectionThreadLocal.remove();
+			log.debug("remove from the threadlocal "
+					+ connectionThreadLocal.hashCode());
+		}
+	}
+
+	public void rollback() {
+		try {
+			connectionThreadLocal.get().rollback();
+		} catch (SQLException e) {
+			log.error(e.getMessage());
+		}
+	}
+
+	
+	
 }

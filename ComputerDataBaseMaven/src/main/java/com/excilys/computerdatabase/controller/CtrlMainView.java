@@ -20,11 +20,11 @@ public class CtrlMainView {
 	}
 
 	public List<Company> getAllCompany() throws SQLException {
-		return CompanyDAO.INSTANCE.getAll(ConnectionDAO.INSTANCE.connectionPool.getConnection());
+		return companyBL.getAll();
 	}
 	
 	public int deleteCompany(String str) throws NumberFormatException, SQLException {
-		companyBL.delete(CompanyDAO.INSTANCE.get(Integer.parseInt(str), ConnectionDAO.INSTANCE.connectionPool.getConnection()));
+		companyBL.delete(companyBL.get(Integer.parseInt(str)));
 		return 1;
 	}
 

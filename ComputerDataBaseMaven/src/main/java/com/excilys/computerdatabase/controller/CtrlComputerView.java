@@ -5,12 +5,12 @@ import java.util.List;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
-import com.excilys.computerdatabase.persistence.ComputerDAO;
+import com.excilys.computerdatabase.persistence.IComputerDAO;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 public class CtrlComputerView {
-	private ComputerDAO computerDAO;
+	private IComputerDAO computerDAO;
 	private ComputerBL bl;
 
 	public CtrlComputerView() {

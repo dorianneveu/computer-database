@@ -1,49 +1,44 @@
 package com.excilys.computerdatabase.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.persistence.CompanyDAO;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
-import com.excilys.computerdatabase.persistence.ConnectionDAO;
 
 public class CompanyBL extends AbstractBL<Company> {
-	Connection cnx = null;
 	
 	public CompanyBL() {
 	}
 	
 	
 	@Override
-	public void deleteAbstract(Company company, Connection cnx) {
-		ComputerDAO.INSTANCE.deleteByCompany(company, cnx);
-		CompanyDAO.INSTANCE.delete(company, cnx);
+	public void deleteAbstract(Company company) {
+		ComputerDAO.INSTANCE.deleteByCompany(company);
+		CompanyDAO.INSTANCE.delete(company);
 	}
 
 	@Override
-	public Company getAbstract(int id, Connection cnx) throws SQLException {
-		Company company = CompanyDAO.INSTANCE.get(id, cnx);
+	public Company getAbstract(int id) throws SQLException {
+		Company company = CompanyDAO.INSTANCE.get(id);
 		return company;
 	}
 
 	@Override
-	public List<Company> getAllAbstract(Connection cnx) throws SQLException {
-		cnx = getConnection();
-		List<Company> companies = CompanyDAO.INSTANCE.getAll(cnx);
-		ConnectionDAO.INSTANCE.close(cnx);
+	public List<Company> getAllAbstract() throws SQLException {
+		List<Company> companies = CompanyDAO.INSTANCE.getAll();
 		return companies;
 	}
 
 	@Override
-	public void updateAbstract(Company object, Connection cnx) throws SQLException {
+	public void updateAbstract(Company object) throws SQLException {
 		throw new UnsupportedOperationException("this method should not be used");
 		
 	}
 
 	@Override
-	public void insertAbstract(Company object, Connection cnx) throws SQLException {
+	public void insertAbstract(Company object) throws SQLException {
 		throw new UnsupportedOperationException("this method should not be used");
 		
 	}

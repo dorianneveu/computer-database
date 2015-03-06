@@ -15,44 +15,58 @@ import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.ComputerMapper;
 
-public enum ComputerDAO {
+public enum ComputerDAO implements IComputerDAO {
 	INSTANCE;
 	
 	private ComputerDAO() {
 		
 	}
-	public Computer get(int id, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#get(int, java.sql.Connection)
+	 */
+	@Override
+	public Computer get(int id) {
 		Computer computer = new Computer();
 		try {
-			PreparedStatement pt = cnx.prepareStatement("SELECT computer.*, company.name FROM computer  LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT computer.*, company.name FROM computer  LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.id = ?");
 			pt.setInt(1, id);
 			ResultSet rs = pt.executeQuery();
 			if (rs.first()) {
 				computer = ComputerMapper.mapperComputer(rs);
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug get computer");
 		}
 		return computer;
 	}
 
-	public List<Computer> getAll(Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#getAll(java.sql.Connection)
+	 */
+	@Override
+	public List<Computer> getAll() {
 		List<Computer> computers = new ArrayList<Computer>();
 		try {
-			Statement st = cnx.createStatement();
+			Statement st = ConnectionDAO.INSTANCE.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id");
 			while (rs.next()) {
 				computers.add(ComputerMapper.mapperComputer(rs));
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug get all computer");
 		}
 		return computers;
 	}
 
-	public Computer create(Computer computer, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#create(com.excilys.computerdatabase.model.Computer, java.sql.Connection)
+	 */
+	@Override
+	public Computer create(Computer computer) {
 		try {
-			PreparedStatement pt = cnx
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection()
 					.prepareStatement("INSERT INTO computer(name, introduced, discontinued, company_id) values (?,?,?,?)");
 			pt.setString(1, computer.getName());
 			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
@@ -77,15 +91,20 @@ public enum ComputerDAO {
 				computer.setId(rs.getInt(1));
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug insert computer");
 		}
 		return computer;
 	}
 
-	public int update(Computer computer, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#update(com.excilys.computerdatabase.model.Computer, java.sql.Connection)
+	 */
+	@Override
+	public int update(Computer computer) {
 		int i = 0;
 		try {
-			PreparedStatement pt = cnx.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
 			pt.setString(1, computer.getName());
 			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
 				pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
@@ -105,75 +124,94 @@ public enum ComputerDAO {
 				computer.setId(rs.getInt(1));
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug update computer");
 		}
 		return i;
 	}
 
-	public int delete(Computer computer, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#delete(com.excilys.computerdatabase.model.Computer, java.sql.Connection)
+	 */
+	@Override
+	public int delete(Computer computer) {
 		int value = 0;
 		try {
-			PreparedStatement pt = cnx.prepareStatement("DELETE FROM computer WHERE id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("DELETE FROM computer WHERE id = ?");
 			pt.setInt(1, computer.getId());
 			value = pt.executeUpdate();
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug delete computer");
 		}
 		return value;
 	}
 	
-	public void deleteByCompany(Company company, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#deleteByCompany(com.excilys.computerdatabase.model.Company, java.sql.Connection)
+	 */
+	@Override
+	public void deleteByCompany(Company company) {
 		try {
-			PreparedStatement pt = cnx.prepareStatement("DELETE FROM computer WHERE company_id = ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("DELETE FROM computer WHERE company_id = ?");
 			pt.setInt(1, company.getId());
 			pt.executeUpdate();
 			
 		} catch (SQLException e) {
-			try {
-				cnx.rollback();
-				cnx.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug delete computer");
 		} 
 	}
 	
 	
 
-	public long getCount(Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#getCount(java.sql.Connection)
+	 */
+	@Override
+	public long getCount() {
 		long value = 0;
 		try {
-			Statement st = cnx.createStatement();
+			Statement st = ConnectionDAO.INSTANCE.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT count(name) FROM computer");
 			if(rs.first()){
 				value = rs.getLong(1);
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			e.printStackTrace();
 		}
 		return value;
 	}
 	
-	public long getCountByName(String name, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#getCountByName(java.lang.String, java.sql.Connection)
+	 */
+	@Override
+	public long getCountByName(String name) {
 		long value = 0;
 		try {
-			PreparedStatement pt = cnx.prepareStatement("SELECT count(name) FROM computer WHERE name like ? ");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT count(name) FROM computer WHERE name like ? ");
 			pt.setString(1, name+"%");
 			ResultSet rs = pt.executeQuery();
 			if(rs.first()){
 				value = rs.getLong(1);
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			e.printStackTrace();
 		}
 		return value;
 	}
 	
-	public List<Computer> getAllLimit(int limit, int offset, String sort, String type, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#getAllLimit(int, int, java.lang.String, java.lang.String, java.sql.Connection)
+	 */
+	@Override
+	public List<Computer> getAllLimit(int limit, int offset, String sort, String type) {
 		List<Computer> computers = new ArrayList<Computer>();
 		try {
-			PreparedStatement pt = cnx.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
 			pt.setInt(1, limit);
 			pt.setInt(2, offset);
 			ResultSet rs = pt.executeQuery();
@@ -181,15 +219,20 @@ public enum ComputerDAO {
 				computers.add(ComputerMapper.mapperComputer(rs));
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug get computer with limit");
 		}
 		return computers;
 	}
 	
-	public List<Computer> findByName(String name, int limit, int offset, String sort, String type, Connection cnx) {
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#findByName(java.lang.String, int, int, java.lang.String, java.lang.String, java.sql.Connection)
+	 */
+	@Override
+	public List<Computer> findByName(String name, int limit, int offset, String sort, String type) {
 		List<Computer> computers = new ArrayList<Computer>();
 		try {
-			PreparedStatement pt = cnx.prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
+			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
 			pt.setString(1, name+"%");
 			pt.setInt(2, limit);
 			pt.setInt(3, offset);
@@ -198,6 +241,7 @@ public enum ComputerDAO {
 				computers.add(ComputerMapper.mapperComputer(rs));
 			}
 		} catch (SQLException e) {
+			ConnectionDAO.INSTANCE.rollback();
 			throw new IllegalStateException("bug find by name");
 		}
 		return computers;
