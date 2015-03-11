@@ -1,9 +1,17 @@
 package com.excilys.computerdatabase.service.dto;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
-
+import com.excilys.computerdatabase.persistence.CompanyDAO;
+import com.excilys.computerdatabase.persistence.ICompanyDAO;
+@Component
 public class MapperDTO {
+	
+	@Autowired
+	private static ICompanyDAO companyDAO;
 	
 	static public ComputerDTO computerToDTO(Computer computer) {
 		ComputerDTO cDTO = new ComputerDTO();
@@ -33,6 +41,7 @@ public class MapperDTO {
 	
 	static public Computer dTOToComputer(ComputerDTO computerDTO)  {
 		Computer computer = new Computer();
+//		ICompanyDAO companyDAO = new CompanyDAO();
 		if (computerDTO.getId() > 0) {
 			computer.setId(computerDTO.getId());
 		}
@@ -48,7 +57,7 @@ public class MapperDTO {
 			computer.setDiscontinued(null);
 		}
 		if (computerDTO.getCompanyId() > 0) {
-			computer.setCompany(new Company(computerDTO.getCompanyId()));
+			computer.setCompany(new Company(computerDTO.getCompanyId(), computerDTO.getCompanyName()));
 		} else {
 			computer.setCompany(null);
 		}

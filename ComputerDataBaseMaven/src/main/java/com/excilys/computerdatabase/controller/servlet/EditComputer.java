@@ -2,11 +2,15 @@ package com.excilys.computerdatabase.controller.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.computerdatabase.controller.validator.ValidatorComputerDTO;
 import com.excilys.computerdatabase.service.CompanyBL;
@@ -24,16 +28,23 @@ public class EditComputer extends HttpServlet {
 	private static final String PARAM_NAME = "name";
 	private static final String PARAM_ID = "id";
 	private static final long serialVersionUID = 1L;
-	ComputerBL blComputer;
-	CompanyBL blCompany;
-       
+	@Autowired
+	private ComputerBL blComputer;
+	@Autowired
+	private CompanyBL blCompany;
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
     /**
      * @see HttpServlet#HttpServlet()
      */
     public EditComputer() {
         super();
-		blComputer = new ComputerBL();
-		blCompany = new CompanyBL();
+//		blComputer = new ComputerBL();
+//		blCompany = new CompanyBL();
     }
 
 	/**

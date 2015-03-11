@@ -6,14 +6,14 @@ import com.excilys.computerdatabase.model.Company;
 
 public interface ICompanyDAO {
 
-	public abstract Company get(int id);
+	Company get(int id);
 
-	public abstract List<Company> getAll();
+	List<Company> getAll();
 
-	public abstract Company create(Company company);
+	Company create(Company company);
 
-	public abstract void update(Company company);
+	void update(Company company);
 
-	public abstract void delete(Company company);
+	void delete(Company company);
 
 }

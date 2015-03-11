@@ -3,31 +3,43 @@ package com.excilys.computerdatabase.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.persistence.CompanyDAO;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
+import com.excilys.computerdatabase.persistence.ICompanyDAO;
+import com.excilys.computerdatabase.persistence.IComputerDAO;
 
+@Service
 public class CompanyBL extends AbstractBL<Company> {
 	
+	@Autowired
+	private ICompanyDAO companyDAO;
+	@Autowired
+	private IComputerDAO computerDAO;
+	
 	public CompanyBL() {
+//		this.companyDAO = new CompanyDAO();
 	}
 	
 	
 	@Override
 	public void deleteAbstract(Company company) {
-		ComputerDAO.INSTANCE.deleteByCompany(company);
-		CompanyDAO.INSTANCE.delete(company);
+		computerDAO.deleteByCompany(company);
+		companyDAO.delete(company);
 	}
 
 	@Override
 	public Company getAbstract(int id) throws SQLException {
-		Company company = CompanyDAO.INSTANCE.get(id);
+		Company company = companyDAO.get(id); 
 		return company;
 	}
 
 	@Override
 	public List<Company> getAllAbstract() throws SQLException {
-		List<Company> companies = CompanyDAO.INSTANCE.getAll();
+		List<Company> companies = companyDAO.getAll();
 		return companies;
 	}
 

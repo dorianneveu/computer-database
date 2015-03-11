@@ -7,14 +7,30 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.excilys.computerdatabase.helper.DateConverter;
+import com.excilys.computerdatabase.helper.MapperCompanyJDBC;
+import com.excilys.computerdatabase.helper.MapperComputerJDBC;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.ComputerMapper;
 
-public enum ComputerDAO implements IComputerDAO {
-	INSTANCE;
+@Repository
+public class ComputerDAO implements IComputerDAO {
+	
+	private DataSource dataSource;
+
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 	
 	private ComputerDAO() {
 		
@@ -25,17 +41,9 @@ public enum ComputerDAO implements IComputerDAO {
 	@Override
 	public Computer get(int id) {
 		Computer computer = new Computer();
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT computer.*, company.name FROM computer  LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.id = ?");
-			pt.setInt(1, id);
-			ResultSet rs = pt.executeQuery();
-			if (rs.first()) {
-				computer = ComputerMapper.mapperComputer(rs);
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug get computer");
-		}
+		String query = "SELECT computer.*, company.name FROM computer  LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.id = ?"; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        computer = (Computer)jdbcTemplate.queryForObject(query, new Object[] {id}, new MapperComputerJDBC());
 		return computer;
 	}
 
@@ -45,15 +53,27 @@ public enum ComputerDAO implements IComputerDAO {
 	@Override
 	public List<Computer> getAll() {
 		List<Computer> computers = new ArrayList<Computer>();
-		try {
-			Statement st = ConnectionDAO.INSTANCE.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id");
-			while (rs.next()) {
-				computers.add(ComputerMapper.mapperComputer(rs));
+		String query = "SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id"; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
+		for (Map row : rows) {
+			Computer computer = new Computer();
+			if(row.get("company_id") != null) {
+				Company company = new Company(Integer.parseInt(String.valueOf(row.get("company_id"))), (String)row.get("cname"));
+				computer.setCompany(company);
+			} else {
+				computer.setCompany(new Company());
 			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug get all computer");
+			computer.setId(Integer.parseInt(String.valueOf(row.get("id"))));
+			computer.setName((String)row.get("name"));
+			if(row.get("introduced") != null) {
+				computer.setIntroduced(row.get("introduced").toString());
+			}
+			if(row.get("discontinued") != null) {
+				computer.setDiscontinued(row.get("discontinued").toString());
+			}
+			computers.add(computer);
 		}
 		return computers;
 	}
@@ -63,35 +83,32 @@ public enum ComputerDAO implements IComputerDAO {
 	 */
 	@Override
 	public Computer create(Computer computer) {
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection()
-					.prepareStatement("INSERT INTO computer(name, introduced, discontinued, company_id) values (?,?,?,?)");
-			pt.setString(1, computer.getName());
+		String query = "INSERT INTO computer(name, introduced, discontinued, company_id) values (?,?,?,?)";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+ 
+        Timestamp introduced = null;
+        Timestamp discontinued = null;
+        int company = 0;
 			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
-				pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
+				introduced = new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime());
 			} else {
-				pt.setNull(2, java.sql.Types.TIMESTAMP);
 			}
 			if (!String.valueOf(computer.getDiscontinued()).equals("0000-00-00") && computer.getDiscontinued() != null) {
-				pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
+				discontinued = new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime());
 			} else {
-				pt.setNull(3, java.sql.Types.TIMESTAMP);
 			}
 			if(computer.getCompany() != null && computer.getCompany().getId() != 0) {
-				pt.setInt(4, computer.getCompany().getId());
+				company = computer.getCompany().getId();
 			}
 			else {
-				pt.setNull(4, java.sql.Types.BIGINT);
 			}
-			pt.executeUpdate();
-			ResultSet rs = pt.getGeneratedKeys();
-			if (rs.next()) {
-				computer.setId(rs.getInt(1));
+			
+
+			if(company == 0) {
+				jdbcTemplate.update(query, new Object[] { computer.getName(), introduced, discontinued, null });
+			} else {
+				jdbcTemplate.update(query, new Object[] { computer.getName(), introduced, discontinued, company });
 			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug insert computer");
-		}
 		return computer;
 	}
 
@@ -100,31 +117,18 @@ public enum ComputerDAO implements IComputerDAO {
 	 */
 	@Override
 	public int update(Computer computer) {
+		String query = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		Timestamp introduced = null;
+		Timestamp discontinued = null;
 		int i = 0;
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
-			pt.setString(1, computer.getName());
-			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
-				pt.setTimestamp(2, new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime()));
-			} else {
-				pt.setNull(2, java.sql.Types.TIMESTAMP);
-			}
-			if (!String.valueOf(computer.getDiscontinued()).equals("0000-00-00") && computer.getDiscontinued() != null) {
-				pt.setTimestamp(3, new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime()));
-			} else {
-				pt.setNull(3, java.sql.Types.TIMESTAMP);
-			}
-			pt.setInt(4, computer.getCompany().getId());
-			pt.setInt(5, computer.getId());
-			i = pt.executeUpdate();
-			ResultSet rs = pt.getGeneratedKeys();
-			if (rs.next()) {
-				computer.setId(rs.getInt(1));
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug update computer");
+		if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
+			introduced = new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime());
 		}
+		if (!String.valueOf(computer.getDiscontinued()).equals("0000-00-00") && computer.getDiscontinued() != null) {
+			discontinued = new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime());
+		}
+		i = jdbcTemplate.update(query, new Object[] { computer.getName(), introduced, discontinued, computer.getCompany().getId(), computer.getId()});
 		return i;
 	}
 
@@ -134,14 +138,10 @@ public enum ComputerDAO implements IComputerDAO {
 	@Override
 	public int delete(Computer computer) {
 		int value = 0;
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("DELETE FROM computer WHERE id = ?");
-			pt.setInt(1, computer.getId());
-			value = pt.executeUpdate();
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug delete computer");
-		}
+		
+		String query = "DELETE FROM computer WHERE id = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        value = jdbcTemplate.update(query, new Object[] { computer.getId() });
 		return value;
 	}
 	
@@ -150,35 +150,20 @@ public enum ComputerDAO implements IComputerDAO {
 	 */
 	@Override
 	public void deleteByCompany(Company company) {
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("DELETE FROM computer WHERE company_id = ?");
-			pt.setInt(1, company.getId());
-			pt.executeUpdate();
-			
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug delete computer");
-		} 
+		String query = "DELETE FROM computer WHERE company_id = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(query, new Object[] { company.getId() });
 	}
-	
-	
-
 	/* (non-Javadoc)
 	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#getCount(java.sql.Connection)
 	 */
 	@Override
 	public long getCount() {
 		long value = 0;
-		try {
-			Statement st = ConnectionDAO.INSTANCE.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT count(name) FROM computer");
-			if(rs.first()){
-				value = rs.getLong(1);
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
-		}
+		Computer computer = new Computer();
+		String query = "SELECT count(name) FROM computer"; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        value = jdbcTemplate.queryForLong(query);
 		return value;
 	}
 	
@@ -188,17 +173,10 @@ public enum ComputerDAO implements IComputerDAO {
 	@Override
 	public long getCountByName(String name) {
 		long value = 0;
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT count(name) FROM computer WHERE name like ? ");
-			pt.setString(1, name+"%");
-			ResultSet rs = pt.executeQuery();
-			if(rs.first()){
-				value = rs.getLong(1);
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
-		}
+		Computer computer = new Computer();
+		String query = "SELECT count(name) FROM computer WHERE name like ? "; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        value = jdbcTemplate.queryForLong(query, new Object[] { (name+"%") });
 		return value;
 	}
 	
@@ -208,17 +186,27 @@ public enum ComputerDAO implements IComputerDAO {
 	@Override
 	public List<Computer> getAllLimit(int limit, int offset, String sort, String type) {
 		List<Computer> computers = new ArrayList<Computer>();
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
-			pt.setInt(1, limit);
-			pt.setInt(2, offset);
-			ResultSet rs = pt.executeQuery();
-			while (rs.next()) {
-				computers.add(ComputerMapper.mapperComputer(rs));
+		String query = "SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?"; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[] {limit, offset} );
+		for (Map row : rows) {
+			Computer computer = new Computer();
+			if(row.get("company_id") != null) {
+				Company company = new Company(Integer.parseInt(String.valueOf(row.get("company_id"))), (String)row.get("cname"));
+				computer.setCompany(company);
+			} else {
+				computer.setCompany(new Company());
 			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug get computer with limit");
+			computer.setId(Integer.parseInt(String.valueOf(row.get("id"))));
+			computer.setName((String)row.get("name"));
+			if(row.get("introduced") != null) {
+				computer.setIntroduced(row.get("introduced").toString());
+			}
+			if(row.get("discontinued") != null) {
+				computer.setDiscontinued(row.get("discontinued").toString());
+			}
+			computers.add(computer);
 		}
 		return computers;
 	}
@@ -228,19 +216,28 @@ public enum ComputerDAO implements IComputerDAO {
 	 */
 	@Override
 	public List<Computer> findByName(String name, int limit, int offset, String sort, String type) {
+		
 		List<Computer> computers = new ArrayList<Computer>();
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT computer.*, company.name FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?");
-			pt.setString(1, name+"%");
-			pt.setInt(2, limit);
-			pt.setInt(3, offset);
-			ResultSet rs = pt.executeQuery();
-			while (rs.next()) {
-				computers.add(ComputerMapper.mapperComputer(rs));
+		String query = "SELECT computer.*, company.name as cname FROM computer LEFT OUTER JOIN company ON computer.company_id = company.id WHERE computer.name LIKE ? ORDER BY "+sort+" "+type+" LIMIT ? OFFSET ?"; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query, new Object[] { (name+"%"), limit, offset} );
+		for (Map row : rows) {
+			Computer computer = new Computer();
+			if(row.get("company_id") != null) {
+				Company company = new Company(Integer.parseInt(String.valueOf(row.get("company_id"))), (String)row.get("cname"));
+				computer.setCompany(company);
+			} else {
+				computer.setCompany(new Company());
 			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			throw new IllegalStateException("bug find by name");
+			computer.setId(Integer.parseInt(String.valueOf(row.get("id"))));
+			computer.setName((String)row.get("name"));
+			if(row.get("introduced") != null) {
+				computer.setIntroduced(row.get("introduced").toString());
+			}
+			if(row.get("discontinued") != null) {
+				computer.setDiscontinued(row.get("discontinued").toString());
+			}
+			computers.add(computer);
 		}
 		return computers;
 	}

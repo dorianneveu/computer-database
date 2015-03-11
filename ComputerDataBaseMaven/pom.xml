@@ -75,11 +75,26 @@
 	    <artifactId>bonecp</artifactId>
 	    <version>${bonecp}</version>
 	</dependency>
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-core</artifactId>
-	    <version>${spring}</version>
-	</dependency>
+		<dependency>
+			<artifactId>spring-web</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>${spring}</version>
+		</dependency>
+		<dependency>
+			<artifactId>spring-jdbc</artifactId>
+			<groupId>org.springframework</groupId>
+			<version>${spring}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring}</version>
+        </dependency>
    </dependencies>
    <reporting>
         <plugins>

@@ -4,14 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.computerdatabase.helper.Page;
+import com.excilys.computerdatabase.model.Company;
+import com.excilys.computerdatabase.service.CompanyBL;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
@@ -19,7 +25,8 @@ import com.excilys.computerdatabase.service.dto.ComputerDTO;
  * Servlet implementation class DashBoard
  */
 @WebServlet("/Dashboard")
-public class Dashboard extends HttpServlet {
+@Configurable
+public class Dashboard extends HttpServlet{
 	private static final String PARAM_SEARCH = "search";
 	private static final String PARAM_ORDER = "order";
 	private static final String PARAM_SORT = "sort";
@@ -27,8 +34,14 @@ public class Dashboard extends HttpServlet {
 	private static final String PARAM_PAGE = "page";
 	private static final String PARAM_SELECTION = "selection";
 	private static final long serialVersionUID = 1L;
+	@Autowired
 	private ComputerBL blComputer;
-       
+
+	@Override
+	public void init(ServletConfig config) throws ServletException{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+	}
     /**
      * @see HttpServlet#HttpServlet()
      */

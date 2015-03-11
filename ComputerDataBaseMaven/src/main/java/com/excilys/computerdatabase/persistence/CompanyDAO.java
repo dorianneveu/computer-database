@@ -6,14 +6,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.excilys.computerdatabase.helper.MapperCompanyJDBC;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.service.CompanyMapper;
 
-public enum CompanyDAO implements ICompanyDAO {
-	INSTANCE;
-	
-	private CompanyDAO() {
+@Repository
+public class CompanyDAO implements ICompanyDAO {
+	private DataSource dataSource;
+
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+	public CompanyDAO() {
 		
 	}
 
@@ -23,17 +36,10 @@ public enum CompanyDAO implements ICompanyDAO {
 	@Override
 	public Company get(int id) {
 		Company company = new Company();
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("SELECT id, name FROM company WHERE id = ?");
-			pt.setInt(1, id);
-			ResultSet rs = pt.executeQuery();
-			if (rs.first()) {
-				company = CompanyMapper.mapperCompany(rs);
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
-		}
+		String query = "SELECT id, name FROM company WHERE id = ?"; 
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        
+        company = (Company)jdbcTemplate.queryForObject(query, new Object[] {id}, new MapperCompanyJDBC());
 		return company;
 	}
 
@@ -42,16 +48,17 @@ public enum CompanyDAO implements ICompanyDAO {
 	 */
 	@Override
 	public List<Company> getAll() {
+
+		String query = "SELECT id, name FROM company"; 
 		List<Company> companies = new ArrayList<Company>();
-		try {
-			Statement st = ConnectionDAO.INSTANCE.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("SELECT id, name FROM company");
-			while (rs.next()) {
-				companies.add(CompanyMapper.mapperCompany(rs));
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
+		for (Map row : rows) {
+			Company company = new Company();
+			company.setId(Integer.parseInt(String.valueOf(row.get("id"))));
+			company.setName((String)row.get("name"));
+			companies.add(company);
 		}
 		return companies;
 	}
@@ -61,18 +68,10 @@ public enum CompanyDAO implements ICompanyDAO {
 	 */
 	@Override
 	public Company create(Company company) {
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("INSERT INTO company(name) values (?)");
-			pt.setString(1, company.getName());
-			pt.executeUpdate();
-			ResultSet rs = pt.getGeneratedKeys();
-			if (rs.next()) {
-				company.setId(rs.getInt(1));
-			}
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
-		}
+		String query = "INSERT INTO company(name) values (?)";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+ 
+        jdbcTemplate.update(query, new Object[] { company.getName() });
 		return company;
 	}
 
@@ -81,15 +80,9 @@ public enum CompanyDAO implements ICompanyDAO {
 	 */
 	@Override
 	public void update(Company company) {
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("UPDATE company SET name = ? WHERE id = ?");
-			pt.setString(1, company.getName());
-			pt.setInt(2, company.getId());
-			pt.executeUpdate();
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
-		} 
+		String query = "UPDATE company SET name = ? WHERE id = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(query, new Object[] { company.getName(), company.getId() });
 	}
 
 	/* (non-Javadoc)
@@ -97,14 +90,9 @@ public enum CompanyDAO implements ICompanyDAO {
 	 */
 	@Override
 	public void delete(Company company) {
-		try {
-			PreparedStatement pt = ConnectionDAO.INSTANCE.getConnection().prepareStatement("DELETE FROM company WHERE id = ?");
-			pt.setInt(1, company.getId());
-			pt.executeUpdate();
-		} catch (SQLException e) {
-			ConnectionDAO.INSTANCE.rollback();
-			e.printStackTrace();
-		} 
+		String query = "DELETE FROM company WHERE id = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(query, new Object[] { company.getId() });
 	}
 
 }
