@@ -15,7 +15,7 @@
 	<body>
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
-				<a class="navbar-brand" href="Dashboard?page=50&offset=0&order=id&search=&sort=ASC"> Application -
+				<a class="navbar-brand" href="dashboard?page=50&offset=0&order=id&search=&sort=ASC"> Application -
 					Computer Database </a>
 			</div>
 		</header>

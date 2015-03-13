@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.persistence.CompanyDAO;
@@ -21,11 +22,11 @@ public class CompanyBL extends AbstractBL<Company> {
 	private IComputerDAO computerDAO;
 	
 	public CompanyBL() {
-//		this.companyDAO = new CompanyDAO();
 	}
 	
 	
 	@Override
+    @Transactional
 	public void deleteAbstract(Company company) {
 		computerDAO.deleteByCompany(company);
 		companyDAO.delete(company);

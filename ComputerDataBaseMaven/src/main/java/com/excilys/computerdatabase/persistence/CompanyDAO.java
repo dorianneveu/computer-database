@@ -1,9 +1,5 @@
 package com.excilys.computerdatabase.persistence;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.excilys.computerdatabase.helper.MapperCompanyJDBC;
 import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.service.CompanyMapper;
 
 @Repository
 public class CompanyDAO implements ICompanyDAO {

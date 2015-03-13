@@ -15,7 +15,7 @@
                     </div>
                     <h1>Edit Computer</h1>
 
-                    <form action="EditComputer" method="POST">
+                    <form action="editComputer" method="POST">
                         <input type="hidden" name="id" value="${computer.id}"/>
                         <fieldset>
                             <div class="form-group">
@@ -50,7 +50,7 @@
                         <div class="actions pull-right">
                             <input type="submit" value="Edit" class="btn btn-primary">
                             or
-                            <a href="Dashboard" class="btn btn-default">Cancel</a>
+                            <a href="dashboard" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
                 </div>

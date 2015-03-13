@@ -80,9 +80,6 @@ public class Computer {
 	}
 	
 	public boolean equals(Computer c){
-//		if (this.ge(c)) {
-//			return true;
-//		}
 		if (this.id == c.getId()) {
 			return true;
 		}

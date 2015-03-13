@@ -3,7 +3,7 @@ package com.excilys.computerdatabase.helper;
 public class Page {
 //	INSTANCE;
 
-	public int limit = 0;
+	public int limit = 50;
 	public int offset = 0;
 	public int actualPage = 0;
 	public int nbPage = 0;

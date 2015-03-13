@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.ComputerDAO;
-import com.excilys.computerdatabase.persistence.ConnectionDAO;
 import com.excilys.computerdatabase.persistence.ICompanyDAO;
 import com.excilys.computerdatabase.persistence.IComputerDAO;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
@@ -20,8 +19,6 @@ import com.excilys.computerdatabase.service.dto.MapperDTO;
 public class ComputerBL extends AbstractBL<ComputerDTO> {
 	@Autowired
 	private IComputerDAO computerDAO;
-	@Autowired
-	private ConnectionDAO connectionDAO;
 	public ComputerBL() {
 		
 	}
@@ -33,27 +30,21 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	 */
 	public long getNumberPage(long maxPage) {
 		long numberPage = 0;
-//		connectionDAO.getConnection();
 		numberPage = computerDAO.getCount() / maxPage;
-//		connectionDAO.closeConnection();
 		return numberPage;
 	}
 	
 	public int findByNameCount(String name) {
-//		connectionDAO.getConnection();
 		int counter = (int)computerDAO.getCountByName(name);
-//		connectionDAO.closeConnection();
 		return counter;
 	}
 	
 	public List<ComputerDTO> findByName(Page page) {
-//		connectionDAO.getConnection();
 		List<Computer> computers = computerDAO.findByName(page.search, page.limit, page.offset*page.limit, page.order, page.sort);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
 		}
-//		connectionDAO.closeConnection();
 		return computersDTO;
 	}
 	
@@ -64,13 +55,11 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	 * @return
 	 */
 	public List<ComputerDTO> getAllLimit(int limit, int offset, String sort, String type) {
-//		connectionDAO.getConnection();
 		List<Computer> computers = computerDAO.getAllLimit(limit, offset, sort, type);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
 		}
-//		connectionDAO.closeConnection();
 		return computersDTO;
 	}
 

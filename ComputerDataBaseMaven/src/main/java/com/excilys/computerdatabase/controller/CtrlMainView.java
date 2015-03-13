@@ -15,7 +15,6 @@ public class CtrlMainView {
 	private CompanyBL companyBL;
 
 	public CtrlMainView() {
-//		this.companyBL = new CompanyBL();
 	}
 
 	public List<Company> getAllCompany() throws SQLException {

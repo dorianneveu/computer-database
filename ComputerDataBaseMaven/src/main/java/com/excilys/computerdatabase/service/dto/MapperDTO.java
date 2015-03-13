@@ -3,6 +3,7 @@ package com.excilys.computerdatabase.service.dto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.excilys.computerdatabase.helper.DateConverter;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.CompanyDAO;
@@ -10,8 +11,6 @@ import com.excilys.computerdatabase.persistence.ICompanyDAO;
 @Component
 public class MapperDTO {
 	
-	@Autowired
-	private static ICompanyDAO companyDAO;
 	
 	static public ComputerDTO computerToDTO(Computer computer) {
 		ComputerDTO cDTO = new ComputerDTO();
@@ -20,12 +19,12 @@ public class MapperDTO {
 		}
 		cDTO.setName(computer.getName());
 		if (computer.getIntroduced() != null) {
-			cDTO.setIntroduced(computer.getIntroduced().substring(0,10));
+			cDTO.setIntroduced(DateConverter.localDate((computer.getIntroduced().substring(0,10))));
 		} else {
 			cDTO.setIntroduced("");
 		}
 		if (computer.getDiscontinued() != null) {
-			cDTO.setDiscontinued(computer.getDiscontinued().substring(0,10));
+			cDTO.setDiscontinued(DateConverter.localDate((computer.getDiscontinued().substring(0,10))));
 		} else {
 			cDTO.setDiscontinued("");
 		}
@@ -41,13 +40,13 @@ public class MapperDTO {
 	
 	static public Computer dTOToComputer(ComputerDTO computerDTO)  {
 		Computer computer = new Computer();
-//		ICompanyDAO companyDAO = new CompanyDAO();
 		if (computerDTO.getId() > 0) {
 			computer.setId(computerDTO.getId());
 		}
 		computer.setName(computerDTO.getName());
 		if (computerDTO.getIntroduced() != null) {
 			computer.setIntroduced(computerDTO.getIntroduced().substring(0,10));
+		
 		} else {
 			computer.setIntroduced(null);
 		}

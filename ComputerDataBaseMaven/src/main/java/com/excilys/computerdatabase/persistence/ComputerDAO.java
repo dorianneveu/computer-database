@@ -1,9 +1,5 @@
 package com.excilys.computerdatabase.persistence;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.excilys.computerdatabase.helper.DateConverter;
-import com.excilys.computerdatabase.helper.MapperCompanyJDBC;
 import com.excilys.computerdatabase.helper.MapperComputerJDBC;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
-import com.excilys.computerdatabase.service.ComputerMapper;
 
 @Repository
 public class ComputerDAO implements IComputerDAO {
@@ -91,16 +85,12 @@ public class ComputerDAO implements IComputerDAO {
         int company = 0;
 			if (!String.valueOf(computer.getIntroduced()).equals("0000-00-00") && computer.getIntroduced() != null) {
 				introduced = new Timestamp(DateConverter.stringToDate(computer.getIntroduced()).getTime());
-			} else {
 			}
 			if (!String.valueOf(computer.getDiscontinued()).equals("0000-00-00") && computer.getDiscontinued() != null) {
 				discontinued = new Timestamp(DateConverter.stringToDate(computer.getDiscontinued()).getTime());
-			} else {
 			}
 			if(computer.getCompany() != null && computer.getCompany().getId() != 0) {
 				company = computer.getCompany().getId();
-			}
-			else {
 			}
 			
 
@@ -160,7 +150,6 @@ public class ComputerDAO implements IComputerDAO {
 	@Override
 	public long getCount() {
 		long value = 0;
-		Computer computer = new Computer();
 		String query = "SELECT count(name) FROM computer"; 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         value = jdbcTemplate.queryForLong(query);
@@ -173,7 +162,6 @@ public class ComputerDAO implements IComputerDAO {
 	@Override
 	public long getCountByName(String name) {
 		long value = 0;
-		Computer computer = new Computer();
 		String query = "SELECT count(name) FROM computer WHERE name like ? "; 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         value = jdbcTemplate.queryForLong(query, new Object[] { (name+"%") });
