@@ -1,10 +1,5 @@
 package com.excilys.computerdatabase.persistence;
 
-import java.util.List;
-
-
-import com.excilys.computerdatabase.model.Company;
-
 import junit.framework.TestCase;
 
 public class TestCompanyDAO extends TestCase {

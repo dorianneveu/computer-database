@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.model.Computer;
-import com.excilys.computerdatabase.persistence.ComputerDAO;
-import com.excilys.computerdatabase.persistence.ICompanyDAO;
 import com.excilys.computerdatabase.persistence.IComputerDAO;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 import com.excilys.computerdatabase.service.dto.MapperDTO;

@@ -4,21 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.excilys.computerdatabase.controller.CtrlMainView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.service.CompanyBL;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-
-import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.service.CompanyBL;
 
 public class MainView {
 

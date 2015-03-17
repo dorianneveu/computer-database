@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.helper;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import junit.framework.TestCase;

@@ -1,10 +1,5 @@
 package com.excilys.computerdatabase.controller;
 
-import java.util.List;
-
-import com.excilys.computerdatabase.controller.CtrlComputerView;
-import com.excilys.computerdatabase.model.Computer;
-
 import junit.framework.TestCase;
 
 public class TestCtrlComputer extends TestCase {

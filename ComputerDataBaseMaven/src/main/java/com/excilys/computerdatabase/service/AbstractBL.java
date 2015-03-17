@@ -3,8 +3,6 @@ package com.excilys.computerdatabase.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 //Design pattern Template
 public abstract class AbstractBL<T> implements Service<T> {
 

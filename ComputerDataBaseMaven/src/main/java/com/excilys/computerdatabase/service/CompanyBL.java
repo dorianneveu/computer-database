@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.persistence.CompanyDAO;
-import com.excilys.computerdatabase.persistence.ComputerDAO;
 import com.excilys.computerdatabase.persistence.ICompanyDAO;
 import com.excilys.computerdatabase.persistence.IComputerDAO;
 

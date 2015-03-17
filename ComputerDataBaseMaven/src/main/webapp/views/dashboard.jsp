@@ -16,7 +16,7 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="dashboard?page=${page.limit }&offset=0&order=${page.order }&search=&sort=${page.sort}" method="GET" class="form-inline">
+                    <form id="searchForm" action="dashboard?page=${page.limit }&offset=0&order=${page.order}&search=&sort=${page.sort}" method="GET" class="form-inline">
 						<input type="hidden" id="page" name="page" value="${page.limit }"/>
 						<input type="hidden" id="offset" name="offset" value="0"/>
 						<input type="hidden" id="sort" name="sort" value="${page.sort}" />
@@ -100,7 +100,6 @@
         
          <c:if test="${page.limit > 0}"><td>
          	<my:pagination page="${page}" />
-<%--               <pg:pagetag page="${page}" nbEachPage="${page.nbPage}" offset="${page.offset}"/> --%>
 		</c:if>
         <div class="btn-group btn-group-sm pull-right" role="group" >
 	        <form action="dashboard" Method="GET">
@@ -112,6 +111,12 @@
 		</div>
 
     </footer>
+    
+    <script type="text/javascript">
+		var strings = new Array();
+		strings['dashboard.view'] = "<spring:message code='dashboard.view' javaScriptEscape='true' />";
+		strings['dashboard.edit'] = "<spring:message code='dashboard.edit' javaScriptEscape='true' />";
+	</script>
 <script src="${request.getContextPath()}js/jquery.min.js"></script>
 <script src="${request.getContextPath()}js/bootstrap.min.js"></script>
 <script src="${request.getContextPath()}js/dashboard.js"></script>

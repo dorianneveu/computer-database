@@ -1,13 +1,10 @@
 package com.excilys.computerdatabase.service.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.excilys.computerdatabase.helper.DateConverter;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.model.Computer;
-import com.excilys.computerdatabase.persistence.CompanyDAO;
-import com.excilys.computerdatabase.persistence.ICompanyDAO;
 @Component
 public class MapperDTO {
 	
