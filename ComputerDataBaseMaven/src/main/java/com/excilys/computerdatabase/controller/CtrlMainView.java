@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.service.CompanyBL;
-@Configurable
+@Component
 public class CtrlMainView {
 	@Autowired
 	private CompanyBL companyBL;

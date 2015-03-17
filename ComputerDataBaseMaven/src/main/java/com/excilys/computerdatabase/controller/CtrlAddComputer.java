@@ -27,7 +27,7 @@ public class CtrlAddComputer {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToAddComputer(ModelMap model) {
-		model.addAttribute("computers", blCompany.getAll());
+		model.addAttribute("companies", blCompany.getAll());
 		return "addComputer";
 	}
 	@RequestMapping(method = RequestMethod.POST)

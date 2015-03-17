@@ -2,15 +2,21 @@ package com.excilys.computerdatabase.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
-
+@Component
 public class CtrlComputerView {
+	@Autowired
 	private ComputerBL bl;
+	ComputerDTO computerDTO;
+
 
 	public CtrlComputerView() {
-		this.bl = new ComputerBL();
+//		this.bl = new ComputerBL();
 	}
 
 	public ComputerDTO getComputerById(String str) {
@@ -35,7 +41,6 @@ public class CtrlComputerView {
 	 * @return int > 0 if the computer is updated
 	 */
 	public void updateComputer(String name, String introduced, String discontinued, String company, ComputerDTO computer) {
-		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
 			if (Integer.parseInt(company) != 0) {
 				computerDTO.setCompanyId(Integer.parseInt(company));
@@ -88,7 +93,6 @@ public class CtrlComputerView {
 	 * @return Computer created
 	 */
 	public void insertComputer(String name, String introduced, String discontinued, String company) {
-		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
 			computerDTO.setCompanyId(Integer.parseInt(company));
 		} else {

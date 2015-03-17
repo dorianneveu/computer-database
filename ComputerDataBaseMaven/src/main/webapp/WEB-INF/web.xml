@@ -5,6 +5,16 @@
 <!-- <welcome-file>dashboard</welcome-file> -->
 <!-- </welcome-file-list> -->
 
+<context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>/WEB-INF/applicationContext.xml
+            classpath*:/applicationContext.xml</param-value>
+</context-param>
+<listener>
+	<listener-class>
+		org.springframework.web.context.ContextLoaderListener
+	</listener-class>
+</listener> 
 
 <!-- Declaration de la servlet de Spring et de son mapping -->
 	<servlet>
@@ -36,15 +46,5 @@
         <url-pattern>*.woff</url-pattern>
     </servlet-mapping>
     
-
-<context-param>
-	<param-name>contextConfigLocation</param-name>
-	<param-value>/WEB-INF/applicationContext.xml</param-value>
-</context-param>
-<listener>
-	<listener-class>
-		org.springframework.web.context.ContextLoaderListener
-	</listener-class>
-</listener> 
    
 </web-app>

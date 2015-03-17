@@ -1,7 +1,6 @@
 package com.excilys.computerdatabase.helper;
 
 public class Page {
-//	INSTANCE;
 
 	public int limit = 50;
 	public int offset = 0;

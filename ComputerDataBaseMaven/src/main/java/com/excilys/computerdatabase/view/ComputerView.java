@@ -3,20 +3,25 @@ package com.excilys.computerdatabase.view;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.excilys.computerdatabase.controller.CtrlComputerView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
+@Component
 public class ComputerView {
 	boolean life;
+	@Autowired
 	CtrlComputerView ctrl;
 	Computer computer;
 	ComputerDTO computerDTO;
 	String name, introduced, discontinued, company;
 	
 	public ComputerView() {
-		ctrl = new CtrlComputerView();
+//		ctrl = new CtrlComputerView();
 	}
 
 	public void showView(Scanner sc) {

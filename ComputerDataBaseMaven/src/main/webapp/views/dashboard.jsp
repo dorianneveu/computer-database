@@ -106,7 +106,6 @@
 		    	<input type="submit" name="page" value="10" />
 		    	<input type="submit" name="page" value="50" />
 		    	<input type="submit" name="page" value="100" />
-		    	<input type="submit" name="page" value="ALL" />
 			</form>
 		</div>
 

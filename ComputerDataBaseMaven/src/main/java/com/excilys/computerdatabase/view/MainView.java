@@ -4,16 +4,26 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.excilys.computerdatabase.controller.CtrlMainView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
-
+@Component
 public class MainView {
 
-	public static void main(String[] args) throws SQLException {
+	@Autowired
+	CtrlMainView ctrl;
+	@Autowired
+	ComputerView computerView;
+	
+	public MainView() {}
+			
+			
+	public void cli() throws SQLException {
 		boolean life = true;
-		CtrlMainView ctrl = new CtrlMainView();
-		ComputerView computerView = new ComputerView();
+		
 		while (life) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Hi, please type the number which correspond to your choice:\n1.Computer\n2.List of all "

@@ -23,6 +23,9 @@ public class CompanyBL extends AbstractBL<Company> {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.service.ICompanyBL#deleteAbstract(com.excilys.computerdatabase.model.Company)
+	 */
 	@Override
     @Transactional
 	public void deleteAbstract(Company company) {
@@ -30,24 +33,36 @@ public class CompanyBL extends AbstractBL<Company> {
 		companyDAO.delete(company);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.service.ICompanyBL#getAbstract(int)
+	 */
 	@Override
 	public Company getAbstract(int id) throws SQLException {
 		Company company = companyDAO.get(id); 
 		return company;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.service.ICompanyBL#getAllAbstract()
+	 */
 	@Override
 	public List<Company> getAllAbstract() throws SQLException {
 		List<Company> companies = companyDAO.getAll();
 		return companies;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.service.ICompanyBL#updateAbstract(com.excilys.computerdatabase.model.Company)
+	 */
 	@Override
 	public void updateAbstract(Company object) throws SQLException {
 		throw new UnsupportedOperationException("this method should not be used");
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.excilys.computerdatabase.service.ICompanyBL#insertAbstract(com.excilys.computerdatabase.model.Company)
+	 */
 	@Override
 	public void insertAbstract(Company object) throws SQLException {
 		throw new UnsupportedOperationException("this method should not be used");

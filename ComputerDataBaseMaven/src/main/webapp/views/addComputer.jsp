@@ -3,32 +3,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@include file="header.jsp" %>
 
 	<section id="main">
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-2 box">
-				<h1>Add Computer</h1>
+				<h1><spring:message code="dashboard.add"/></h1>
 				<form id="addcomputer" action="addComputer" method="POST" >
 					<fieldset>
 						<div class="form-group">
-							<label for="computerName">Computer name</label> <input
+							<label for="computerName"><spring:message code="dashboard.name"/></label> <input
 								type="text" class="form-control" id="name" name="name" onkeyup="$.fn.checkvalue()"
-								placeholder="Computer name">
+								placeholder="<spring:message code="dashboard.name"/>">
 						</div>
 						<div class="form-group">
-							<label for="introduced">Introduced date</label> <input
+							<label for="introduced"><spring:message code="dashboard.introduced"/></label> <input
 								type="date" class="form-control" id="introduced"
-								name="introduced" placeholder="Introduced date">
+								name="introduced" placeholder="<spring:message code="dashboard.introduced"/>">
 						</div>
 						<div class="form-group">
-							<label for="discontinued">Discontinued date</label> <input
+							<label for="discontinued"><spring:message code="dashboard.discontinued"/></label> <input
 								type="date" class="form-control" id="discontinued"
-								name="discontinued" placeholder="Discontinued date">
+								name="discontinued" placeholder="<spring:message code="dashboard.discontinued"/>">
 						</div>
 						<div class="form-group">
-							<label for="companyId">Company</label> <select
+							<label for="companyId"><spring:message code="dashboard.company"/></label> <select
 								class="form-control" id="company" name="company">
 								<option value="0"><c:out value="--" /></option>
 								<c:forEach var="company" items="${companies}">
@@ -38,8 +39,8 @@
 						</div>
 					</fieldset>
 					<div class="actions pull-right">
-						<input id="send" type="submit" value="Add" class="btn btn-primary">
-						or <a href="dashboard" class="btn btn-default">Cancel</a>
+						<input id="send" type="submit" value="<spring:message code="add.add"/>" class="btn btn-primary">
+						<a href="dashboard" class="btn btn-default"><spring:message code="add.cancel"/></a>
 					</div>
 				</form>
 			</div>
