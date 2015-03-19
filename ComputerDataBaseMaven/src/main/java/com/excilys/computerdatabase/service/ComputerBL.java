@@ -52,14 +52,14 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	 * @param offset : the number of elements we want
 	 * @return
 	 */
-	public List<ComputerDTO> getAllLimit(int limit, int offset, String sort, String type) {
-		List<Computer> computers = computerDAO.getAllLimit(limit, offset, sort, type);
-		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
-		for (Computer computer : computers) {
-			computersDTO.add(MapperDTO.computerToDTO(computer));
-		}
-		return computersDTO;
-	}
+//	public List<ComputerDTO> getAllLimit(int limit, int offset, String sort, String type) {
+//		List<Computer> computers = computerDAO.getAllLimit(limit, offset, sort, type);
+//		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
+//		for (Computer computer : computers) {
+//			computersDTO.add(MapperDTO.computerToDTO(computer));
+//		}
+//		return computersDTO;
+//	}
 
 	@Override
 	public void updateAbstract(ComputerDTO object) throws SQLException {

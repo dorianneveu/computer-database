@@ -52,25 +52,25 @@
                         </th>
                         <th>
                         	<spring:message code="dashboard.name"/>
-                        	<a href="dashboard?page=${page.limit}&offset=0&order=computer.name&search=${page.search}&sort=ASC" >^</a>
-                        	<a href="dashboard?page=${page.limit}&offset=0&order=computer.name&search=${page.search}&sort=DESC" >v</a>
+                        	<a href="dashboard?page=${page.limit}&offset=0&order=cmp.name&search=${page.search}&sort=ASC" >^</a>
+                        	<a href="dashboard?page=${page.limit}&offset=0&order=cmp.name&search=${page.search}&sort=DESC" >v</a>
                         </th>
                         <th>
                             <spring:message code="dashboard.introduced"/>
-                            <a href="dashboard?page=${page.limit}&offset=0&order=computer.introduced&search=${page.search}&sort=ASC" >^</a>
-                            <a href="dashboard?page=${page.limit}&offset=0&order=computer.introduced&search=${page.search}&sort=DESC" >v</a>
+                            <a href="dashboard?page=${page.limit}&offset=0&order=cmp.introduced&search=${page.search}&sort=ASC" >^</a>
+                            <a href="dashboard?page=${page.limit}&offset=0&order=cmp.introduced&search=${page.search}&sort=DESC" >v</a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
                             <spring:message code="dashboard.discontinued"/>
-                            <a href="dashboard?page=${page.limit}&offset=0&order=computer.discontinued&search=${page.search}&sort=ASC" >^</a>
-                            <a href="dashboard?page=${page.limit}&offset=0&order=computer.discontinued&search=${page.search}&sort=DESC" >v</a>
+                            <a href="dashboard?page=${page.limit}&offset=0&order=cmp.discontinued&search=${page.search}&sort=ASC" >^</a>
+                            <a href="dashboard?page=${page.limit}&offset=0&order=cmp.discontinued&search=${page.search}&sort=DESC" >v</a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
                             <spring:message code="dashboard.company"/>
-                            <a href="dashboard?page=${page.limit}&offset=0&order=computer.company_id&search=${page.search}&sort=ASC" >^</a>
-                            <a href="dashboard?page=${page.limit}&offset=0&order=computer.company_id&search=${page.search}&sort=DESC" >v</a>
+                            <a href="dashboard?page=${page.limit}&offset=0&order=company_id&search=${page.search}&sort=ASC" >^</a>
+                            <a href="dashboard?page=${page.limit}&offset=0&order=company_id&search=${page.search}&sort=DESC" >v</a>
                         </th>
                     </tr>
                 </thead>

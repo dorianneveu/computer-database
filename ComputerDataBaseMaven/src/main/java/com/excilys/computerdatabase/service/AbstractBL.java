@@ -3,15 +3,22 @@ package com.excilys.computerdatabase.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.Transaction;
+
+import com.excilys.computerdatabase.helper.HibernateUtils;
+
 //Design pattern Template
 public abstract class AbstractBL<T> implements Service<T> {
 
 	public final void delete(T object) {
+
+//		Transaction tx = HibernateUtils.INSTANCE.sessionFactory.openSession().getTransaction();
 		try {
 			deleteAbstract(object);
 		} catch (SQLException e2) {
 			e2.printStackTrace();
 		}
+//		tx.commit();
 	}
 	
 	public final void update(T object) {

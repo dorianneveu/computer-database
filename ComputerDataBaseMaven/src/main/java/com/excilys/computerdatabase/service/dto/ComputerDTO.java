@@ -1,8 +1,11 @@
 package com.excilys.computerdatabase.service.dto;
 
+//import javax.validation.constraints.NotNull;
+
 public class ComputerDTO {
 	
 	private int id;
+//	@NotNull
 	private String name;
 	private String introduced;
 	private String discontinued;

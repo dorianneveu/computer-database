@@ -10,10 +10,6 @@ public interface ICompanyDAO {
 
 	List<Company> getAll();
 
-	Company create(Company company);
-
-	void update(Company company);
-
 	void delete(Company company);
 
 }

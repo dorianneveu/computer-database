@@ -1,14 +1,39 @@
 package com.excilys.computerdatabase.model;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Component;
 
-@Component
+@Entity
+@Table(name="computer")
 public class Computer {
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
 	private int id;
+	@Column(name="name")
 	private String name;
-	private String introduced;
-	private String discontinued;
+	@Column(name="introduced")
+	@Type(type = "com.excilys.computerdatabase.helper.CustomLocalDateTimeUserType")
+	private LocalDate introduced;
+//	@Column(name="introduced")
+//	private String introduced;
+//	@Column(name="discontinued")
+//	private String discontinued;
+	@Column(name="discontinued")
+	@Type(type = "com.excilys.computerdatabase.helper.CustomLocalDateTimeUserType")
+	private LocalDate discontinued;
+	@OneToOne
 	private Company company;
 	public Computer(){
 		this.id = 0;
@@ -17,7 +42,7 @@ public class Computer {
 		this.id = 0;
 		this.name = name;
 	}
-	public Computer(int id, String name, String introduced, String discontinued, Company company) {
+	public Computer(int id, String name, LocalDate introduced, LocalDate discontinued, Company company) {
 		this.id = id;
 		this.name = name;
 		this.introduced = introduced;
@@ -36,17 +61,35 @@ public class Computer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getIntroduced() {
+//	public String getIntroduced() {
+//		return introduced;
+//	}
+//	public void setIntroduced(String introduced) {
+//		this.introduced = introduced;
+//	}
+	public LocalDate getIntroduced() {
 		return introduced;
 	}
-	public void setIntroduced(String introduced) {
+	public void setIntroduced(LocalDate introduced) {
 		this.introduced = introduced;
 	}
-	public String getDiscontinued() {
+	public void setIntroduced(Timestamp introduced) {
+		this.introduced = (introduced != null && introduced.toString() != "0000-00-00 00:00:00") ? introduced.toLocalDateTime().toLocalDate() : null;
+	}
+//	public String getDiscontinued() {
+//		return discontinued;
+//	}
+//	public void setDiscontinued(String discontinued) {
+//		this.discontinued = discontinued;
+//	}
+	public LocalDate getDiscontinued() {
 		return discontinued;
 	}
-	public void setDiscontinued(String discontinued) {
+	public void setDiscontinued(LocalDate discontinued) {
 		this.discontinued = discontinued;
+	}
+	public void setDiscontinued(Timestamp discontinued) {
+		this.discontinued = (discontinued != null && discontinued.toString() != "0000-00-00 00:00:00") ? discontinued.toLocalDateTime().toLocalDate() : null;
 	}
 	public Company getCompany() {
 		return company;

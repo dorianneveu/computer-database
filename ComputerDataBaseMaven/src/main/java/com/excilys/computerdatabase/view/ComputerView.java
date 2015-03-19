@@ -94,8 +94,8 @@ public class ComputerView {
 					str = sc.nextLine();
 					if (CheckEntry.checkIsId(str)) {
 						computerDTO = ctrl.getComputerById(str);
-						if (computer.getId() != 0 ) {
-							System.out.println(computer.toString());
+						if (computerDTO.getId() != 0 ) {
+							System.out.println(computerDTO.toString());
 						} else {
 							System.out.println("Wrong entry");
 						}

@@ -23,8 +23,8 @@ public interface IComputerDAO {
 
 	public abstract long getCountByName(String name);
 
-	public abstract List<Computer> getAllLimit(int limit, int offset,
-			String sort, String type);
+//	public abstract List<Computer> getAllLimit(int limit, int offset,
+//			String sort, String type);
 
 	public abstract List<Computer> findByName(String name, int limit,
 			int offset, String sort, String type);

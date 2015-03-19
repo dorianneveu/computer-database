@@ -1,5 +1,9 @@
 package com.excilys.computerdatabase.service.dto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.stereotype.Component;
 
 import com.excilys.computerdatabase.helper.DateConverter;
@@ -16,21 +20,25 @@ public class MapperDTO {
 		}
 		cDTO.setName(computer.getName());
 		if (computer.getIntroduced() != null) {
-			cDTO.setIntroduced(DateConverter.localDate((computer.getIntroduced().substring(0,10))));
+//			cDTO.setIntroduced(DateConverter.localDate((computer.getIntroduced().substring(0,10))));
+			cDTO.setIntroduced(DateConverter.localDate((computer.getIntroduced().toString())));
 		} else {
 			cDTO.setIntroduced("");
 		}
 		if (computer.getDiscontinued() != null) {
-			cDTO.setDiscontinued(DateConverter.localDate((computer.getDiscontinued().substring(0,10))));
+//			cDTO.setDiscontinued(DateConverter.localDate((computer.getDiscontinued().substring(0,10))));
+			cDTO.setDiscontinued(DateConverter.localDate((computer.getDiscontinued().toString())));
 		} else {
 			cDTO.setDiscontinued("");
 		}
-		if (computer.getCompany().getId() > 0) {
-			cDTO.setCompanyId(computer.getCompany().getId());
-			cDTO.setCompanyName(computer.getCompany().getName());
-		} else {
-			cDTO.setCompanyId(0);
-			cDTO.setCompanyName("");
+		if(computer.getCompany() != null ) {
+			if (computer.getCompany().getId() > 0) {
+				cDTO.setCompanyId(computer.getCompany().getId());
+				cDTO.setCompanyName(computer.getCompany().getName());
+			} else {
+				cDTO.setCompanyId(0);
+				cDTO.setCompanyName("");
+			}
 		}
 		return cDTO;
 	}
@@ -42,15 +50,22 @@ public class MapperDTO {
 		}
 		computer.setName(computerDTO.getName());
 		if (computerDTO.getIntroduced() != null) {
-			computer.setIntroduced(computerDTO.getIntroduced().substring(0,10));
-		
+//			computer.setIntroduced(computerDTO.getIntroduced().substring(0,10));
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate date = LocalDate.parse(computerDTO.getIntroduced(), formatter);
+			computer.setIntroduced(date);
 		} else {
-			computer.setIntroduced(null);
+			LocalDate d = null;
+			computer.setIntroduced(d);
 		}
 		if (computerDTO.getDiscontinued() != null) {
-			computer.setDiscontinued(computerDTO.getDiscontinued().substring(0,10));
+//			computer.setDiscontinued(computerDTO.getDiscontinued().substring(0,10));
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate date = LocalDate.parse(computerDTO.getDiscontinued(), formatter);
+			computer.setDiscontinued(date);
 		} else {
-			computer.setDiscontinued(null);
+			LocalDate d = null;
+			computer.setDiscontinued(d);
 		}
 		if (computerDTO.getCompanyId() > 0) {
 			computer.setCompany(new Company(computerDTO.getCompanyId(), computerDTO.getCompanyName()));

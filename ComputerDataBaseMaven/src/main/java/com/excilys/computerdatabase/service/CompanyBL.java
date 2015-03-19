@@ -12,7 +12,7 @@ import com.excilys.computerdatabase.persistence.ICompanyDAO;
 import com.excilys.computerdatabase.persistence.IComputerDAO;
 
 @Service
-public class CompanyBL extends AbstractBL<Company> {
+public class CompanyBL implements ICompanyBL{
 	
 	@Autowired
 	private ICompanyDAO companyDAO;
@@ -27,8 +27,7 @@ public class CompanyBL extends AbstractBL<Company> {
 	 * @see com.excilys.computerdatabase.service.ICompanyBL#deleteAbstract(com.excilys.computerdatabase.model.Company)
 	 */
 	@Override
-    @Transactional
-	public void deleteAbstract(Company company) {
+	public void delete(Company company) {
 		computerDAO.deleteByCompany(company);
 		companyDAO.delete(company);
 	}
@@ -37,7 +36,7 @@ public class CompanyBL extends AbstractBL<Company> {
 	 * @see com.excilys.computerdatabase.service.ICompanyBL#getAbstract(int)
 	 */
 	@Override
-	public Company getAbstract(int id) throws SQLException {
+	public Company get(int id)  {
 		Company company = companyDAO.get(id); 
 		return company;
 	}
@@ -46,7 +45,7 @@ public class CompanyBL extends AbstractBL<Company> {
 	 * @see com.excilys.computerdatabase.service.ICompanyBL#getAllAbstract()
 	 */
 	@Override
-	public List<Company> getAllAbstract() throws SQLException {
+	public List<Company> getAll() {
 		List<Company> companies = companyDAO.getAll();
 		return companies;
 	}

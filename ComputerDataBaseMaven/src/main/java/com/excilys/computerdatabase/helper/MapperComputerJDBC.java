@@ -16,8 +16,8 @@ public class MapperComputerJDBC implements RowMapper {
 		Company company = new Company(rs.getInt(5), rs.getString(6));
 		computer.setId(rs.getInt(1));
 		computer.setName(rs.getString(2));
-		computer.setIntroduced(rs.getString(3));
-		computer.setDiscontinued(rs.getString(4));
+		computer.setIntroduced(rs.getTimestamp(3));
+		computer.setDiscontinued(rs.getTimestamp(4));
 		computer.setCompany(company);
 		return computer;
 	}
