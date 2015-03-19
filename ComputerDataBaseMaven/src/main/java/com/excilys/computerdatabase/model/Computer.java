@@ -26,10 +26,6 @@ public class Computer {
 	@Column(name="introduced")
 	@Type(type = "com.excilys.computerdatabase.helper.CustomLocalDateTimeUserType")
 	private LocalDate introduced;
-//	@Column(name="introduced")
-//	private String introduced;
-//	@Column(name="discontinued")
-//	private String discontinued;
 	@Column(name="discontinued")
 	@Type(type = "com.excilys.computerdatabase.helper.CustomLocalDateTimeUserType")
 	private LocalDate discontinued;

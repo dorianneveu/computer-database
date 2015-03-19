@@ -1,6 +1,8 @@
 package com.excilys.computerdatabase.helper;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -37,5 +39,16 @@ public class DateConverter {
 			return convertedDate;
 		}
 		return date;
+	}
+	
+	public static boolean isDate(String inputString, String regex) {
+		if (inputString == null || inputString.isEmpty())
+			return true;
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(inputString);
+		if (m.find()) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="companyId"><spring:message code="dashboard.company"/></label>
-                                <select class="form-control" id="company" name="company">
+                                <select class="form-control" id="companyId" name="companyId">
 								<option value="0"><c:out value="--" /></option>
                                 	<c:forEach var="company" items="${companies}">
                                 		<c:choose>

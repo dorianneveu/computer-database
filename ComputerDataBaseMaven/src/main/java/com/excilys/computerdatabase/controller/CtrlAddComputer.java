@@ -1,9 +1,13 @@
 package com.excilys.computerdatabase.controller;
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +16,7 @@ import com.excilys.computerdatabase.controller.validator.ValidatorComputerDTO;
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.service.CompanyBL;
 import com.excilys.computerdatabase.service.ComputerBL;
+import com.excilys.computerdatabase.service.dto.ComputerDTO;
 
 @Controller
 @RequestMapping("/addComputer")
@@ -28,18 +33,17 @@ public class CtrlAddComputer {
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToAddComputer(ModelMap model) {
 		model.addAttribute("companies", blCompany.getAll());
+		model.addAttribute("computerDTO", new ComputerDTO());
 		return "addComputer";
 	}
 	@RequestMapping(method = RequestMethod.POST)
-	public String add(ModelMap model, @RequestParam(value=PARAM_COMPANY, required=false) String pCompany, @RequestParam(value=PARAM_DISCONTINUED, required=false) final String pDiscontinued
-			, @RequestParam(value=PARAM_INTRODUCED, required=false) final String pIntroduced, @RequestParam(value=PARAM_NAME, required=false) final String pName ) {
-		blComputer.insert(ValidatorComputerDTO.insertComputer(pName, pIntroduced, pDiscontinued, pCompany)); 
-		Page page = new Page();
-		page.nbPage = (int) blComputer.getNumberPage(page.limit);
-		model.addAttribute("nbFound", (int) blComputer.findByNameCount(page.search));
-		model.addAttribute("page", page);
-		model.addAttribute("computers", blComputer.findByName(page));
-		return "dashboard";
+	public String add(ModelMap model, @Valid ComputerDTO computerDTO, BindingResult result) {
+		if(result.hasErrors()) {
+			model.addAttribute("computerDTO", computerDTO);
+			return "addComputer";
+		}
+		blComputer.insert(computerDTO);
+		return "forward:/dashboard";
 	}
 
 }

@@ -1,13 +1,19 @@
 package com.excilys.computerdatabase.service.dto;
 
-//import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.excilys.computerdatabase.controller.validator.Date;
 
 public class ComputerDTO {
 	
 	private int id;
-//	@NotNull
+	@NotEmpty
 	private String name;
+	@Date(message = "{dashboard.introduced}")
 	private String introduced;
+	@Date(message = "{dashboard.discontinued}")
 	private String discontinued;
 	private int companyId;
 	private String companyName;

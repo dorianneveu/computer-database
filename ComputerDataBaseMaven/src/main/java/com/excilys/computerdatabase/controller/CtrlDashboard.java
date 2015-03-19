@@ -3,12 +3,16 @@ package com.excilys.computerdatabase.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
@@ -27,9 +31,12 @@ public class CtrlDashboard {
 	private ComputerBL blComputer;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String allParameters(ModelMap model, @RequestParam(value=PARAM_PAGE, required=false) String pPage, @RequestParam(value=PARAM_OFFSET, required=false) final String pOffset
+	public String allParameters(@Valid @ModelAttribute Page page, ModelMap model
+			, @RequestParam(value=PARAM_PAGE, required=false) String pPage, @RequestParam(value=PARAM_OFFSET, required=false) final String pOffset
 			, @RequestParam(value=PARAM_SORT, required=false) final String pSort, @RequestParam(value=PARAM_ORDER, required=false) final String pOrder
-			, @RequestParam(value=PARAM_SEARCH, required=false) final String pSearch) {
+			, @RequestParam(value=PARAM_SEARCH, required=false) final String pSearch
+			) {
+		System.out.println(page);
 		model = workServlet(model, pPage, pOffset, pSort, pOrder, pSearch);
 		return "dashboard";
 	}

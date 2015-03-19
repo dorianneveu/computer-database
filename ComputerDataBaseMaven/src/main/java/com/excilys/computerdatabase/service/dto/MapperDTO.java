@@ -49,7 +49,7 @@ public class MapperDTO {
 			computer.setId(computerDTO.getId());
 		}
 		computer.setName(computerDTO.getName());
-		if (computerDTO.getIntroduced() != null) {
+		if (computerDTO.getIntroduced() != null && !computerDTO.getIntroduced().equals("")) {
 //			computer.setIntroduced(computerDTO.getIntroduced().substring(0,10));
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date = LocalDate.parse(computerDTO.getIntroduced(), formatter);
@@ -58,7 +58,7 @@ public class MapperDTO {
 			LocalDate d = null;
 			computer.setIntroduced(d);
 		}
-		if (computerDTO.getDiscontinued() != null) {
+		if (computerDTO.getDiscontinued() != null && !computerDTO.getDiscontinued().equals("")) {
 //			computer.setDiscontinued(computerDTO.getDiscontinued().substring(0,10));
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date = LocalDate.parse(computerDTO.getDiscontinued(), formatter);
