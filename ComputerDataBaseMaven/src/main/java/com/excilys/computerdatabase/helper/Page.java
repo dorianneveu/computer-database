@@ -2,7 +2,7 @@ package com.excilys.computerdatabase.helper;
 
 public class Page {
 
-	public int limit = 50;
+	public int page = 50;
 	public int offset = 0;
 	public int actualPage = 0;
 	public int nbPage = 0;
@@ -11,14 +11,14 @@ public class Page {
 	public String search = "";
 	
 	public boolean isEmpty() {
-		if (this.limit == 0 && this.offset == 0 && this.actualPage == 0) {
+		if (this.page == 0 && this.offset == 0 && this.actualPage == 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public void reset() {
-		this.limit = 0;
+		this.page = 0;
 		this.offset = 0;
 		this.actualPage = 0;
 		this.nbPage = 0;
@@ -27,12 +27,12 @@ public class Page {
 		this.search = "";
 	}
 
-	public int getLimit() {
-		return limit;
+	public int getPage() {
+		return page;
 	}
 
-	public void setLimit(int limit) {
-		this.limit = limit;
+	public void setPage(int limit) {
+		this.page = limit;
 	}
 
 	public int getOffset() {

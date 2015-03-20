@@ -1,6 +1,8 @@
 package com.excilys.computerdatabase.service.dto;
 
 
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -10,6 +12,7 @@ public class ComputerDTO {
 	
 	private int id;
 	@NotEmpty
+	@Size(min =1, max = 255)
 	private String name;
 	@Date(message = "{dashboard.introduced}")
 	private String introduced;

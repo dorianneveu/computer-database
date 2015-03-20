@@ -7,13 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.excilys.computerdatabase.controller.validator.ValidatorComputerDTO;
-import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.service.CompanyBL;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.service.dto.ComputerDTO;
@@ -21,10 +17,6 @@ import com.excilys.computerdatabase.service.dto.ComputerDTO;
 @Controller
 @RequestMapping("/addComputer")
 public class CtrlAddComputer {
-	private static final String PARAM_COMPANY = "company";
-	private static final String PARAM_DISCONTINUED = "discontinued";
-	private static final String PARAM_INTRODUCED = "introduced";
-	private static final String PARAM_NAME = "name";
 	@Autowired
 	private ComputerBL blComputer;
 	@Autowired

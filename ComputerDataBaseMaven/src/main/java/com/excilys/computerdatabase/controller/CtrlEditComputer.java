@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.excilys.computerdatabase.controller.validator.ValidatorComputerDTO;
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.service.CompanyBL;
 import com.excilys.computerdatabase.service.ComputerBL;
@@ -19,10 +18,6 @@ import com.excilys.computerdatabase.service.dto.ComputerDTO;
 @Controller
 @RequestMapping("/editComputer")
 public class CtrlEditComputer {
-	private static final String PARAM_COMPANY = "company";
-	private static final String PARAM_DISCONTINUED = "discontinued";
-	private static final String PARAM_INTRODUCED = "introduced";
-	private static final String PARAM_NAME = "name";
 	private static final String PARAM_ID = "id";
 	@Autowired
 	private ComputerBL blComputer;
@@ -39,15 +34,10 @@ public class CtrlEditComputer {
 	@RequestMapping(method = RequestMethod.POST)
 	public String edit(ModelMap model, 
 			@Valid @ModelAttribute ComputerDTO computerDto
-//			,@RequestParam(value=PARAM_COMPANY, required=false) String pCompany, @RequestParam(value=PARAM_DISCONTINUED, required=false) final String pDiscontinued
-//			, @RequestParam(value=PARAM_INTRODUCED, required=false) final String pIntroduced, @RequestParam(value=PARAM_NAME, required=false) final String pName,
-//			,@RequestParam(value=PARAM_ID, required=false) final String pId
 			) {
-//		ComputerDTO computer = blComputer.get(Integer.parseInt(pId));
-//		blComputer.update(ValidatorComputerDTO.updateComputer(pName, pIntroduced, pDiscontinued, pCompany, computer)); 
 		blComputer.update(computerDto); 
 		Page page = new Page();
-		page.nbPage = (int) blComputer.getNumberPage(page.limit);
+		page.nbPage = (int) blComputer.getNumberPage(page.page);
 		model.addAttribute("nbFound", (int) blComputer.findByNameCount(page.search));
 		model.addAttribute("page", page);
 		model.addAttribute("computers", blComputer.findByName(page));

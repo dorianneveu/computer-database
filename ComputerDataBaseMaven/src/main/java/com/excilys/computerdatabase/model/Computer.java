@@ -57,12 +57,6 @@ public class Computer {
 	public void setName(String name) {
 		this.name = name;
 	}
-//	public String getIntroduced() {
-//		return introduced;
-//	}
-//	public void setIntroduced(String introduced) {
-//		this.introduced = introduced;
-//	}
 	public LocalDate getIntroduced() {
 		return introduced;
 	}
@@ -72,12 +66,6 @@ public class Computer {
 	public void setIntroduced(Timestamp introduced) {
 		this.introduced = (introduced != null && introduced.toString() != "0000-00-00 00:00:00") ? introduced.toLocalDateTime().toLocalDate() : null;
 	}
-//	public String getDiscontinued() {
-//		return discontinued;
-//	}
-//	public void setDiscontinued(String discontinued) {
-//		this.discontinued = discontinued;
-//	}
 	public LocalDate getDiscontinued() {
 		return discontinued;
 	}

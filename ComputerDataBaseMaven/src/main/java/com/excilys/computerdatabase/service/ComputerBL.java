@@ -38,7 +38,7 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	}
 	
 	public List<ComputerDTO> findByName(Page page) {
-		List<Computer> computers = computerDAO.findByName(page.search, page.limit, page.offset*page.limit, page.order, page.sort);
+		List<Computer> computers = computerDAO.findByName(page.search, page.page, page.offset*page.page, page.order, page.sort);
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
 			computersDTO.add(MapperDTO.computerToDTO(computer));
@@ -48,7 +48,7 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	
 	/**
 	 * Return a list of computer with the specified limit and offset
-	 * @param limit : the beginning of the select
+	 * @param page : the beginning of the select
 	 * @param offset : the number of elements we want
 	 * @return
 	 */

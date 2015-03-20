@@ -3,10 +3,6 @@ package com.excilys.computerdatabase.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.hibernate.Transaction;
-
-import com.excilys.computerdatabase.helper.HibernateUtils;
-
 //Design pattern Template
 public abstract class AbstractBL<T> implements Service<T> {
 

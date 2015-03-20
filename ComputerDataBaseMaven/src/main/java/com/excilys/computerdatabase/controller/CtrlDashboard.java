@@ -21,10 +21,6 @@ import com.excilys.computerdatabase.service.dto.ComputerDTO;
 @RequestMapping("/dashboard")
 public class CtrlDashboard {
 
-	private static final String PARAM_SEARCH = "search";
-	private static final String PARAM_ORDER = "order";
-	private static final String PARAM_SORT = "sort";
-	private static final String PARAM_OFFSET = "offset";
 	private static final String PARAM_PAGE = "page";
 	private static final String PARAM_SELECTION = "selection";
 	@Autowired
@@ -32,19 +28,15 @@ public class CtrlDashboard {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String allParameters(@Valid @ModelAttribute Page page, ModelMap model
-			, @RequestParam(value=PARAM_PAGE, required=false) String pPage, @RequestParam(value=PARAM_OFFSET, required=false) final String pOffset
-			, @RequestParam(value=PARAM_SORT, required=false) final String pSort, @RequestParam(value=PARAM_ORDER, required=false) final String pOrder
-			, @RequestParam(value=PARAM_SEARCH, required=false) final String pSearch
 			) {
-		System.out.println(page);
-		model = workServlet(model, pPage, pOffset, pSort, pOrder, pSearch);
+		System.out.println(page.getPage());
+		model = workServlet(model, page.getPage(), page.getOffset(), page.getSort(), page.getOrder(), page.getSearch());
 		return "dashboard";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String delete(ModelMap model, @RequestParam(value=PARAM_PAGE, required=false) String pPage, @RequestParam(value=PARAM_OFFSET, required=false) final String pOffset
-			, @RequestParam(value=PARAM_SORT, required=false) final String pSort, @RequestParam(value=PARAM_ORDER, required=false) final String pOrder
-			, @RequestParam(value=PARAM_SEARCH, required=false) final String pSearch, @RequestParam(value=PARAM_SELECTION, required=false) final String pSelected) {
+	public String delete(@Valid @ModelAttribute Page page, ModelMap model
+			, @RequestParam(value=PARAM_SELECTION, required=false) final String pSelected) {
 		if (pSelected != null) {
 			if (pSelected.length() > 0) {
 				String[] selected = pSelected.split(",");
@@ -53,22 +45,22 @@ public class CtrlDashboard {
 				}
 			}
 		}
-		model = workServlet(model, pPage, pOffset, pSort, pOrder, pSearch);
+		model = workServlet(model, page.getPage(), page.getOffset(), page.getSort(), page.getOrder(), page.getSearch());
 		return "dashboard";
 	}
 	
-	private ModelMap workServlet(ModelMap model, String pPage, String pOffset, String pSort, String pOrder, String pSearch) {
+	private ModelMap workServlet(ModelMap model, int pPage, int pOffset, String pSort, String pOrder, String pSearch) {
 		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
 		Page page = new Page();
-		if (pPage != null) {
-			page.limit = Integer.parseInt(pPage);
-			page.nbPage = (int) blComputer.getNumberPage(page.limit);
+		if (pPage != 0) {
+			page.page = pPage;
+			page.nbPage = (int) blComputer.getNumberPage(page.page);
 		} else {
-			page.limit = 50;
-			page.nbPage = (int) blComputer.getNumberPage(page.limit);
+			page.page = 50;
+			page.nbPage = (int) blComputer.getNumberPage(page.page);
 		}
-		if (pOffset != null) {
-			page.offset = Integer.parseInt(pOffset);
+		if (pOffset != 0) {
+			page.offset = pOffset;
 		}
 		if (pSort != null) {
 			page.sort = pSort;
@@ -78,7 +70,7 @@ public class CtrlDashboard {
 		}
 		if (pSearch != null) {
 			page.search = pSearch;
-			page.nbPage = (int) blComputer.findByNameCount(page.search)/page.limit;
+			page.nbPage = (int) blComputer.findByNameCount(page.search)/page.page;
 		}
 		computersDTO = blComputer.findByName(page);
 		model.addAttribute("nbFound", (int) blComputer.findByNameCount(page.search));

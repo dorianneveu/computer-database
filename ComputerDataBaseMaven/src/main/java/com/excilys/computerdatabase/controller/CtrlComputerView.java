@@ -16,7 +16,6 @@ public class CtrlComputerView {
 
 
 	public CtrlComputerView() {
-//		this.bl = new ComputerBL();
 	}
 
 	public ComputerDTO getComputerById(String str) {
