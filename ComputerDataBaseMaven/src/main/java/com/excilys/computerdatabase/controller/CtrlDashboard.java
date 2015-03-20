@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -27,10 +26,8 @@ public class CtrlDashboard {
 	private ComputerBL blComputer;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String allParameters(@Valid @ModelAttribute Page page, ModelMap model
-			) {
-		System.out.println(page.getPage());
-		model = workServlet(model, page.getPage(), page.getOffset(), page.getSort(), page.getOrder(), page.getSearch());
+	public String allParameters(@Valid @ModelAttribute Page page, ModelMap model ) {
+		model = workServlet(model, page);
 		return "dashboard";
 	}
 	
@@ -45,34 +42,16 @@ public class CtrlDashboard {
 				}
 			}
 		}
-		model = workServlet(model, page.getPage(), page.getOffset(), page.getSort(), page.getOrder(), page.getSearch());
+		model = workServlet(model, page);
 		return "dashboard";
 	}
 	
-	private ModelMap workServlet(ModelMap model, int pPage, int pOffset, String pSort, String pOrder, String pSearch) {
-		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
-		Page page = new Page();
-		if (pPage != 0) {
-			page.page = pPage;
-			page.nbPage = (int) blComputer.getNumberPage(page.page);
-		} else {
-			page.page = 50;
-			page.nbPage = (int) blComputer.getNumberPage(page.page);
-		}
-		if (pOffset != 0) {
-			page.offset = pOffset;
-		}
-		if (pSort != null) {
-			page.sort = pSort;
-		}
-		if (pOrder != null) {
-			page.order = pOrder;
-		}
-		if (pSearch != null) {
-			page.search = pSearch;
+	private ModelMap workServlet(ModelMap model, Page page) {
+		List<ComputerDTO> computersDTO = blComputer.findByName(page);
+		page.nbPage = (int) blComputer.getNumberPage(page.page);
+		if (page.getSearch() != null) {
 			page.nbPage = (int) blComputer.findByNameCount(page.search)/page.page;
 		}
-		computersDTO = blComputer.findByName(page);
 		model.addAttribute("nbFound", (int) blComputer.findByNameCount(page.search));
 		model.addAttribute(PARAM_PAGE, page);
 		model.addAttribute("computers", computersDTO);

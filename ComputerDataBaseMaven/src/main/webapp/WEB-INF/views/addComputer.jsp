@@ -20,7 +20,7 @@
 						<div class="form-group">
 							<label for="computerName"><spring:message
 									code="dashboard.name" /></label> <input type="text"
-								class="form-control" id="name" name="name"
+								class="form-control" id="name" name="name" value="${computerDTO.name }"
 								onkeyup="$.fn.checkvalue()"
 								placeholder="<spring:message code="dashboard.name"/>"></input>
 							<th:errors path="name" cssclass="alert alert-danger"></th:errors>
@@ -28,14 +28,14 @@
 						<div class="form-group">
 							<label for="introduced"><spring:message
 									code="dashboard.introduced" /></label> <input type="date"
-								class="form-control" id="introduced" name="introduced"
+								class="form-control" id="introduced" name="introduced" value="${computerDTO.introduced }"
 								placeholder="<spring:message code="dashboard.introduced"/>"></input>
 							<th:errors path="introduced" cssclass="alert alert-danger"></th:errors>
 						</div>
 						<div class="form-group">
 							<label for="discontinued"><spring:message
 									code="dashboard.discontinued" /></label> <input type="date"
-								class="form-control" id="discontinued" name="discontinued"
+								class="form-control" id="discontinued" name="discontinued" value="${computerDTO.discontinued }"
 								placeholder="<spring:message code="dashboard.discontinued"/>"></input>
 							<th:errors path="discontinued" cssclass="alert alert-danger"></th:errors>
 						</div>
@@ -46,8 +46,16 @@
 								name="companyId">
 								<option value="0"><c:out value="--" /></option>
 								<c:forEach var="company" items="${companies}">
-									<option value="${company.id}"><c:out
-											value="${company.name}" /></option>
+									<c:choose>
+										<c:when test="${company.id == computerDTO.companyId }">
+											<option value="${company.id}" selected="true"><c:out
+													value="${company.name}" /></option>
+										</c:when>
+										<c:otherwise>
+											<option value="${company.id}"><c:out
+													value="${company.name}" /></option>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
 							</th:select>
 						</div>

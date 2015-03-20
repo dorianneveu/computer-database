@@ -31,6 +31,7 @@ public class CtrlAddComputer {
 	@RequestMapping(method = RequestMethod.POST)
 	public String add(ModelMap model, @Valid ComputerDTO computerDTO, BindingResult result) {
 		if(result.hasErrors()) {
+			model.addAttribute("companies", blCompany.getAll());
 			model.addAttribute("computerDTO", computerDTO);
 			return "addComputer";
 		}

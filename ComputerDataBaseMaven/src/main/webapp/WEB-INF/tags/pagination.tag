@@ -9,7 +9,6 @@
 		</a>
 	</li>
 
-
 <c:choose>
  <c:when test="${page.nbPage > 15}">
  	<c:forEach var="i" begin="0" step="5" end="${page.nbPage}">
@@ -30,7 +29,6 @@
  	</c:forEach>
  </c:otherwise>
 </c:choose>
-
 	<li>
  		<a href="dashboard?page=${page.page}&offset=${ page.offset+1 }&order=${page.order}&search=${page.search}&sort=${page.sort}" aria-label="Next">
 			<span aria-hidden="true">&raquo;</span>

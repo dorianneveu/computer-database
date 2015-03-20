@@ -37,6 +37,6 @@ public class DateValidator implements ConstraintValidator<Date, String> {
 
 	private String getDateRegex() {
 		Locale userLocale = LocaleContextHolder.getLocale();
-		return messageSource.getMessage("binding.date.regex", null, userLocale);
+		return messageSource.getMessage("date.error", null, userLocale);
 	}
 }

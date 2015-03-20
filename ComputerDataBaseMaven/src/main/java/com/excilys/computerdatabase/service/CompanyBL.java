@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.computerdatabase.model.Company;
 import com.excilys.computerdatabase.persistence.ICompanyDAO;
@@ -21,7 +20,6 @@ public class CompanyBL implements ICompanyBL{
 	
 	public CompanyBL() {
 	}
-	
 	
 	/* (non-Javadoc)
 	 * @see com.excilys.computerdatabase.service.ICompanyBL#deleteAbstract(com.excilys.computerdatabase.model.Company)

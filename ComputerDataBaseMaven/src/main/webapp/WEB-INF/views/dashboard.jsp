@@ -4,12 +4,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="pg" uri="../WEB-INF/pagetag.tld"%>
+<%@ taglib prefix="pg" uri="../pagetag.tld"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags/" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
     <%@include file="header.jsp" %>
     <section id="main">
-    Language : <a href="?lang=_en">English</a>|<a href="?lang=_fr">Francais</a>
+    <a href="?lang=_en"><img src="${request.getContextPath()}img/uk.png"></a><a href="?lang=_fr"><img src="${request.getContextPath()}img/fr.png"></a>
         <div class="container">
             <h1 id="homeTitle">
                  <c:out value="${nbFound}"/></td> <spring:message code="dashboard.found"/>
@@ -52,25 +52,25 @@
                         </th>
                         <th>
                         	<spring:message code="dashboard.name"/>
-                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=ASC" >^</a>
-                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=DESC" >v</a>
+                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
+                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                         <th>
                             <spring:message code="dashboard.introduced"/>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=ASC" >^</a>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=DESC" >v</a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
                             <spring:message code="dashboard.discontinued"/>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=ASC" >^</a>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=DESC" >v</a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
                             <spring:message code="dashboard.company"/>
-                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=ASC" >^</a>
-                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=DESC" >v</a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                     </tr>
                 </thead>
