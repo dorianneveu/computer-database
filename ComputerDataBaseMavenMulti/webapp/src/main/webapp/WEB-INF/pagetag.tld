@@ -1,0 +1,22 @@
+<taglib>
+  <tlib-version>1.0</tlib-version>
+  <jsp-version>2.0</jsp-version>
+  <short-name>Page Tld</short-name>
+  <tag>
+    <name>pagetag</name>
+    <tag-class>com.excilys.computerdatabase.tag.PageTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+       <name>offset</name>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>nbEachPage</name>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>page</name>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
