@@ -14,6 +14,8 @@
             <h1 id="homeTitle">
                  <c:out value="${nbFound}"/></td> <spring:message code="dashboard.found"/>
             </h1>
+            <c:url value="/j_spring_security_logout" var="logoutUrl" />
+<a href="${logoutUrl}">Log Out</a>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
                     <form id="searchForm" action="dashboard?page=${page.page }&offset=0&order=${page.order}&search=&sort=${page.sort}" method="GET" class="form-inline">

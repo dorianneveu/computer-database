@@ -4,13 +4,8 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-    http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context-4.0.xsd
     http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc.xsd
-    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<import resource="classpath*:/applicationContext-service.xml" />
-	<import resource="classpath*:/applicationContext-persistence.xml" />
-<!-- 	<import resource="classpath*:/applicationContext-binding.xml" /> -->
 </beans>

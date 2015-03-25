@@ -11,9 +11,10 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<!-- Enable Annotation based Declarative Transaction Management -->
-	<import resource="classpath*:/applicationContext-binding"/>
-	<import resource="classpath*:/applicationContext-persistence.xml" />
-	<import resource="classpath*:/applicationContext-service"/>
+<!-- 	<import resource="classpath*:/applicationContext-binding.xml"/> -->
+<!-- 	<import resource="classpath*:/applicationContext-persistence.xml" /> -->
+	<import resource="classpath*:/applicationContext-service.xml"/>
 	<context:component-scan base-package="com.excilys.computerdatabase.clictrl" />
+	<context:component-scan base-package="com.excilys.computerdatabase.view" />
 
 </beans>

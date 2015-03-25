@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import com.excilys.computerdatabase.clictrl.CtrlMainView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
+import com.excilys.computerdatabase.model.User;
+import com.excilys.computerdatabase.service.UserBL;
 @Component
 public class MainView {
 
@@ -23,7 +25,7 @@ public class MainView {
 			
 	public void cli() throws SQLException {
 		boolean life = true;
-		
+
 		while (life) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Hi, please type the number which correspond to your choice:\n1.Computer\n2.List of all "
