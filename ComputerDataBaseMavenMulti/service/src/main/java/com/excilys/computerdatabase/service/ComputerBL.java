@@ -46,21 +46,6 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 		return computersDTO;
 	}
 	
-	/**
-	 * Return a list of computer with the specified limit and offset
-	 * @param page : the beginning of the select
-	 * @param offset : the number of elements we want
-	 * @return
-	 */
-//	public List<ComputerDTO> getAllLimit(int limit, int offset, String sort, String type) {
-//		List<Computer> computers = computerDAO.getAllLimit(limit, offset, sort, type);
-//		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
-//		for (Computer computer : computers) {
-//			computersDTO.add(MapperDTO.computerToDTO(computer));
-//		}
-//		return computersDTO;
-//	}
-
 	@Override
 	public void updateAbstract(ComputerDTO object) throws SQLException {
 		Computer computer = MapperDTO.dTOToComputer(object);
@@ -96,7 +81,4 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 		}
 		return computersDTO;
 	}
-
-
-
 }

@@ -46,19 +46,6 @@
 	      <groupId>org.slf4j</groupId>
 	      <artifactId>slf4j-simple</artifactId>
    	  </dependency>
-   	  <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-         <scope>test</scope>
-    </dependency> 
-    <dependency>
-	  <groupId>jstl</groupId>
-	  <artifactId>jstl</artifactId>
-	</dependency>
-	<dependency>
-	  <groupId>taglibs</groupId>
-	  <artifactId>standard</artifactId>
-	</dependency>
 	<dependency>
 	    <groupId>ch.qos.logback</groupId>
 	    <artifactId>logback-classic</artifactId>
@@ -120,9 +107,5 @@
       <artifactId>javassist</artifactId>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-		<groupId>javax.validation</groupId>
-		<artifactId>validation-api</artifactId>
-	</dependency>
    </dependencies>
 </project>

@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import javax.persistence.Entity;
-import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name="company")

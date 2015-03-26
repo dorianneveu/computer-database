@@ -2,12 +2,8 @@ package com.excilys.computerdatabase.view;
 
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.excilys.computerdatabase.service.UserBL;
-
 
 public class Launcher {
 

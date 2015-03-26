@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import com.excilys.computerdatabase.clictrl.CtrlMainView;
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.model.Company;
-import com.excilys.computerdatabase.model.User;
-import com.excilys.computerdatabase.service.UserBL;
 @Component
 public class MainView {
 

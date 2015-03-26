@@ -1,21 +1,18 @@
 <%@page import="java.util.List"%>
 <%@page import="com.excilys.computerdatabase.model.Computer"%>
-<%-- <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="pg" uri="../pagetag.tld"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags/" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <%@include file="header.jsp" %>
     <section id="main">
-    <a href="?lang=_en"><img src="${request.getContextPath()}img/uk.png"></a><a href="?lang=_fr"><img src="${request.getContextPath()}img/fr.png"></a>
         <div class="container">
             <h1 id="homeTitle">
                  <c:out value="${nbFound}"/></td> <spring:message code="dashboard.found"/>
             </h1>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
-<a href="${logoutUrl}">Log Out</a>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
                     <form id="searchForm" action="dashboard?page=${page.page }&offset=0&order=${page.order}&search=&sort=${page.sort}" method="GET" class="form-inline">
@@ -27,10 +24,12 @@
                         class="btn btn-primary" />
                     </form>
                 </div>
+                <sec:authorize ifAnyGranted="ROLE_ADMIN">
                 <div class="pull-right">
                     <a class="btn btn-success" id="addComputer" href="addComputer"><spring:message code="dashboard.add"/></a> 
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();"><spring:message code="dashboard.edit"/></a>
                 </div>
+                </sec:authorize>
             </div>
         </div>
 

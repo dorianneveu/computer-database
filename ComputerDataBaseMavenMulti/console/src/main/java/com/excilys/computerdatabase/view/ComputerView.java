@@ -21,7 +21,6 @@ public class ComputerView {
 	String name, introduced, discontinued, company;
 	
 	public ComputerView() {
-//		ctrl = new CtrlComputerView();
 	}
 
 	public void showView(Scanner sc) {
