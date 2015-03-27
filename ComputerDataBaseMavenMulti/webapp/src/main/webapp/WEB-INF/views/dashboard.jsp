@@ -109,7 +109,6 @@
 		    	<input type="submit" name="page" value="100" />
 			</form>
 		</div>
-
     </footer>
     
     <script type="text/javascript">

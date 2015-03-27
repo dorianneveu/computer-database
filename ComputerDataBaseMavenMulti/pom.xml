@@ -35,6 +35,38 @@
     	<hibernate-validator>4.2.0.Final</hibernate-validator>
     	<servlet>2.5</servlet>
     </properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${slf4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback}</version>
+		</dependency>
+		<dependency>
+	      <groupId>org.mockito</groupId>
+	      <artifactId>mockito-core</artifactId>
+	      <version>${mockito}</version>
+      	  <scope>test</scope>
+   	  	</dependency>
+	</dependencies>
+    
+    
     <dependencyManagement>
     <dependencies>
     <dependency>
@@ -76,32 +108,11 @@
             <scope>import</scope>
         </dependency>
       <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <version>${junit}</version>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
 	      <groupId>mysql</groupId>
 	      <artifactId>mysql-connector-java</artifactId>
 	      <version>${mysql}</version>
    	  </dependency>
-   	  <dependency>
-	      <groupId>org.mockito</groupId>
-	      <artifactId>mockito-core</artifactId>
-	      <version>${mockito}</version>
-      	  <scope>test</scope>
-   	  </dependency>
-      <dependency>
-	      <groupId>org.slf4j</groupId>
-	      <artifactId>slf4j-api</artifactId>
-	      <version>${slf4j}</version>
-   	  </dependency>
-   	  <dependency>
-	      <groupId>org.slf4j</groupId>
-	      <artifactId>slf4j-simple</artifactId>
-	      <version>${slf4j}</version>
-   	  </dependency>
+
    	  <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
@@ -117,16 +128,6 @@
 	  <groupId>taglibs</groupId>
 	  <artifactId>standard</artifactId>
 	  <version>${taglibs}</version>
-	</dependency>
-	<dependency>
-	    <groupId>ch.qos.logback</groupId>
-	    <artifactId>logback-classic</artifactId>
-	    <version>${logback}</version>
-	</dependency>
-	<dependency>
-	    <groupId>com.jolbox</groupId>
-	    <artifactId>bonecp</artifactId>
-	    <version>${bonecp}</version>
 	</dependency>
 		<dependency>
 			<artifactId>spring-web</artifactId>
