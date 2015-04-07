@@ -1,7 +1,6 @@
 package com.excilys.computerdatabase.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,7 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	@Autowired
 	private IComputerDAO computerDAO;
 	public ComputerBL() {
-		
 	}
-
 	/**
 	 * Return the number of page related to the number of elements per page
 	 * @param maxPage : number of elements per page
@@ -39,10 +36,7 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	
 	public List<ComputerDTO> findByName(Page page) {
 		List<Computer> computers = computerDAO.findByName(page.search, page.page, page.offset*page.page, page.order, page.sort);
-		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
-		for (Computer computer : computers) {
-			computersDTO.add(MapperDTO.computerToDTO(computer));
-		}
+		List<ComputerDTO> computersDTO = MapperDTO.listToDto(computers);
 		return computersDTO;
 	}
 	
@@ -75,10 +69,7 @@ public class ComputerBL extends AbstractBL<ComputerDTO> {
 	@Override
 	public List<ComputerDTO> getAllAbstract() throws SQLException {
 		List<Computer> computers = computerDAO.getAll();
-		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
-		for (Computer computer : computers) {
-			computersDTO.add(MapperDTO.computerToDTO(computer));
-		}
+		List<ComputerDTO> computersDTO = MapperDTO.listToDto(computers);
 		return computersDTO;
 	}
 }

@@ -37,7 +37,7 @@ public class CtrlDashboard {
 		if (pSelected != null) {
 			if (pSelected.length() > 0) {
 				String[] selected = pSelected.split(",");
-				for (String str : selected) {
+				for (String str : selected) { 
 					blComputer.delete(blComputer.get(Integer.parseInt(str)));
 				}
 			}

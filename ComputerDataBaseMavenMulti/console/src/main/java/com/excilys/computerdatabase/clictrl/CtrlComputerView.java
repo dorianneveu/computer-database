@@ -2,28 +2,45 @@ package com.excilys.computerdatabase.clictrl;
 
 import java.util.List;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.excilys.computerdatabase.helper.CheckEntry;
 import com.excilys.computerdatabase.service.ComputerBL;
 import com.excilys.computerdatabase.dto.ComputerDTO;
+
 @Component
 public class CtrlComputerView {
 	@Autowired
 	private ComputerBL bl;
 	ComputerDTO computerDTO;
 
+	Client client;
+	WebTarget computerTarget;
 
 	public CtrlComputerView() {
+		client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+		computerTarget = client.target("http://localhost:8080/webservice/rest/computer");
 	}
 
 	public ComputerDTO getComputerById(String str) {
-		return bl.get(Integer.parseInt(str));
+		ComputerDTO computer = computerTarget.path("/"+str).request(MediaType.APPLICATION_JSON).get(new GenericType<ComputerDTO>() {});
+		return computer;
 	}
 
 	public List<ComputerDTO> getAllComputer() {
-		return bl.getAll();
+		List<ComputerDTO> computersDTO = computerTarget.path("/all").request(MediaType.APPLICATION_JSON).get(new GenericType<List<ComputerDTO>>() {});
+
+		return computersDTO;
 	}
 	
 	
@@ -40,6 +57,7 @@ public class CtrlComputerView {
 	 * @return int > 0 if the computer is updated
 	 */
 	public void updateComputer(String name, String introduced, String discontinued, String company, ComputerDTO computer) {
+		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
 			if (Integer.parseInt(company) != 0) {
 				computerDTO.setCompanyId(Integer.parseInt(company));
@@ -81,7 +99,10 @@ public class CtrlComputerView {
 			computerDTO.setName(computer.getName());
 		}
 		computerDTO.setId(computer.getId());
-		bl.update(computerDTO);
+		Response response = computerTarget.path("/"+ computerDTO.getId()).request(MediaType.APPLICATION_JSON).post(Entity.entity(computerDTO, MediaType.APPLICATION_JSON));
+		if(response.getStatus() != 200 && response.getStatus() != 204 ) {
+			System.out.println("Error http " + response.getStatus());
+		}
 	}
 	/**
 	 * Verify all the param before the insert of the computer. If a param is not good, set his value to null
@@ -92,6 +113,7 @@ public class CtrlComputerView {
 	 * @return Computer created
 	 */
 	public void insertComputer(String name, String introduced, String discontinued, String company) {
+		ComputerDTO computerDTO = new ComputerDTO();
 		if (CheckEntry.checkIsId(company)) {
 			computerDTO.setCompanyId(Integer.parseInt(company));
 		} else {
@@ -108,11 +130,17 @@ public class CtrlComputerView {
 			computerDTO.setDiscontinued(null);
 		}
 		computerDTO.setName(name.trim());
-		bl.insert(computerDTO);
+		Response response = computerTarget.request(MediaType.APPLICATION_JSON).post(Entity.entity(computerDTO, MediaType.APPLICATION_JSON));
+		if(response.getStatus() != 200 && response.getStatus() != 204 ) {
+			System.out.println("Error http " + response.getStatus());
+		}
 	}
 
 	public void deleteComputer(String str) {
-		bl.delete(bl.get(Integer.parseInt(str)));
+		Response response = computerTarget.path("/"+ Integer.parseInt(str)).request(MediaType.APPLICATION_JSON).delete();
+		if(response.getStatus() != 200 && response.getStatus() != 204 ) {
+			System.out.println("Error http " + response.getStatus());
+		}
 	}
 	/**
 	 * Check if the the computer exist.

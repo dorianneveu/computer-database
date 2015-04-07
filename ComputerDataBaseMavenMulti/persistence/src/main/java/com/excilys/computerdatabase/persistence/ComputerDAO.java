@@ -29,7 +29,6 @@ public class ComputerDAO implements IComputerDAO {
 	@Override
 	@Transactional
 	public Computer get(int id) {
-
 		Computer computer = new Computer();
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("select cmp from Computer cmp left outer join cmp.company as company where cmp.id = :id");
@@ -88,7 +87,7 @@ public class ComputerDAO implements IComputerDAO {
 	public void deleteByCompany(Company company) {
 		Session s = sessionFactory.getCurrentSession();
 	    Query q = s.createQuery("delete from Computer where company_id = :id");
-	    q.setInteger(1, company.getId());
+	    q.setInteger("id", company.getId());
 	    q.executeUpdate();
 	}
 	/* (non-Javadoc)
@@ -110,7 +109,6 @@ public class ComputerDAO implements IComputerDAO {
 	@Override
 	@Transactional
 	public long getCountByName(String name) {
-
 		long value = 0;
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("select count(*) from Computer where name like :name");

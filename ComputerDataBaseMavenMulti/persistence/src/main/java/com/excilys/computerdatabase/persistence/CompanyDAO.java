@@ -49,6 +49,7 @@ public class CompanyDAO implements ICompanyDAO {
 	 * @see com.excilys.computerdatabase.persistence.ICompanyDAO#delete(com.excilys.computerdatabase.model.Company)
 	 */
 	@Override
+	@Transactional
 	public void delete(Company company) {
 		Session s = sessionFactory.getCurrentSession();
 	    Query q = s.createQuery("delete Company where id= :id");

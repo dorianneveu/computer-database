@@ -2,6 +2,8 @@ package com.excilys.computerdatabase.dto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -68,6 +70,14 @@ public class MapperDTO {
 			computer.setCompany(null);
 		}
 		return computer;
+	}
+	
+	static public List<ComputerDTO> listToDto(List<Computer> computers) {
+		return computers.stream().map(c -> computerToDTO(c)).collect(Collectors.toList());
+	}
+
+	static public List<Computer> listFromDto(List<ComputerDTO> computerDTOs) {
+		return computerDTOs.stream().map(c -> dTOToComputer(c)).collect(Collectors.toList());
 	}
 
 }
