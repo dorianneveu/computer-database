@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.excilys.computerdatabase.service.CompanyBL;
-import com.excilys.computerdatabase.service.ComputerBL;
+import com.excilys.computerdatabase.service.IComputerBL;
 import com.excilys.computerdatabase.dto.ComputerDTO;
 
 @Controller
 @RequestMapping("/addComputer")
 public class CtrlAddComputer {
 	@Autowired
-	private ComputerBL blComputer;
+	private IComputerBL blComputer;
 	@Autowired
 	private CompanyBL blCompany;
 	

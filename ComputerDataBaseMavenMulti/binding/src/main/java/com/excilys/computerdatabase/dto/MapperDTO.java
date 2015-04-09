@@ -13,7 +13,11 @@ import com.excilys.computerdatabase.model.Computer;
 @Component
 public class MapperDTO {
 	
-	
+	/**
+	 * Convert a computer to it DTO
+	 * @param computer
+	 * @return ComputerDTO
+	 */
 	static public ComputerDTO computerToDTO(Computer computer) {
 		ComputerDTO cDTO = new ComputerDTO();
 		if (computer.getId() > 0) {
@@ -41,7 +45,11 @@ public class MapperDTO {
 		}
 		return cDTO;
 	}
-	
+	/**
+	 * Convert a ComputerDTO to a Computer
+	 * @param computerDTO
+	 * @return Computer
+	 */
 	static public Computer dTOToComputer(ComputerDTO computerDTO)  {
 		Computer computer = new Computer();
 		if (computerDTO.getId() > 0) {
@@ -71,11 +79,20 @@ public class MapperDTO {
 		}
 		return computer;
 	}
-	
+	/**
+	 * Convert a list of Computer to a list of his DTO
+	 * @param computers
+	 * @return List<ComputerDTO>
+	 */
 	static public List<ComputerDTO> listToDto(List<Computer> computers) {
 		return computers.stream().map(c -> computerToDTO(c)).collect(Collectors.toList());
 	}
 
+	/**
+	 * Convert a list of ComputerDTO to a list of Computer
+	 * @param computerDTOs
+	 * @return List<Computer>
+	 */
 	static public List<Computer> listFromDto(List<ComputerDTO> computerDTOs) {
 		return computerDTOs.stream().map(c -> dTOToComputer(c)).collect(Collectors.toList());
 	}

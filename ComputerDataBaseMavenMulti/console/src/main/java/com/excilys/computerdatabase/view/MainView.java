@@ -32,6 +32,7 @@ public class MainView {
 			System.out.println("You type : " + str);
 			switch(str.trim()) {
 				case "1" :
+					//Launch the dialog for the action on computer
 					computerView.showView(sc);
 					break;
 				case "2" :
@@ -49,11 +50,8 @@ public class MainView {
 					System.out.println("Id of the company to delete (0 to cancel) : ");
 					str = sc.nextLine();
 					if (CheckEntry.checkIsId(str)) {
-						if (ctrl.deleteCompany(str) > 0) {
-							System.out.println("Success");
-						} else {
-							System.out.println("No computer deleted, please check the id");
-						}
+						ctrl.deleteCompany(str);
+						System.out.println("Success");
 					} else {
 						System.out.println("Wrong entry");
 					}

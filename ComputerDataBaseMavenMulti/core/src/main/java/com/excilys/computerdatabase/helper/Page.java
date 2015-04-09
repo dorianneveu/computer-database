@@ -6,7 +6,7 @@ public class Page {
 	public int offset = 0;
 	public int actualPage = 0;
 	public int nbPage = 0;
-	public String order = "cmp.id";
+	public String order = "cmp.name";
 	public String sort = "ASC";
 	public String search = "";
 	

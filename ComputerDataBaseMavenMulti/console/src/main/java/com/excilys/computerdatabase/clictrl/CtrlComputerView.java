@@ -15,13 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.excilys.computerdatabase.helper.CheckEntry;
-import com.excilys.computerdatabase.service.ComputerBL;
+import com.excilys.computerdatabase.service.IComputerBL;
 import com.excilys.computerdatabase.dto.ComputerDTO;
 
 @Component
 public class CtrlComputerView {
 	@Autowired
-	private ComputerBL bl;
+	private IComputerBL bl;
 	ComputerDTO computerDTO;
 
 	Client client;
@@ -54,7 +54,6 @@ public class CtrlComputerView {
 	 * @param discontinued
 	 * @param company
 	 * @param computer
-	 * @return int > 0 if the computer is updated
 	 */
 	public void updateComputer(String name, String introduced, String discontinued, String company, ComputerDTO computer) {
 		ComputerDTO computerDTO = new ComputerDTO();
@@ -110,7 +109,6 @@ public class CtrlComputerView {
 	 * @param introduced
 	 * @param discontinued
 	 * @param company
-	 * @return Computer created
 	 */
 	public void insertComputer(String name, String introduced, String discontinued, String company) {
 		ComputerDTO computerDTO = new ComputerDTO();
@@ -148,7 +146,12 @@ public class CtrlComputerView {
 	 * @return boolean
 	 */
 	public boolean computerExist(String str) {
-		ComputerDTO computer = bl.get(Integer.parseInt(str));
+		ComputerDTO computer = new ComputerDTO();
+		try {
+			computer = bl.get(Integer.parseInt(str));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		if (computer.getId() > 0) {
 			return true;
 		} else {

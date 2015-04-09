@@ -35,6 +35,7 @@
 		<hibernate-validator>4.2.0.Final</hibernate-validator>
 		<servlet>2.5</servlet>
 		<jersey>2.17</jersey>
+		<common.login>1.1.1</common.login>
 	</properties>
 	<!-- All the dependencies for the test  -->		
 	<dependencies>
@@ -240,6 +241,12 @@
 			<version>${jersey}</version>
 		</dependency>
 			
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>${common.login}</version>
+		</dependency>
+		
 		</dependencies>
 	</dependencyManagement>
 	<reporting>

@@ -40,6 +40,7 @@ public class ComputerDAO implements IComputerDAO {
 	/* (non-Javadoc)
 	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#getAll(java.sql.Connection)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Computer> getAll() {
@@ -121,6 +122,7 @@ public class ComputerDAO implements IComputerDAO {
 	/* (non-Javadoc)
 	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#findByName(java.lang.String, int, int, java.lang.String, java.lang.String, java.sql.Connection)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Computer> findByName(String name, int limit, int offset, String sort, String type) {

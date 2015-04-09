@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
@@ -39,6 +40,7 @@ public class CustomLocalDateTimeUserType implements EnhancedUserType,
 		return SQL_TYPES;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Class returnedClass() {
 		return LocalDate.class;

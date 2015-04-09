@@ -36,13 +36,10 @@ public class CtrlMainView {
 		companies = companyTarget.path("/all").request(MediaType.APPLICATION_JSON).get(new GenericType<List<Company>>() {});
 		
 		return companies;
-//		return companyBL.getAll();
 	}
 	
-	public int deleteCompany(String str) throws NumberFormatException, SQLException {
-//		companyBL.delete(companyBL.get(Integer.parseInt(str)));
-		companyTarget.path("/delete/" + str).request(MediaType.APPLICATION_JSON).delete();
-		return 1;
+	public void deleteCompany(String str) throws NumberFormatException, SQLException {
+		companyTarget.path("/" + str).request(MediaType.APPLICATION_JSON).delete();
 	}
 
 }

@@ -10,6 +10,7 @@ public class Launcher {
 	public static void main(String[] args) throws SQLException {
    		AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("/applicationContext-console.xml");
 		MainView m = (MainView) ctx.getBean(MainView.class);	
+		//Launch the dialog
 		m.cli();
 		ctx.close();
 	}

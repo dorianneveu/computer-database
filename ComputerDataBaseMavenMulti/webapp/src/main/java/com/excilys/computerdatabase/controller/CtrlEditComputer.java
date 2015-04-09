@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.excilys.computerdatabase.helper.Page;
 import com.excilys.computerdatabase.service.CompanyBL;
-import com.excilys.computerdatabase.service.ComputerBL;
+import com.excilys.computerdatabase.service.IComputerBL;
 import com.excilys.computerdatabase.dto.ComputerDTO;
 
 @Controller
@@ -21,7 +21,7 @@ import com.excilys.computerdatabase.dto.ComputerDTO;
 public class CtrlEditComputer {
 	private static final String PARAM_ID = "id";
 	@Autowired
-	private ComputerBL blComputer;
+	private IComputerBL blComputer;
 	@Autowired
 	private CompanyBL blCompany;
 	

@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.webservice;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -13,7 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.excilys.computerdatabase.model.Computer;
 import com.excilys.computerdatabase.persistence.IComputerDAO;
@@ -34,7 +32,7 @@ public class ComputerBLWeb implements IComputerBLWeb {
 	@POST
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void update(ComputerDTO object) throws SQLException {
+	public void update(ComputerDTO object) {
 		Computer computer = MapperDTO.dTOToComputer(object);
 		computerDAO.update(computer);
 	}
@@ -45,7 +43,7 @@ public class ComputerBLWeb implements IComputerBLWeb {
 	@Override
 	@DELETE
 	@Path("/{id}")
-	public void delete(@PathParam("id") int id) throws SQLException {
+	public void delete(@PathParam("id") int id) {
 		computerDAO.delete(computerDAO.get(id));
 	}
 	
@@ -55,7 +53,7 @@ public class ComputerBLWeb implements IComputerBLWeb {
 	@Override
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void insert(ComputerDTO object) throws SQLException {
+	public void insert(ComputerDTO object) {
 		Computer computer = MapperDTO.dTOToComputer(object);
 		computerDAO.create(computer);
 	}
@@ -67,8 +65,10 @@ public class ComputerBLWeb implements IComputerBLWeb {
 	@GET
 	@Path("/{param}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ComputerDTO get(@PathParam("param") int id) throws SQLException {
+	public ComputerDTO get(@PathParam("param") int id) {
 		Computer computer = computerDAO.get(id);
+		if (computer == null )
+			return null;
 		ComputerDTO computerDTO = MapperDTO.computerToDTO(computer);	
 		return computerDTO;
 	}
@@ -80,7 +80,7 @@ public class ComputerBLWeb implements IComputerBLWeb {
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ComputerDTO> getAll() throws SQLException {
+	public List<ComputerDTO> getAll() {
 		List<Computer> computers = computerDAO.getAll();
 		List<ComputerDTO> computersDTO = MapperDTO.listToDto(computers);
 		return computersDTO;

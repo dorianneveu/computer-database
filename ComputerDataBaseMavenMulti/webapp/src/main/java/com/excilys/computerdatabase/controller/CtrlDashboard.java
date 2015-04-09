@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.excilys.computerdatabase.helper.Page;
-import com.excilys.computerdatabase.service.ComputerBL;
+import com.excilys.computerdatabase.service.IComputerBL;
 import com.excilys.computerdatabase.dto.ComputerDTO;
 
 @Controller
@@ -23,7 +23,7 @@ public class CtrlDashboard {
 	private static final String PARAM_PAGE = "page";
 	private static final String PARAM_SELECTION = "selection";
 	@Autowired
-	private ComputerBL blComputer;
+	private IComputerBL blComputer;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String allParameters(@Valid @ModelAttribute Page page, ModelMap model ) {

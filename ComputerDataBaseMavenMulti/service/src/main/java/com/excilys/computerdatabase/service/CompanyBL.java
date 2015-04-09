@@ -1,6 +1,5 @@
 package com.excilys.computerdatabase.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,24 +45,6 @@ public class CompanyBL implements ICompanyBL{
 	public List<Company> getAll() {
 		List<Company> companies = companyDAO.getAll();
 		return companies;
-	}
-
-	/* (non-Javadoc)
-	 * @see com.excilys.computerdatabase.service.ICompanyBL#updateAbstract(com.excilys.computerdatabase.model.Company)
-	 */
-	@Override
-	public void updateAbstract(Company object) throws SQLException {
-		throw new UnsupportedOperationException("this method should not be used");
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see com.excilys.computerdatabase.service.ICompanyBL#insertAbstract(com.excilys.computerdatabase.model.Company)
-	 */
-	@Override
-	public void insertAbstract(Company object) throws SQLException {
-		throw new UnsupportedOperationException("this method should not be used");
-		
 	}
 
 }

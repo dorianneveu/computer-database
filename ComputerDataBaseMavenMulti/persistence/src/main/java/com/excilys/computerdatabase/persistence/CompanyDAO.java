@@ -37,6 +37,7 @@ public class CompanyDAO implements ICompanyDAO {
 	/* (non-Javadoc)
 	 * @see com.excilys.computerdatabase.persistence.ICompanyDAO#getAll()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Company> getAll() {

@@ -7,14 +7,14 @@ import com.excilys.computerdatabase.model.Company;
 
 public interface ICompanyBL {
 
+	/**
+	 * Delete in the database the company wich correspond to the id set and all the computer related to this company
+	 * @param company
+	 */
 	public abstract void delete(Company company);
 
 	public abstract Company get(int id) throws SQLException;
 
 	public abstract List<Company> getAll() throws SQLException;
-
-	public abstract void updateAbstract(Company object) throws SQLException;
-
-	public abstract void insertAbstract(Company object) throws SQLException;
 
 }

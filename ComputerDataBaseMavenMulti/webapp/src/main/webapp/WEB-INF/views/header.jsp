@@ -15,7 +15,7 @@
 	<body>
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
-				<a class="navbar-brand" href="dashboard?page=50&offset=0&order=cmp.id&search=&sort=ASC"> Application -
+				<a class="navbar-brand" href="dashboard?page=50&offset=0&order=cmp.name&search=&sort=ASC"> Application -
 					Computer Database </a>    
 					<div style="float:right"><a href="?lang=_en&id=${computer.id }"><img src="${request.getContextPath()}img/uk.png"></a><a href="?lang=_fr&id=${computer.id }"><img src="${request.getContextPath()}img/fr.png"></a>
 					</div>
