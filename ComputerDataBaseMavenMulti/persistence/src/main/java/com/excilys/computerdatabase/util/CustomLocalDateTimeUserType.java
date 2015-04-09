@@ -29,9 +29,6 @@ import org.hibernate.usertype.EnhancedUserType;
  */
 public class CustomLocalDateTimeUserType implements EnhancedUserType,
 		Serializable {
-	/**
-*
-*/
 	private static final long serialVersionUID = -493657952432522967L;
 	private static final int[] SQL_TYPES = new int[] { Types.TIMESTAMP };
 

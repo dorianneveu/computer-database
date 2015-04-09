@@ -1,7 +1,5 @@
 package com.excilys.computerdatabase.clictrl;
 
-import java.sql.SQLException;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -30,15 +28,14 @@ public class CtrlMainView {
 		companyTarget = client.target("http://localhost:8080/webservice/rest/company");
 	}
 
-	public List<Company> getAllCompany() throws SQLException {
-
+	public List<Company> getAllCompany()  {
 		List<Company> companies = new ArrayList<Company>();
 		companies = companyTarget.path("/all").request(MediaType.APPLICATION_JSON).get(new GenericType<List<Company>>() {});
 		
 		return companies;
 	}
 	
-	public void deleteCompany(String str) throws NumberFormatException, SQLException {
+	public void deleteCompany(String str) {
 		companyTarget.path("/" + str).request(MediaType.APPLICATION_JSON).delete();
 	}
 

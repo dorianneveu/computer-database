@@ -18,7 +18,6 @@ public class ComputerDAO implements IComputerDAO {
 	
 	@Autowired
 	SessionFactory sessionFactory;
-
 	
 	public ComputerDAO() {
 		
@@ -117,7 +116,6 @@ public class ComputerDAO implements IComputerDAO {
 		value = (long) query.uniqueResult();
 		return value;
 	}
-	
 	
 	/* (non-Javadoc)
 	 * @see com.excilys.computerdatabase.persistence.IComputerDAO#findByName(java.lang.String, int, int, java.lang.String, java.lang.String, java.sql.Connection)

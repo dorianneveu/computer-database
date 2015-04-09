@@ -20,10 +20,8 @@ public class MainView {
 	
 	public MainView() {}
 			
-			
 	public void cli() throws SQLException {
 		boolean life = true;
-
 		while (life) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Hi, please type the number which correspond to your choice:\n1.Computer\n2.List of all "

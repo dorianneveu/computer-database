@@ -23,7 +23,6 @@ public class CtrlComputerView {
 	@Autowired
 	private IComputerBL bl;
 	ComputerDTO computerDTO;
-
 	Client client;
 	WebTarget computerTarget;
 
@@ -42,7 +41,6 @@ public class CtrlComputerView {
 
 		return computersDTO;
 	}
-	
 	
 	public int getPage(long maxPage){
 		return (int)(bl.getNumberPage(maxPage));

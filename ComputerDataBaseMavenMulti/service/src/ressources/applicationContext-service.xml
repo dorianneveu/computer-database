@@ -6,7 +6,7 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<import resource="classpath*:/applicationContext-persistence.xml"/>
-	<import resource="classpath*:/applicationContext-binding.xml"/>
+	<import resource="classpath*:/applicationContext-persistence.xml" />
+	<import resource="classpath*:/applicationContext-binding.xml" />
 	<context:component-scan base-package="com.excilys.computerdatabase.service" />
 </beans>

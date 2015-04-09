@@ -214,7 +214,7 @@
 				<artifactId>jstl</artifactId>
 				<version>${jstl}</version>
 			</dependency>
-			
+			<!-- WebService dependencies -->
 			<dependency>
 				<groupId>org.glassfish.jersey.core</groupId>
 				<artifactId>jersey-server</artifactId>
@@ -266,7 +266,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-
 				</configuration>
 			</plugin>
 		</plugins>
