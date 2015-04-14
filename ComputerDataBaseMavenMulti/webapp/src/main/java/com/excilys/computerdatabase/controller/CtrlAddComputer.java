@@ -36,7 +36,7 @@ public class CtrlAddComputer {
 			return "addComputer";
 		}
 		blComputer.insert(computerDTO);
-		return "forward:/dashboard";
+		return "redirect:/dashboard";
 	}
 
 }

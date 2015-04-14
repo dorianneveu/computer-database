@@ -6,6 +6,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@include file="header.jsp"%>
 
+<link rel="stylesheet" href="js/datePicker/jquery-ui.min.css">
+
 <section id="main">
 	<div class="container">
 		<div class="row">
@@ -26,14 +28,14 @@
 						</div>
 						<div class="form-group">
 							<label for="introduced"><spring:message
-									code="dashboard.introduced" /></label> <input type="date"
+									code="dashboard.introduced" /></label> <input type="text"
 								class="form-control" id="introduced" name="introduced" value="${computerDTO.introduced }"
 								placeholder="<spring:message code="dashboard.introduced"/>"></input>
 							<th:errors path="introduced" cssclass="alert alert-danger"></th:errors>
 						</div>
 						<div class="form-group">
 							<label for="discontinued"><spring:message
-									code="dashboard.discontinued" /></label> <input type="date"
+									code="dashboard.discontinued" /></label> <input type="text"
 								class="form-control" id="discontinued" name="discontinued" value="${computerDTO.discontinued }"
 								placeholder="<spring:message code="dashboard.discontinued"/>"></input>
 							<th:errors path="discontinued" cssclass="alert alert-danger"></th:errors>
@@ -70,11 +72,29 @@
 		</div>
 	</div>
 </section>
+
+
 <script src="${request.getContextPath()}js/jquery.min.js"></script>
 <script src="${request.getContextPath()}js/addcomputer.js"></script>
+<script src="js/datePicker/jquery-ui.js"></script>
+<script src="js/datePicker/datepicker-fr.js"></script>
+<script src="js/datePicker/datepicker-en.js"></script>
 <script type="text/javascript">
 		var strings = new Array();
+		strings['add.errorname'] = "<spring:message code='add.errorname' javaScriptEscape='true' />";
 		strings['lang'] = "<spring:message code='lang' javaScriptEscape='true' />";
+		    $(function() {
+		        $( "#introduced" ).datepicker({changeMonth: true,
+		            changeYear: true});
+		        $( "#introduced" ).datepicker( "option", $.datepicker.regional["<spring:message code='lang' javaScriptEscape='true' />"] );
+		       
+		    });
+		    
+		    $(function() {
+		        $( "#discontinued" ).datepicker({changeMonth: true,
+		            changeYear: true});
+		        $( "#discontinued" ).datepicker( "option", $.datepicker.regional["<spring:message code='lang' javaScriptEscape='true' />"] );
+		    });
 	</script>
 </body>
 </html>

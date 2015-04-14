@@ -42,7 +42,7 @@ public class CtrlEditComputer {
 		model.addAttribute("nbFound", (int) blComputer.findByNameCount(page.search));
 		model.addAttribute("page", page);
 		model.addAttribute("computers", blComputer.findByName(page));
-		return "dashboard";
+		return "redirect:/dashboard";
 	}
 
 }

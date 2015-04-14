@@ -17,7 +17,7 @@
 		if(x==0){
 			$("#name").css("border", "solid");
 		    $("#name").css("border-color", "#ff0000");
-			alert("You have to enter a name!");
+			alert(strings["add.errorname"]);
 			preventDefault();
 			return false;
 		}
@@ -33,13 +33,17 @@ $(document).ready(function() {
 			e.preventDefault();
 	    	$("#name").css("border", "solid");
 		    $("#name").css("border-color", "#ff0000");
-			alert("You have to enter a name!");
+			alert(strings["add.errorname"]);
 		} else if ($("#introduced").val() != '') {
 			if (!isDate($("#introduced").val())) {
 				e.preventDefault();
 				$("#introduced").css("border", "solid");
 			    $("#introduced").css("border-color", "#ff0000");
-				alert("Date format yyyy-mm-dd");
+			    if(strings["lang"] == "en") {
+			    	alert("Date format yyyy-mm-dd");
+			    } else {
+			    	alert("Format de la date : dd-mm-yyyy");
+			    }
 			} else {
 			    $("#introduced").css("border", "none");
 			}

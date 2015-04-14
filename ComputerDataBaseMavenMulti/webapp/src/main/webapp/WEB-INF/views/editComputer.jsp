@@ -7,6 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="th"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@include file="header.jsp" %>
+<link rel="stylesheet" href="js/datePicker/jquery-ui.min.css">
     <section id="main">
         <div class="container">
             <div class="row">
@@ -25,11 +26,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="introduced"><spring:message code="dashboard.introduced"/></label>
-                                <input type="date" class="form-control" value="${computer.introduced}" id="introduced" name="introduced" placeholder="<spring:message code="dashboard.introduced"/>">
+                                <input type="text" class="form-control" value="${computer.introduced}" id="introduced" name="introduced" placeholder="<spring:message code="dashboard.introduced"/>">
                             </div>
                             <div class="form-group">
                                 <label for="discontinued"><spring:message code="dashboard.discontinued"/></label>
-                                <input type="date" class="form-control" value="${computer.discontinued}" id="discontinued" name="discontinued" placeholder="<spring:message code="dashboard.discontinued"/>">
+                                <input type="text" class="form-control" value="${computer.discontinued}" id="discontinued" name="discontinued" placeholder="<spring:message code="dashboard.discontinued"/>">
                             </div>
                             <div class="form-group">
                                 <label for="companyId"><spring:message code="dashboard.company"/></label>
@@ -60,5 +61,23 @@
     </section>
 <script src="${request.getContextPath()}js/jquery.min.js"></script>
 <script src="${request.getContextPath()}js/addcomputer.js"></script>
+<script src="js/datePicker/jquery-ui.js"></script>
+<script src="js/datePicker/datepicker-fr.js"></script>
+<script src="js/datePicker/datepicker-en.js"></script>
+<script type="text/javascript">
+	$(function() {
+	    $( "#introduced" ).datepicker({changeMonth: true,
+	        changeYear: true});
+	    $( "#introduced" ).datepicker( "option", $.datepicker.regional["<spring:message code='lang' javaScriptEscape='true' />"] );
+		$( "#introduced" ).datepicker( "setDate", "${computer.introduced}" );
+	});
+	
+	$(function() {
+	    $( "#discontinued" ).datepicker({changeMonth: true,
+	        changeYear: true});
+	    $( "#discontinued" ).datepicker( "option", $.datepicker.regional["<spring:message code='lang' javaScriptEscape='true' />"]);
+		$( "#discontinued" ).datepicker( "setDate", "${computer.discontinued}" );
+	});
+</script>
 </body>
 </html>
