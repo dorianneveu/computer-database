@@ -13,9 +13,9 @@ public class ComputerDTO {
 	@NotEmpty
 	@Size(min =1, max = 255)
 	private String name;
-	@Date(message = "{date.error}")
+	@Date
 	private String introduced;
-	@Date(message = "{dashboard.discontinued}")
+	@Date
 	private String discontinued;
 	private int companyId;
 	private String companyName;

@@ -48,7 +48,11 @@ $(document).ready(function() {
 				e.preventDefault();
 				$("#discontinued").css("border", "solid");
 			    $("#discontinued").css("border-color", "#ff0000");
-				alert("Date format yyyy-mm-dd");
+			    if(strings["lang"] == "en") {
+			    	alert("Date format yyyy-mm-dd");
+			    } else {
+			    	alert("Format de la date : dd-mm-yyyy");
+			    }
 			} else {
 			    $("#discontinued").css("border", "none");
 			}
@@ -58,21 +62,33 @@ $(document).ready(function() {
 
 function isDate(txtDate)
 	{
+	var rxDatePattern;
 	  var currVal = txtDate;
 	  if(currVal == '')
 	    return false;
 	   
 	  //Declare Regex 
-	  var rxDatePattern = /^(\d{4})(-)(\d{1,2})(-)(\d{1,2})$/;
+	  if(strings["lang"] == "en") {
+		   rxDatePattern = /^(\d{4})(-)(\d{1,2})(-)(\d{1,2})$/;
+	  } else {
+		   rxDatePattern = /^(\d{1,2})(-)(\d{1,2})(-)(\d{4})$/;
+	  }
 	  var dtArray = currVal.match(rxDatePattern); // is format OK?
 	 
 	  if (dtArray == null)
 	     return false;
 	  
 	  //Checks for mm/dd/yyyy format.
-	  dtMonth = dtArray[5];
-	  dtDay= dtArray[7];
-	  dtYear = dtArray[1];
+	  if(strings["lang"] == "en") {
+		  dtMonth = dtArray[5];
+		  dtDay= dtArray[7];
+		  dtYear = dtArray[1];
+	  } else {
+		  dtMonth = dtArray[1];
+		  dtDay= dtArray[3];
+		  dtYear = dtArray[5];
+	  }
+	  
 	 
 	  if (dtMonth < 1 || dtMonth > 12)
 	      return false;

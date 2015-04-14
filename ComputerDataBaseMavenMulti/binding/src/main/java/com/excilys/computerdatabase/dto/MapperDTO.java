@@ -3,8 +3,10 @@ package com.excilys.computerdatabase.dto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.excilys.computerdatabase.helper.DateConverter;
@@ -51,13 +53,19 @@ public class MapperDTO {
 	 * @return Computer
 	 */
 	static public Computer dTOToComputer(ComputerDTO computerDTO)  {
+		Locale userLocale = LocaleContextHolder.getLocale();
+		DateTimeFormatter formatter;
+		if(userLocale.getLanguage().equals(new Locale("en").getLanguage())) {
+			 formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		} else {
+			 formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		}
 		Computer computer = new Computer();
 		if (computerDTO.getId() > 0) {
 			computer.setId(computerDTO.getId());
 		}
 		computer.setName(computerDTO.getName());
 		if (computerDTO.getIntroduced() != null && !computerDTO.getIntroduced().equals("")) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date = LocalDate.parse(computerDTO.getIntroduced(), formatter);
 			computer.setIntroduced(date);
 		} else {
@@ -65,7 +73,6 @@ public class MapperDTO {
 			computer.setIntroduced(d);
 		}
 		if (computerDTO.getDiscontinued() != null && !computerDTO.getDiscontinued().equals("")) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate date = LocalDate.parse(computerDTO.getDiscontinued(), formatter);
 			computer.setDiscontinued(date);
 		} else {

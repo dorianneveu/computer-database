@@ -115,6 +115,7 @@
 		var strings = new Array();
 		strings['dashboard.view'] = "<spring:message code='dashboard.view' javaScriptEscape='true' />";
 		strings['dashboard.edit'] = "<spring:message code='dashboard.edit' javaScriptEscape='true' />";
+		strings['dashboard.del'] = "<spring:message code='dashboard.del' javaScriptEscape='true' />";
 	</script>
 <script src="${request.getContextPath()}js/jquery.min.js"></script>
 <script src="${request.getContextPath()}js/bootstrap.min.js"></script>

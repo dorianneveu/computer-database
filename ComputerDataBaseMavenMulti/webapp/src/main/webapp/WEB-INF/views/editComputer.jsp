@@ -1,12 +1,12 @@
 <%@page import="com.excilys.computerdatabase.model.Company"%>
 <%@page import="java.util.List"%>
-<%-- <%@page import="com.excilys.computerdatabase.model.Computer"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="th"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-    <%@include file="header.jsp" %>
+<%@include file="header.jsp" %>
     <section id="main">
         <div class="container">
             <div class="row">
@@ -16,12 +16,12 @@
                     </div>
                     <h1><spring:message code="edit.edit"/></h1>
 
-                    <form action="editComputer" method="POST">
+                    <th:form action="editComputer" method="POST" modelAttribute="computer">
                         <input type="hidden" name="id" value="${computer.id}"/>
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName"><spring:message code="dashboard.name"/></label>
-                                <input type="text" class="form-control" value="${computer.name}" id="name" name="name" placeholder="<spring:message code="dashboard.name"/>">
+                                <input type="text" class="form-control" value="${computer.name}" id="name" name="name" onkeyup="$.fn.checkvalue()" placeholder="<spring:message code="dashboard.name"/>">
                             </div>
                             <div class="form-group">
                                 <label for="introduced"><spring:message code="dashboard.introduced"/></label>
@@ -49,14 +49,16 @@
                             </div>            
                         </fieldset>
                         <div class="actions pull-right">
-                            <input type="submit" value="<spring:message code="dashboard.edit"/>" class="btn btn-primary">
+                            <input id="send" type="submit" value="<spring:message code="dashboard.edit"/>" class="btn btn-primary">
                             
                             <a href="dashboard" class="btn btn-default"><spring:message code="add.cancel"/></a>
                         </div>
-                    </form>
+                    </th:form>
                 </div>
             </div>
         </div>
     </section>
+<script src="${request.getContextPath()}js/jquery.min.js"></script>
+<script src="${request.getContextPath()}js/addcomputer.js"></script>
 </body>
 </html>

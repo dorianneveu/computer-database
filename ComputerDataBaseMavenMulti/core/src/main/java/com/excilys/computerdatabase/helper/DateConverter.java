@@ -42,6 +42,8 @@ public class DateConverter {
 	}
 	
 	public static boolean isDate(String inputString, String regex) {
+		System.out.println(inputString);
+		System.out.println(regex);
 		if (inputString == null || inputString.isEmpty())
 			return true;
 		Pattern p = Pattern.compile(regex);

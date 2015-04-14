@@ -1,7 +1,6 @@
 <%@page import="com.excilys.computerdatabase.model.Company"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="th"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -73,5 +72,9 @@
 </section>
 <script src="${request.getContextPath()}js/jquery.min.js"></script>
 <script src="${request.getContextPath()}js/addcomputer.js"></script>
+<script type="text/javascript">
+		var strings = new Array();
+		strings['lang'] = "<spring:message code='lang' javaScriptEscape='true' />";
+	</script>
 </body>
 </html>
