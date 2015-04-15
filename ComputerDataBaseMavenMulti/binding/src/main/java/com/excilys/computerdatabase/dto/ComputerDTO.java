@@ -3,14 +3,11 @@ package com.excilys.computerdatabase.dto;
 
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.excilys.computerdatabase.validator.Date;
 
 public class ComputerDTO {
 	
 	private int id;
-	@NotEmpty
 	@Size(min =1, max = 255)
 	private String name;
 	@Date

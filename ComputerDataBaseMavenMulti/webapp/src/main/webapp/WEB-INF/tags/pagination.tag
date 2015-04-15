@@ -28,16 +28,32 @@
  </c:when>
 
  <c:when test="${page.offset-2 < 0}">
- 	<c:forEach var="i" begin="0" step="1" end="4">
-		<c:choose>
- 		<c:when test="${i == page.offset}">
- 				<li><a href="dashboard?page=${page.page}&offset=${i}&order=${page.order}&search=${page.search}&sort=${page.sort}"><b>${i+1}</b></a></li>
- 			</c:when>
- 			<c:otherwise>
- 				<li><a href="dashboard?page=${page.page}&offset=${i}&order=${page.order}&search=${page.search}&sort=${page.sort}">${i+1}</a></li>
+ 	<c:choose>
+ 		<c:when test="${page.nbPage < 4}">
+ 			<c:forEach var="i" begin="0" step="1" end="${page.nbPage}">
+				<c:choose>
+		 		<c:when test="${i == page.offset}">
+		 				<li><a href="dashboard?page=${page.page}&offset=${i}&order=${page.order}&search=${page.search}&sort=${page.sort}"><b>${i+1}</b></a></li>
+		 			</c:when>
+		 			<c:otherwise>
+		 				<li><a href="dashboard?page=${page.page}&offset=${i}&order=${page.order}&search=${page.search}&sort=${page.sort}">${i+1}</a></li>
+		 		</c:otherwise>
+				</c:choose>
+	 		</c:forEach>
+ 		</c:when>
+ 		<c:otherwise>
+ 			<c:forEach var="i" begin="0" step="1" end="4">
+				<c:choose>
+		 		<c:when test="${i == page.offset}">
+		 				<li><a href="dashboard?page=${page.page}&offset=${i}&order=${page.order}&search=${page.search}&sort=${page.sort}"><b>${i+1}</b></a></li>
+		 			</c:when>
+		 			<c:otherwise>
+		 				<li><a href="dashboard?page=${page.page}&offset=${i}&order=${page.order}&search=${page.search}&sort=${page.sort}">${i+1}</a></li>
+		 		</c:otherwise>
+				</c:choose>
+	 		</c:forEach>
  		</c:otherwise>
-		</c:choose>
- 	</c:forEach>
+ 	</c:choose>
  </c:when>
  
  <c:when test="${page.offset+2 > page.nbPage}">

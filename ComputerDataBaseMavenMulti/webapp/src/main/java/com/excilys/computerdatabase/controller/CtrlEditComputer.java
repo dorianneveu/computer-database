@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,16 +26,22 @@ public class CtrlEditComputer {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToEditComputer(ModelMap model, @RequestParam(value=PARAM_ID, required=false) final String pId) {
-		ComputerDTO computer = blComputer.get(Integer.parseInt(pId));
-		model.addAttribute("computer",computer);
+		ComputerDTO computerDTO = blComputer.get(Integer.parseInt(pId));
+		model.addAttribute("computerDTO",computerDTO);
 		model.addAttribute("companies", blCompany.getAll());
 		return "editComputer";
 	}
 	@RequestMapping(method = RequestMethod.POST)
 	public String edit(ModelMap model, 
-			@Valid @ModelAttribute ComputerDTO computerDto, BindingResult result
+			@Valid ComputerDTO computerDTO, BindingResult result
 			) {
-		blComputer.update(computerDto); 
+		if(result.hasErrors()) {
+			model.addAttribute("companies", blCompany.getAll());
+			model.addAttribute("computerDTO", computerDTO);
+			return "editComputer";
+		}
+		
+		blComputer.update(computerDTO); 
 		Page page = new Page();
 		page.nbPage = (int) blComputer.getNumberPage(page.page);
 		model.addAttribute("nbFound", (int) blComputer.findByNameCount(page.search));

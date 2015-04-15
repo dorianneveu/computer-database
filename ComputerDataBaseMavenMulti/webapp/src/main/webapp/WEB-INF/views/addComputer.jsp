@@ -20,25 +20,25 @@
 					<fieldset>
 						<div class="form-group">
 							<label for="computerName"><spring:message
-									code="dashboard.name" /></label> <input type="text"
+									code="add.name" /></label> <input type="text"
 								class="form-control" id="name" name="name" value="${computerDTO.name }"
 								onkeyup="$.fn.checkvalue()"
-								placeholder="<spring:message code="dashboard.name"/>"></input>
-							<th:errors path="name" cssclass="alert alert-danger"></th:errors>
+								placeholder="<spring:message code="dashboard.name"/>"></input><br/>
+							<th:errors path="name" class="alert alert-danger"></th:errors>
 						</div>
 						<div class="form-group">
 							<label for="introduced"><spring:message
 									code="dashboard.introduced" /></label> <input type="text"
 								class="form-control" id="introduced" name="introduced" value="${computerDTO.introduced }"
-								placeholder="<spring:message code="dashboard.introduced"/>"></input>
-							<th:errors path="introduced" cssclass="alert alert-danger"></th:errors>
+								placeholder="<spring:message code="date.format"/>"></input><br/>
+							<th:errors path="introduced" class="alert alert-danger"></th:errors>
 						</div>
 						<div class="form-group">
 							<label for="discontinued"><spring:message
 									code="dashboard.discontinued" /></label> <input type="text"
 								class="form-control" id="discontinued" name="discontinued" value="${computerDTO.discontinued }"
-								placeholder="<spring:message code="dashboard.discontinued"/>"></input>
-							<th:errors path="discontinued" cssclass="alert alert-danger"></th:errors>
+								placeholder="<spring:message code="date.format"/>"></input><br/>
+							<th:errors path="discontinued" class="alert alert-danger"></th:errors>
 						</div>
 						<div class="form-group">
 							<label for="companyId"><spring:message

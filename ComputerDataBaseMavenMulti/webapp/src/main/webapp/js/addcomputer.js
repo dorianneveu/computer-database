@@ -84,16 +84,14 @@ function isDate(txtDate)
 	  
 	  //Checks for mm/dd/yyyy format.
 	  if(strings["lang"] == "en") {
-		  dtMonth = dtArray[5];
-		  dtDay= dtArray[7];
-		  dtYear = dtArray[1];
+		  dtYear = dtArray[1]
+		  dtMonth = dtArray[3];
+		  dtDay= dtArray[5];
 	  } else {
-		  dtMonth = dtArray[1];
-		  dtDay= dtArray[3];
+		  dtDay = dtArray[1];
+		  dtMonth= dtArray[3];
 		  dtYear = dtArray[5];
 	  }
-	  
-	 
 	  if (dtMonth < 1 || dtMonth > 12)
 	      return false;
 	  else if (dtDay < 1 || dtDay> 31)

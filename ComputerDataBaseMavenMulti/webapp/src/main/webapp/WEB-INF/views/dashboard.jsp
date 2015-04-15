@@ -53,25 +53,25 @@
                         </th>
                         <th>
                         	<spring:message code="dashboard.name"/>
-                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
-                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
+                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-up"></i></a>
+                        	<a href="dashboard?page=${page.page}&offset=0&order=cmp.name&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                         <th>
                             <spring:message code="dashboard.introduced"/>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.introduced&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
                             <spring:message code="dashboard.discontinued"/>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
-                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=cmp.discontinued&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
                             <spring:message code="dashboard.company"/>
-                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-up"></i></a>
-                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-down"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=DESC" ><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="dashboard?page=${page.page}&offset=0&order=company_id&search=${page.search}&sort=ASC" ><i class="fa fa-arrow-circle-down"></i></a>
                         </th>
                     </tr>
                 </thead>
@@ -83,7 +83,7 @@
 	                		<input type="checkbox" name="cb" class="cb" value="${computer.id}">
 	                	</td>
 	                	<td>
-	                		<a href="editComputer?id=${computer.id}" onclick=""><c:out value="${computer.name}"/></a>
+	                		<sec:authorize ifAnyGranted="ROLE_ADMIN"><a href="editComputer?id=${computer.id}" onclick=""></sec:authorize><c:out value="${computer.name}"/></a>
 	                	</td>
 	                	<td><c:out value="${computer.introduced}"/></td>
 	                	<td><c:out value="${computer.discontinued}"/></td>
